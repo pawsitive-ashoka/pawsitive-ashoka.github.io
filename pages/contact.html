@@ -19,17 +19,38 @@
     </div>
     <div class="contact-form-card">
       <h3>📬 drop us a note</h3>
-      <div class="form-row-2">
-        <div class="form-group"><label>your name</label><input type="text" placeholder="e.g. Priya Sharma"></div>
-        <div class="form-group"><label>email</label><input type="email" placeholder="you@ashoka.edu.in"></div>
-      </div>
-      <div class="form-group">
-        <label>what's this about?</label>
-        <select><option value="">choose a topic…</option><option>General Inquiry</option><option>Collaboration / Partnership</option><option>Animal Emergency</option><option>Volunteer / Join Us</option><option>Donation Query</option><option>Media / Press</option><option>Something Else</option></select>
-      </div>
-      <div class="form-group"><label>your message</label><textarea placeholder="tell us what's on your mind…"></textarea></div>
-      <button class="form-submit" onclick="submitForm()">send it → 🐾</button>
+      <form id="contact-form" onsubmit="submitForm(event)" novalidate>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="cf-name">your name</label>
+            <input id="cf-name" name="from_name" type="text" placeholder="e.g. Priya Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="cf-email">email</label>
+            <input id="cf-email" name="from_email" type="email" placeholder="you@ashoka.edu.in" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-topic">what's this about?</label>
+          <select id="cf-topic" name="topic" required>
+            <option value="">choose a topic…</option>
+            <option>General Inquiry</option>
+            <option>Collaboration / Partnership</option>
+            <option>Animal Emergency</option>
+            <option>Volunteer / Join Us</option>
+            <option>Donation Query</option>
+            <option>Media / Press</option>
+            <option>Something Else</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cf-message">your message</label>
+          <textarea id="cf-message" name="message" placeholder="tell us what's on your mind…" required></textarea>
+        </div>
+        <button class="form-submit" type="submit" id="formSubmitBtn">send it → 🐾</button>
+      </form>
       <div class="form-success" id="formSuccess">🎉 message sent! we'll get back to you soon 🐾</div>
+      <div class="form-error" id="formError"></div>
     </div>
   </div>
 </div>

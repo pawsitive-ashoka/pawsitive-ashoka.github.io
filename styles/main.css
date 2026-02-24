@@ -305,6 +305,7 @@ nav::after {
 .form-submit{width:100%;font-family:'Caveat',cursive;font-size:1.3rem;font-weight:700;background:var(--accent);color:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:0.7rem;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:all 0.2s;margin-top:0.3rem;}
 .form-submit:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
 .form-success{display:none;text-align:center;padding:1rem;font-family:'Caveat',cursive;font-size:1.2rem;color:var(--accent3);}
+.form-error{display:none;text-align:center;padding:0.8rem 1rem;margin-top:0.8rem;font-family:'Caveat',cursive;font-size:1.05rem;color:var(--accent);background:var(--bg2);border:2px solid var(--accent);border-radius:12px;line-height:1.5;}
 
 /* FOOTER */
 footer{text-align:center;padding:2rem;border-top:2.5px solid var(--border);color:var(--ink-soft);font-family:'Caveat',cursive;font-size:1.1rem;position:relative;}
