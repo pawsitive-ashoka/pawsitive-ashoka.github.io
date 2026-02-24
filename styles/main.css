@@ -23,7 +23,7 @@ body::before {
 
 /* NAV */
 nav {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: flex-start;
   padding: 1rem 2rem; border-bottom: 2.5px solid var(--border);
   background: var(--bg); position: sticky; top: 0; z-index: 100;
   transition: background 0.4s; flex-wrap: wrap; gap: 0.5rem;
@@ -40,7 +40,7 @@ nav::after {
 }
 .logo span { animation: pawBounce 2s ease-in-out infinite; display: inline-block; }
 @keyframes pawBounce { 0%,100%{transform:rotate(-5deg);}50%{transform:rotate(8deg) scale(1.15);} }
-.nav-links { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
+.nav-links { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; flex: 1; margin-left: 2rem; }
 .nav-link {
   font-family: 'Caveat', cursive; font-size: 1.1rem; font-weight: 600;
   color: var(--ink-soft); background: none; border: none; cursor: pointer;
@@ -59,7 +59,7 @@ nav::after {
   box-shadow: 3px 3px 0 var(--ink); transition: all 0.2s;
 }
 .nav-donate:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--ink); }
-.theme-toggle {
+.theme-toggle { margin-left: auto;
   width: 52px; height: 28px; border-radius: 14px; border: 2.5px solid var(--border);
   background: var(--bg2); cursor: pointer; position: relative; display: flex;
   align-items: center; padding: 0 4px; justify-content: space-between; font-size: 0.9rem;
