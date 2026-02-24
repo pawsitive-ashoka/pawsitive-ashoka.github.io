@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pawsitive 🐾 Ashoka University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')"><span>🐾</span> pawsitive</div>
+  <div class="nav-links">
+    <button class="nav-link" id="nav-home"        onclick="showPage('home')">home</button>
+    <button class="nav-link" id="nav-about"       onclick="showPage('about')">about us</button>
+    <button class="nav-link" id="nav-dogs"        onclick="showPage('dogs')">our dogs</button>
+    <button class="nav-link" id="nav-departments" onclick="showPage('departments')">departments</button>
+    <button class="nav-link" id="nav-team"        onclick="showPage('team')">meet the team</button>
+    <button class="nav-link" id="nav-gallery"     onclick="showPage('gallery')">gallery</button>
+    <button class="nav-link" id="nav-contact"     onclick="showPage('contact')">contact</button>
+    <button class="nav-donate" id="nav-donate"    onclick="showPage('donate')">❤️ donate</button>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+      <span>☀️</span><span>🌙</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page containers — content loaded dynamically from pages/*.html -->
+<div class="page" id="page-home"></div>
+<div class="page" id="page-about"></div>
+<div class="page" id="page-dogs"></div>
+<div class="page" id="page-departments"></div>
+<div class="page" id="page-team"></div>
+<div class="page" id="page-gallery"></div>
+<div class="page" id="page-donate"></div>
+<div class="page" id="page-contact"></div>
+
+<!-- Gallery modal (always present so openModal works from any page) -->
+<div class="modal-bg" id="galleryModal" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-thumb" id="mThumb"></div>
+    <div class="modal-body">
+      <div class="m-tag" id="mTag"></div>
+      <h3 id="mTitle"></h3>
+      <p id="mDesc"></p>
+      <button class="modal-close" onclick="document.getElementById('galleryModal').classList.remove('open')">close ✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- JS modules -->
+<script src="js/gallery.js"></script>
+<script src="js/donate.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/dogs.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

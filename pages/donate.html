@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>❤️ donate</h1>
+  <p>every rupee goes directly to food, medicine & care for our campus animals</p>
+</div>
+<div class="donate-inner">
+  <div class="donate-why">
+    <span class="big-paw">🐾</span>
+    <div>
+      <h3>where your money goes</h3>
+      <p>100% of donations fund daily feeding, emergency vet care, medicines, medical kit restocking, and spay/neuter programs. Our finance team keeps transparent records — ask us anytime. No middlemen. Just care.</p>
+    </div>
+  </div>
+  <div class="donate-grid">
+    <div class="donate-card">
+      <div class="donate-card-head"><h3>📱 pay via UPI</h3><p>instant, zero-fee. scan the QR or copy the ID below.</p></div>
+      <div class="donate-card-body">
+        <div class="upi-qr-box">
+          <span class="qr-icon">⬛</span>
+          <span class="qr-label">your UPI QR code here</span>
+          <span class="qr-note">export from GPay / PhonePe / Paytm and replace with an img tag</span>
+        </div>
+        <div class="upi-id-row">
+          <span class="upi-id-text" id="upiIdText">pawsitive@upi</span>
+          <button class="copy-btn" id="copyBtn" onclick="copyUPI()">copy</button>
+        </div>
+        <p style="font-size:0.75rem;color:var(--ink-soft);font-style:italic;margin-top:0.3rem;">replace "pawsitive@upi" with your actual UPI ID in the code</p>
+      </div>
+    </div>
+    <div class="donate-card">
+      <div class="donate-card-head"><h3>💳 pay via card / bank</h3><p>secure checkout via Razorpay — cards, net banking, wallets. ~2% processing fee applies.</p></div>
+      <div class="donate-card-body">
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-bottom:1rem;">pick an amount or type your own ↓</p>
+        <div class="amount-chips">
+          <button class="chip" onclick="selectChip(this,100)">₹100</button>
+          <button class="chip" onclick="selectChip(this,250)">₹250</button>
+          <button class="chip" onclick="selectChip(this,500)">₹500</button>
+          <button class="chip" onclick="selectChip(this,1000)">₹1000</button>
+        </div>
+        <div class="amount-input-row"><span>₹</span><input type="number" id="donationAmt" placeholder="custom amount" min="1"></div>
+        <button class="rzp-btn" onclick="handleRazorpay()">🔒 donate via Razorpay</button>
+        <p class="rzp-note">replace YOUR_RAZORPAY_KEY_HERE in js/donate.js with your key from the Razorpay dashboard</p>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>made with <span class="heart">❤️</span> by pawsitive · ashoka university · 🐾</footer>
