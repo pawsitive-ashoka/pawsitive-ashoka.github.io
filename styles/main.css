@@ -165,9 +165,10 @@ nav::after {
 .dog-card{background:var(--card);border:2.5px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 var(--sketch);transition:transform 0.25s,box-shadow 0.25s;}
 .dog-card:hover{transform:translateY(-6px) rotate(0.8deg);box-shadow:10px 10px 0 var(--sketch);}
 .dog-card:nth-child(even):hover{transform:translateY(-6px) rotate(-0.8deg);}
-.dog-photo{width:100%;height:100%;object-fit:cover;display:block;}
-.dog-has-photo{padding:0;overflow:hidden;}
-.dog-illustration{height:180px;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;overflow:hidden;}
+.dog-photo{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 0.35s ease;}
+.dog-photo.loaded{opacity:1;}
+.dog-has-photo{padding:0;overflow:hidden;background:var(--bg2);}
+.dog-illustration{height:180px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;overflow:hidden;}
 .dog-illustration::before{content:'';position:absolute;inset:0;opacity:0.15;border-bottom:2px dashed var(--border);}
 .dog-emoji-big{animation:dogWag 2s ease-in-out infinite;display:inline-block;}
 @keyframes dogWag{0%,100%{transform:rotate(-5deg);}25%{transform:rotate(5deg) scaleX(1.05);}75%{transform:rotate(-3deg) scaleX(0.97);}}

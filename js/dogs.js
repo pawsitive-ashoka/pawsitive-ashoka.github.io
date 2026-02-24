@@ -52,7 +52,7 @@ function buildDogCard(meta, body) {
   const bg = getIllustrationBg(meta);
 
   const illustration = meta.image
-    ? `<img src="${meta.image}" alt="${meta.name}" class="dog-photo">`
+    ? `<img src="${meta.image}" alt="${meta.name}" class="dog-photo" loading="lazy" decoding="async" onload="this.classList.add('loaded')">`
     : `<span class="dog-emoji-big">${meta.emoji || '🐕'}</span>`;
 
   return `
