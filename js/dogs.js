@@ -57,7 +57,7 @@ function buildDogCard(meta, body) {
 
   return `
     <div class="dog-card">
-      <div class="dog-illustration${meta.image ? ' dog-has-photo' : ''}" style="${meta.image ? '' : 'background:' + bg}">
+      <div class="dog-illustration${meta.image ? ' dog-has-photo' : ''}"${meta.image ? '' : ' style="background:' + bg + '"'}>
         ${illustration}
       </div>
       <div class="dog-info">
