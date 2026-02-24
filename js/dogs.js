@@ -51,10 +51,14 @@ function buildDogCard(meta, body) {
 
   const bg = getIllustrationBg(meta);
 
+  const illustration = meta.image
+    ? `<img src="${meta.image}" alt="${meta.name}" class="dog-photo">`
+    : `<span class="dog-emoji-big">${meta.emoji || '🐕'}</span>`;
+
   return `
     <div class="dog-card">
-      <div class="dog-illustration" style="background:${bg}">
-        <span class="dog-emoji-big">${meta.emoji || '🐕'}</span>
+      <div class="dog-illustration${meta.image ? ' dog-has-photo' : ''}" style="${meta.image ? '' : 'background:' + bg}">
+        ${illustration}
       </div>
       <div class="dog-info">
         <div class="dog-name">${meta.name || 'Dog'} <span>${meta.nameEmoji || ''}</span></div>
