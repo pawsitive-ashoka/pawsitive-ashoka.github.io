@@ -32,7 +32,24 @@ async function showPage(name) {
   document.getElementById('page-' + name).classList.add('active');
   const activeBtn = document.getElementById('nav-' + name);
   if (activeBtn) activeBtn.classList.add('active');
+  closeNav();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleNav() {
+  const links = document.getElementById('nav-links');
+  const btn = document.getElementById('hamburger');
+  const open = links.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open);
+}
+
+function closeNav() {
+  const links = document.getElementById('nav-links');
+  const btn = document.getElementById('hamburger');
+  links.classList.remove('open');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
 }
 
 function toggleTheme() {

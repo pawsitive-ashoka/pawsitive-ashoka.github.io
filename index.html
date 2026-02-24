@@ -11,7 +11,7 @@
 
 <nav>
   <div class="logo" onclick="showPage('home')"><span>🐾</span> pawsitive</div>
-  <div class="nav-links">
+  <div class="nav-links" id="nav-links">
     <button class="nav-link" id="nav-home"        onclick="showPage('home')">home</button>
     <button class="nav-link" id="nav-about"       onclick="showPage('about')">about us</button>
     <button class="nav-link" id="nav-dogs"        onclick="showPage('dogs')">our dogs</button>
@@ -21,9 +21,14 @@
     <button class="nav-link" id="nav-contact"     onclick="showPage('contact')">contact</button>
     <button class="nav-donate" id="nav-donate"    onclick="showPage('donate')">❤️ donate</button>
   </div>
-  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
-    <span>☀️</span><span>🌙</span>
-  </button>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+      <span>☀️</span><span>🌙</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- Page containers — content loaded dynamically from pages/*.html -->
