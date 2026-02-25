@@ -46,16 +46,22 @@
 <div class="page" id="page-donate"></div>
 <div class="page" id="page-contact"></div>
 
-<!-- Gallery modal (always present so openModal works from any page) -->
-<div class="modal-bg" id="galleryModal" onclick="closeModal(event)">
-  <div class="modal-box" onclick="event.stopPropagation()">
-    <div class="modal-thumb" id="mThumb"></div>
-    <div class="modal-body">
-      <div class="m-tag" id="mTag"></div>
-      <h3 id="mTitle"></h3>
-      <p id="mDesc"></p>
-      <button class="modal-close" onclick="document.getElementById('galleryModal').classList.remove('open')">close ✕</button>
-    </div>
+<!-- Image lightbox -->
+<div class="img-lightbox" id="imgLightbox" onclick="closeLightbox(event)">
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();lightboxNav(-1)">&#8249;</button>
+  <div class="lb-inner" onclick="event.stopPropagation()">
+    <img id="lbImg" src="" alt="Pawsitive photo">
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();lightboxNav(1)">&#8250;</button>
+  <button class="lb-close" onclick="closeLightbox({closeForced:true})">✕</button>
+</div>
+
+<!-- Video modal -->
+<div class="modal-bg" id="videoModal" onclick="closeVideoModal(event)">
+  <div class="video-modal-box" onclick="event.stopPropagation()">
+    <video id="modalVideo" controls playsinline></video>
+    <button class="modal-close" onclick="closeVideoModal({closeForced:true})">close ✕</button>
   </div>
 </div>
 
