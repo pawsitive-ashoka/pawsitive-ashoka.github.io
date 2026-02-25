@@ -1,7 +1,9 @@
 /* ─── app.js ─── page navigation, page loading, theme ─── */
 
 const PAGES = ['home','about','dogs','departments','team','gallery','donate','contact'];
+const DEPT_SLUGS = ['events','finance','ground','social'];
 const _loaded = {};
+const _deptLoaded = {};
 
 async function loadPage(name) {
   if (_loaded[name]) return;
@@ -15,6 +17,7 @@ async function loadPage(name) {
     _loaded[name] = true;
     // After loading dogs page, trigger dog rendering
     if (name === 'dogs') loadDogs();
+    if (name === 'departments') setupDeptCards();
   } catch (e) {
     container.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">
       ⚠️ couldn't load this page right now. try refreshing.
@@ -28,12 +31,62 @@ async function showPage(name) {
     const btn = document.getElementById('nav-' + p);
     if (btn) btn.classList.remove('active');
   });
+  // Also hide dept detail page
+  const deptDetail = document.getElementById('page-dept-detail');
+  if (deptDetail) deptDetail.classList.remove('active');
   await loadPage(name);
   document.getElementById('page-' + name).classList.add('active');
   const activeBtn = document.getElementById('nav-' + name);
   if (activeBtn) activeBtn.classList.add('active');
   closeNav();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function showDeptDetail(slug) {
+  // Hide all main pages
+  PAGES.forEach(p => {
+    document.getElementById('page-' + p).classList.remove('active');
+    const btn = document.getElementById('nav-' + p);
+    if (btn) btn.classList.remove('active');
+  });
+  // Mark departments nav as active (we're a sub-page)
+  const deptBtn = document.getElementById('nav-departments');
+  if (deptBtn) deptBtn.classList.add('active');
+  // Load the detail page if not yet loaded
+  const detailContainer = document.getElementById('page-dept-detail');
+  try {
+    if (!_deptLoaded[slug]) {
+      const res = await fetch('pages/dept-' + slug + '.html');
+      if (!res.ok) throw new Error(res.status);
+      detailContainer.innerHTML = await res.text();
+      _deptLoaded[slug] = true;
+    } else {
+      // Re-fetch to replace any cached version from another dept
+      if (detailContainer.dataset.dept !== slug) {
+        const res = await fetch('pages/dept-' + slug + '.html');
+        if (!res.ok) throw new Error(res.status);
+        detailContainer.innerHTML = await res.text();
+      }
+    }
+    detailContainer.dataset.dept = slug;
+  } catch (e) {
+    detailContainer.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">⚠️ couldn't load this page right now. try refreshing.</div>`;
+  }
+  detailContainer.classList.add('active');
+  closeNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function backToDepartments() {
+  document.getElementById('page-dept-detail').classList.remove('active');
+  showPage('departments');
+}
+
+function setupDeptCards() {
+  // Ensure keyboard accessibility works after dynamic load
+  document.querySelectorAll('.dept-card-link').forEach(card => {
+    card.style.cursor = 'pointer';
+  });
 }
 
 function toggleNav() {
