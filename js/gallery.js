@@ -67,7 +67,6 @@ const mediaImages = [
   "5e668f18-318b-4c0a-b346-c0e38ed608bc.JPG",
   "5e9e4ae7-8484-4660-8e3e-9ea44c42f3b6.JPG",
   "5f04d518-4ce3-4c7f-b63f-689b2544702d.JPG",
-  "6132e66a-b7dc-4a2b-bb6a-818dc81219e7.JPG",
   "629963e0-4d2f-41f9-bfa8-70011f2c6347.JPG",
   "645d7976-adfd-4139-8c7c-2947f7185b34.jpg",
   "65caa2bd-1313-4ffa-b721-26713e81e3fa.JPG",
@@ -82,7 +81,6 @@ const mediaImages = [
   "7055f4a0-d4b2-44fa-bd9d-41b14b09e34a.jpg",
   "71e74041-00dc-4aa3-a83d-0598cb46019f.JPG",
   "7399d1a1-fa5a-48fe-96fe-594dcec539fd.JPG",
-  "761dfa58-458d-458b-a9f2-0171879e07d7.JPG",
   "76823c12-e880-4d05-978a-3fe226eecd4b.JPG",
   "76b786dc-cbbe-42a1-ad2a-afbbd83621fd.JPG",
   "76d9148b-1ddb-4e38-8f8d-7a7c3fa31810.jpg",
@@ -95,7 +93,6 @@ const mediaImages = [
   "8061d1a7-5f58-491f-9519-e6b36af23fe1.JPG",
   "80dd36d6-6e40-4535-86ea-0ae1e481eab9.JPG",
   "86729a43-1bff-45f8-a393-ebe91c68c85a.jpg",
-  "874f126f-e979-4433-8f57-c5cb08036e96.JPG",
   "8ad3b423-b58c-4cd5-9e4f-a3f48b8cc8d5.JPG",
   "8b1aed6a-7da4-4360-87f7-7b9e4e68f8fe.JPG",
   "8bf961aa-0e84-4b24-94d0-6c2c3baa9373.JPG",
@@ -119,7 +116,6 @@ const mediaImages = [
   "IMG_0906.jpg",
   "IMG_0912.jpg",
   "IMG_0914.JPG",
-  "IMG_0915.JPG",
   "IMG_1986.JPG",
   "IMG_2246.JPG",
   "IMG_2247.JPG",
@@ -164,7 +160,6 @@ const mediaImages = [
   "aad0dfd2-3a64-48a2-bee3-e15458af7d2d.JPG",
   "ad95fe76-6fd5-48e9-a600-9444d7ebc577.JPG",
   "adebeec0-10a3-4f56-8ab1-0f31c2f284c1.JPG",
-  "af10ee2f-8833-4e82-a963-afd416c42311.JPG",
   "b288497d-7502-49cf-942c-476425a2962a.JPG",
   "b35b9d53-c1e9-459e-bb9e-621ac4432222.JPG",
   "b42546c3-04ec-4e9e-89ad-5096cf03ad09.JPG",
@@ -175,7 +170,6 @@ const mediaImages = [
   "c16bbc82-1c42-42d8-98ca-4f393a7d876d.JPG",
   "c1cb75d8-a7b9-4b81-ac16-1b354c3bad30.JPG",
   "c3a3e4ae-37d7-49d1-b54c-0fbf31160ef4.JPG",
-  "c5c95b70-4c03-4802-b871-510b9fdeead6.JPG",
   "c6a5a1a5-80fb-4034-bfc5-7eb3d69e15e9.JPG",
   "ca3a74d9-5371-435b-bd0e-290a17b5cc21.jpg",
   "cc3e4ed9-5366-49be-8168-8ae3fec6a2e9.JPG",
@@ -212,7 +206,6 @@ const mediaImages = [
   "f12ccaa9-fda4-48fa-a503-56872034a63b.JPG",
   "f13fadc2-e0f0-4023-bb4f-b4e0eb7e49ff.JPG",
   "f297d649-cb74-42c9-b726-73fdc6cb0520.JPG",
-  "f3586ba3-63d8-4fbc-85e9-8c57d345ff98.JPG",
   "f398eec9-c11d-4610-baaa-7ee6900d93be.JPG",
   "f4afa269-7d59-4fbe-b8a9-1431d5be67a9.JPG",
   "fed832df-890a-4f41-b732-dc5fa0910e3b.JPG",
@@ -237,13 +230,49 @@ function renderMediaGrid() {
 
   let _activeTileVideo = null;
 
+  /* ── Video lazy-load queue: max 2 concurrent metadata fetches ── */
+  const _vtQueue = [];
+  let _vtActive = 0;
+  const VT_CONCURRENT = 2;
+
+  function vtDequeue() {
+    while (_vtActive < VT_CONCURRENT && _vtQueue.length) {
+      _vtQueue.shift()();
+    }
+  }
+
+  function vtLoadMeta(tile) {
+    const video = tile.querySelector('.vt-video');
+    if (video.getAttribute('src')) { return; } // already assigned
+    _vtActive++;
+    video.src = tile.dataset.vsrc;
+    video.preload = 'metadata';
+    const done = () => {
+      tile.classList.remove('vt-loading');
+      _vtActive--;
+      vtDequeue();
+    };
+    video.addEventListener('loadedmetadata', done, { once: true });
+    video.addEventListener('error', done, { once: true });
+  }
+
+  const _vtObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      _vtQueue.push(() => vtLoadMeta(e.target));
+      vtDequeue();
+      _vtObserver.unobserve(e.target);
+    });
+  }, { rootMargin: '300px' });
+
   // Videos first, then images
   mediaVideos.forEach(filename => {
     const src = '/public/gallery/' + filename;
     const tile = document.createElement('div');
-    tile.className = 'media-tile video-tile';
+    tile.className = 'media-tile video-tile vt-loading';
+    tile.dataset.vsrc = src;
     tile.innerHTML = `
-      <video class="vt-video" src="${src}" preload="metadata" playsinline></video>
+      <video class="vt-video" preload="none" playsinline></video>
       <div class="vt-overlay">
         <button class="vt-play-btn" aria-label="Play">&#9654;</button>
       </div>
@@ -260,11 +289,17 @@ function renderMediaGrid() {
 
     playBtn.addEventListener('click', e => {
       e.stopPropagation();
+      // Force-load immediately if metadata hasn't been fetched yet
+      if (!video.getAttribute('src')) {
+        video.src = src;
+        video.preload = 'auto';
+        tile.classList.remove('vt-loading');
+      }
       if (_activeTileVideo && _activeTileVideo !== video) {
         _activeTileVideo.pause();
         _activeTileVideo.closest('.video-tile').classList.remove('playing');
       }
-      video.play();
+      video.play().catch(() => {});
       tile.classList.add('playing');
       _activeTileVideo = video;
     });
@@ -287,6 +322,7 @@ function renderMediaGrid() {
     });
 
     grid.appendChild(tile);
+    _vtObserver.observe(tile);
   });
 
   const frag = document.createDocumentFragment();

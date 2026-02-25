@@ -387,7 +387,10 @@ nav::after {
 .media-tile-overlay{position:absolute;inset:0;background:rgba(45,32,19,0.6);opacity:0;transition:opacity 0.25s;display:flex;align-items:center;justify-content:center;color:#fdf8f0;font-size:1.6rem;}
 .media-tile:hover .media-tile-overlay{opacity:1;}
 .video-tile{aspect-ratio:16/9;cursor:default;}
-.vt-video{width:100%;height:100%;object-fit:cover;display:block;}
+.video-tile.vt-loading{background:linear-gradient(90deg,var(--bg2) 25%,var(--border) 50%,var(--bg2) 75%);background-size:1200px 100%;animation:shimmer 1.4s ease-in-out infinite;}
+.video-tile.vt-loading .vt-video{opacity:0;}
+.video-tile.vt-loading .vt-enlarge-btn{display:none;}
+.vt-video{width:100%;height:100%;object-fit:cover;display:block;opacity:1;transition:opacity 0.4s ease;}
 .vt-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,4,0.35);transition:opacity 0.25s;}
 .video-tile.playing .vt-overlay{opacity:0;pointer-events:none;}
 .vt-play-btn{width:3.2rem;height:3.2rem;border-radius:50%;background:rgba(253,248,240,0.92);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.2rem;color:#2d2013;box-shadow:0 2px 12px rgba(0,0,0,0.4);transition:transform 0.15s,background 0.15s;padding-left:0.15rem;}
