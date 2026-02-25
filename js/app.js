@@ -1,7 +1,9 @@
 /* ─── app.js ─── page navigation, page loading, theme ─── */
 
 const PAGES = ['home','about','dogs','departments','team','gallery','donate','contact'];
+const DEPT_SLUGS = ['events','finance','ground','social'];
 const _loaded = {};
+let _currentDept = null;
 
 /* ── Dept detail content (inline — no fetch needed) ── */
 const DEPT_CONTENT = {
@@ -112,6 +114,7 @@ async function loadPage(name) {
     container.innerHTML = html;
     _loaded[name] = true;
     if (name === 'dogs') loadDogs();
+    if (name === 'departments') setupDeptCards();
   } catch (e) {
     container.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">
       ⚠️ couldn't load this page right now. try refreshing.
@@ -125,6 +128,7 @@ async function showPage(name) {
     const btn = document.getElementById('nav-' + p);
     if (btn) btn.classList.remove('active');
   });
+  // Also hide dept detail page
   const deptDetail = document.getElementById('page-dept-detail');
   if (deptDetail) deptDetail.classList.remove('active');
   await loadPage(name);
@@ -135,9 +139,44 @@ async function showPage(name) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+async function showDeptDetail(slug) {
+  // Hide all main pages
+  PAGES.forEach(p => {
+    document.getElementById('page-' + p).classList.remove('active');
+    const btn = document.getElementById('nav-' + p);
+    if (btn) btn.classList.remove('active');
+  });
+  // Mark departments nav as active (we're a sub-page)
+  const deptBtn = document.getElementById('nav-departments');
+  if (deptBtn) deptBtn.classList.add('active');
+  // Always load the requested dept page (replace whatever is currently showing)
+  const detailContainer = document.getElementById('page-dept-detail');
+  try {
+    if (_currentDept !== slug) {
+      const res = await fetch('pages/dept-' + slug + '.html');
+      if (!res.ok) throw new Error(res.status);
+      detailContainer.innerHTML = await res.text();
+      _currentDept = slug;
+    }
+  } catch (e) {
+    detailContainer.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">⚠️ couldn't load this page right now. try refreshing.</div>`;
+    _currentDept = null;
+  }
+  detailContainer.classList.add('active');
+  closeNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function backToDepartments() {
   document.getElementById('page-dept-detail').classList.remove('active');
   showPage('departments');
+}
+
+function setupDeptCards() {
+  // Ensure keyboard accessibility works after dynamic load
+  document.querySelectorAll('.dept-card-link').forEach(card => {
+    card.style.cursor = 'pointer';
+  });
 }
 
 function toggleNav() {
