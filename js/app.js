@@ -172,6 +172,10 @@ function backToDepartments() {
   showPage('departments');
 }
 
+function toggleEventCard(card) {
+  card.classList.toggle('open');
+}
+
 function setupDeptCards() {
   // Ensure keyboard accessibility works after dynamic load
   document.querySelectorAll('.dept-card-link').forEach(card => {
