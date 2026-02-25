@@ -289,21 +289,39 @@ function renderMediaGrid() {
     grid.appendChild(tile);
   });
 
+  const frag = document.createDocumentFragment();
   mediaImages.forEach((filename, i) => {
     const tile = document.createElement('div');
-    tile.className = 'media-tile';
+    tile.className = 'media-tile media-tile-loading';
     const img = document.createElement('img');
-    img.src = '/public/gallery/' + filename;
+    img.dataset.src = '/public/gallery/' + filename;
     img.alt = 'Pawsitive campus photo';
-    img.loading = 'lazy';
+    img.onload = () => {
+      img.classList.add('loaded');
+      tile.classList.remove('media-tile-loading');
+    };
+    img.onerror = () => tile.classList.remove('media-tile-loading');
     const overlay = document.createElement('div');
     overlay.className = 'media-tile-overlay';
     overlay.innerHTML = '<span>🔍</span>';
     tile.appendChild(img);
     tile.appendChild(overlay);
     tile.addEventListener('click', () => openLightbox(i));
-    grid.appendChild(tile);
+    frag.appendChild(tile);
   });
+  grid.appendChild(frag);
+
+  /* Lazy-load: only fetch images as they approach the viewport */
+  const _imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const img = entry.target.querySelector('img[data-src]');
+      if (img) { img.src = img.dataset.src; delete img.dataset.src; }
+      _imgObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '400px' });
+
+  grid.querySelectorAll('.media-tile:not(.video-tile)').forEach(t => _imgObserver.observe(t));
 }
 
 /* ── Image lightbox ── */
