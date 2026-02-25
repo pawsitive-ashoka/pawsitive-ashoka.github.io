@@ -160,28 +160,42 @@ nav::after {
 .manifesto-block h3{font-family:'Caveat',cursive;font-size:1.6rem;font-weight:700;margin-bottom:0.6rem;}
 .manifesto-block p{color:var(--ink-soft);line-height:1.7;font-size:1rem;}
 
-/* DOGS */
-.dogs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;max-width:1100px;margin:3rem auto;padding:0 2rem 4rem;}
-.dog-card{background:var(--card);border:2.5px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 var(--sketch);transition:transform 0.25s,box-shadow 0.25s;}
-.dog-card:hover{transform:translateY(-6px) rotate(0.8deg);box-shadow:10px 10px 0 var(--sketch);}
-.dog-card:nth-child(even):hover{transform:translateY(-6px) rotate(-0.8deg);}
+/* DOGS — search bar */
+.dogs-search-wrap{max-width:1400px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.dogs-search{flex:1;min-width:160px;padding:0.5rem 1rem;border:2px solid var(--border);border-radius:20px;background:var(--card);color:var(--ink);font-family:'Caveat',cursive;font-size:1.1rem;outline:none;transition:border-color 0.2s;}
+.dogs-search:focus{border-color:var(--accent);}
+.dogs-count{font-family:'Caveat',cursive;font-size:1rem;color:var(--ink-soft);white-space:nowrap;}
+/* DOGS — compact tile grid */
+.dogs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;max-width:1400px;margin:0.5rem auto 3rem;padding:0 1.5rem 2rem;}
+.dog-card{background:var(--card);border:2px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 var(--sketch);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;}
+.dog-card:hover{transform:translateY(-4px);box-shadow:6px 6px 0 var(--sketch);}
+.dog-card-hidden{display:none !important;}
+.dog-tile-photo{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--bg2);}
 .dog-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;display:block;opacity:0;transition:opacity 0.35s ease;}
 .dog-photo.loaded{opacity:1;}
-.dog-has-photo{padding:0;overflow:hidden;background:var(--bg2);}
-.dog-has-photo::before{display:none;}
-.dog-illustration{height:180px;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;overflow:hidden;}
-.dog-illustration::before{content:'';position:absolute;inset:0;opacity:0.15;border-bottom:2px dashed var(--border);}
+.dog-tile-emoji{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
 .dog-emoji-big{animation:dogWag 2s ease-in-out infinite;display:inline-block;}
 @keyframes dogWag{0%,100%{transform:rotate(-5deg);}25%{transform:rotate(5deg) scaleX(1.05);}75%{transform:rotate(-3deg) scaleX(0.97);}}
 .dog-card:nth-child(even) .dog-emoji-big{animation-delay:0.5s;}
-.dog-info{padding:1.4rem 1.4rem 1.6rem;}
-.dog-name{font-family:'Caveat',cursive;font-size:1.7rem;font-weight:700;margin-bottom:0.3rem;display:flex;align-items:center;gap:0.4rem;}
-.dog-breed{font-size:0.85rem;color:var(--accent);background:var(--sketch);padding:0.2rem 0.6rem;border-radius:8px;display:inline-block;margin-bottom:0.7rem;font-weight:600;transform:rotate(-0.5deg);border:1.5px solid var(--border);}
-.dog-desc{font-size:0.95rem;color:var(--ink-soft);line-height:1.6;}
-.dog-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.8rem;}
-.dog-tag{font-size:0.78rem;padding:0.2rem 0.6rem;border-radius:20px;border:1.5px solid var(--border);color:var(--ink-soft);background:var(--bg2);}
+.dog-tile-name{padding:0.35rem 0.5rem 0.45rem;font-family:'Caveat',cursive;font-size:0.95rem;font-weight:700;text-align:center;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dogs-no-results{grid-column:1/-1;text-align:center;padding:3rem 2rem;font-family:'Caveat',cursive;font-size:1.5rem;color:var(--ink-soft);}
 .dogs-loading{text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.5rem;color:var(--ink-soft);}
 .dogs-error{text-align:center;padding:2rem;font-family:'Caveat',cursive;font-size:1.1rem;color:var(--accent);background:var(--card);border:2px solid var(--border);border-radius:14px;margin:1rem 2rem;}
+/* DOGS — modal */
+.dog-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px);}
+.dog-modal{background:var(--card);border:2.5px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:10px 10px 0 var(--sketch);max-width:420px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:modalPop 0.2s ease;}
+@keyframes modalPop{from{transform:scale(0.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.dog-modal-photo{position:relative;width:100%;aspect-ratio:4/3;background:var(--bg2);overflow:hidden;}
+.dog-modal-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;}
+.dog-modal-emoji{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;}
+.dog-modal-body{padding:1.4rem 1.4rem 1.6rem;}
+.dog-modal-name{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;margin-bottom:0.3rem;display:flex;align-items:center;gap:0.4rem;}
+.dog-modal-breed{font-size:0.85rem;color:var(--accent);background:var(--sketch);padding:0.2rem 0.6rem;border-radius:8px;display:inline-block;margin-bottom:0.8rem;font-weight:600;transform:rotate(-0.5deg);border:1.5px solid var(--border);}
+.dog-modal-desc{font-size:0.95rem;color:var(--ink-soft);line-height:1.6;margin-bottom:0.8rem;}
+.dog-modal-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.dog-modal-tag{font-size:0.78rem;padding:0.2rem 0.6rem;border-radius:20px;border:1.5px solid var(--border);color:var(--ink-soft);background:var(--bg2);}
+.dog-modal-close{position:absolute;top:0.75rem;right:0.75rem;background:var(--card);border:2px solid var(--border);border-radius:50%;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;line-height:1;z-index:1;transition:background 0.15s;}
+.dog-modal-close:hover{background:var(--bg2);}
 
 /* DEPARTMENTS */
 .dept-intro{background:var(--bg2);border-top:2.5px solid var(--border);border-bottom:2.5px solid var(--border);padding:1.8rem 2rem;text-align:center;font-size:1.05rem;color:var(--ink-soft);line-height:1.7;}
@@ -384,7 +398,8 @@ footer .heart{color:var(--accent);animation:heartbeat 1.2s ease-in-out infinite;
   .cards { grid-template-columns: 1fr; }
 
   /* DOGS */
-  .dogs-grid { grid-template-columns: 1fr; padding: 0 1.2rem 3rem; margin: 1.5rem auto; }
+  .dogs-search-wrap { padding: 0 1.2rem 0.8rem; }
+  .dogs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0 1.2rem 2rem; margin: 0.5rem auto; }
 
   /* DEPARTMENTS */
   .dept-grid { grid-template-columns: 1fr; padding: 1.5rem 1.2rem 3rem; }
