@@ -451,6 +451,7 @@ nav::after {
 .upi-qr-box .qr-icon{font-size:2.8rem;}
 .upi-qr-box .qr-label{font-family:'Caveat',cursive;font-size:1rem;color:var(--ink-soft);}
 .upi-qr-box .qr-note{font-size:0.75rem;color:var(--ink-soft);opacity:0.7;font-style:italic;}
+.upi-qr-img{width:200px;height:200px;object-fit:contain;border-radius:8px;}
 .upi-id-row{background:var(--bg2);border:2px solid var(--border);border-radius:12px;padding:0.8rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.5rem;}
 .upi-id-text{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--ink);font-weight:600;}
 .copy-btn{font-family:'Caveat',cursive;font-size:0.95rem;font-weight:700;background:var(--accent);color:#fff;border:2px solid var(--ink);border-radius:8px;padding:0.25rem 0.8rem;cursor:pointer;box-shadow:2px 2px 0 var(--ink);transition:all 0.2s;flex-shrink:0;}
