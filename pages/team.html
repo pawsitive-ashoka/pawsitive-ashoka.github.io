@@ -2,33 +2,383 @@
   <h1>🌟 meet the team</h1>
   <p>the humans behind every feeding round, every event, every late-night vet run</p>
 </div>
-<div class="team-photo-wrap">
-  <div class="team-photo-box">
-    <div class="team-photo-inner">
-      <span class="big-icon">📷</span>
-      <p>your team photo goes here ↑<br><span style="font-size:0.85rem;opacity:0.6;">swap with an img tag — recommended 1200×450px</span></p>
+
+<div class="team-hero-photo">
+  <div class="team-photo-inner">
+    <span class="big-icon">📷</span>
+    <p>team photo goes here ↑<br><span style="font-size:0.85rem;opacity:0.6;">swap with an img tag — recommended 1200×450px</span></p>
+  </div>
+  <div class="team-photo-caption">🐾 the pawsitive family (2024–25)</div>
+</div>
+
+<!-- ── TABS ── -->
+<div class="team-tabs-wrap" id="team-tabs">
+  <div class="team-tabs">
+    <button class="team-tab active" onclick="switchTeamTab(this,'leadership')">👑 Leadership</button>
+    <button class="team-tab" onclick="switchTeamTab(this,'core')">🌿 Core Team</button>
+    <button class="team-tab" onclick="switchTeamTab(this,'members')">🐾 Members</button>
+  </div>
+</div>
+
+<!-- ── 3-COLUMN LAYOUT ── -->
+<div class="team-columns-wrap">
+
+  <!-- ── LEADERSHIP ── -->
+  <div class="team-col active" id="col-leadership">
+    <div class="team-col-hdr" style="--col-accent:var(--accent);">
+      <span class="team-col-icon">👑</span>
+      <div class="team-col-hdr-text">
+        <span class="team-col-title">Leadership</span>
+        <span class="team-col-subtitle">presidents · secretary · HoDs</span>
+      </div>
+      <span class="team-col-count">10</span>
     </div>
-    <div class="team-photo-caption">🐾 the pawsitive family · ashoka university · 2024–25</div>
+    <div class="team-col-body">
+
+  <div class="team-section-sub">Presidents</div>
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffe8d0;">
+        <img src="/public/team/president-1.jpg" alt="President" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌟</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">President</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffd0e8;">
+        <img src="/public/team/president-2.jpg" alt="President" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌟</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">President</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
   </div>
-</div>
-<div class="team-desc-block">
-  <div class="manifesto-block">
-    <div class="tag">who we are</div>
-    <h3>more than a club — a pack</h3>
-    <p>We are students from different years, majors, and hostels — bound together by one belief: that every animal at Ashoka deserves someone in their corner. Some of us joined because of a dog we saw limping near gate two. Some because we'd always wanted to do something that mattered. All of us stayed because of the community we found here.</p>
+
+  <div class="team-section-sub">Secretary</div>
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0e8ff;">
+        <img src="/public/team/secretary.jpg" alt="Secretary" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">📋</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">Secretary</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
   </div>
-</div>
-<div class="team-grid-section">
-  <div class="team-grid-title">✨ the people who make it happen</div>
-  <div class="team-grid">
-    <div class="team-card"><div class="team-avatar">🌟</div><h4>Name Here</h4><span class="role">President</span><span class="dept">Overall Leadership</span></div>
-    <div class="team-card"><div class="team-avatar">🤝</div><h4>Name Here</h4><span class="role">Vice President</span><span class="dept">Operations</span></div>
-    <div class="team-card"><div class="team-avatar">🎪</div><h4>Name Here</h4><span class="role">Events Head</span><span class="dept">Events & Logistics</span></div>
-    <div class="team-card"><div class="team-avatar">💼</div><h4>Name Here</h4><span class="role">Finance Head</span><span class="dept">Finance & Outreach</span></div>
-    <div class="team-card"><div class="team-avatar">🐾</div><h4>Name Here</h4><span class="role">On-Ground Head</span><span class="dept">On-Ground & Feeding</span></div>
-    <div class="team-card"><div class="team-avatar">📱</div><h4>Name Here</h4><span class="role">Social Media Head</span><span class="dept">Social Media</span></div>
-    <div class="team-card"><div class="team-avatar">✍️</div><h4>Name Here</h4><span class="role">Content Lead</span><span class="dept">Social Media</span></div>
-    <div class="team-card"><div class="team-avatar">🏥</div><h4>Name Here</h4><span class="role">Medical Coordinator</span><span class="dept">On-Ground & Feeding</span></div>
+
+  <div class="team-section-sub">On-Ground &amp; Feeding</div>
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0f0d8;">
+        <img src="/public/team/ground-hod-1.jpg" alt="On-Ground &amp; Feeding HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🐾</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, On-Ground &amp; Feeding</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#e8f0d0;">
+        <img src="/public/team/ground-hod-2.jpg" alt="On-Ground &amp; Feeding HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🐾</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, On-Ground &amp; Feeding</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
   </div>
-</div>
+
+  <div class="team-section-sub">Events &amp; Logistics</div>
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffe8f0;">
+        <img src="/public/team/events-hod-1.jpg" alt="Events &amp; Logistics HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎪</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, Events &amp; Logistics</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#f0e8ff;">
+        <img src="/public/team/events-hod-2.jpg" alt="Events &amp; Logistics HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎪</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, Events &amp; Logistics</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+  </div>
+
+  <div class="team-section-sub">Finance &amp; Outreach</div>
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#fff0d0;">
+        <img src="/public/team/finance-hod-1.jpg" alt="Finance &amp; Outreach HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">💼</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, Finance &amp; Outreach</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffecd0;">
+        <img src="/public/team/finance-hod-2.jpg" alt="Finance &amp; Outreach HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">💼</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, Finance &amp; Outreach</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+  </div>
+
+  <div class="team-section-sub">Social Media &amp; Marketing</div>
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0eeff;">
+        <img src="/public/team/social-hod.jpg" alt="Social Media &amp; Marketing HoD" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">📱</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="role">HoD, Social Media &amp; Marketing</span>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+  </div>
+
+    </div><!-- /team-col-body leadership -->
+  </div><!-- /col-leadership -->
+
+  <!-- ── CORE TEAM ── -->
+  <div class="team-col" id="col-core">
+    <div class="team-col-hdr" style="--col-accent:var(--accent3);">
+      <span class="team-col-icon">🌿</span>
+      <div class="team-col-hdr-text">
+        <span class="team-col-title">Core Team</span>
+        <span class="team-col-subtitle">the backbone of every initiative</span>
+      </div>
+      <span class="team-col-count">19</span>
+    </div>
+    <div class="team-col-body">
+  <div class="team-col-grid">
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffe8d0;">
+        <img src="/public/team/core-1.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🐕</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0e8ff;">
+        <img src="/public/team/core-2.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🐈</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0f0d8;">
+        <img src="/public/team/core-3.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🦴</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#f0e8ff;">
+        <img src="/public/team/core-4.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌿</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffe8f8;">
+        <img src="/public/team/core-5.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎨</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#fff0d0;">
+        <img src="/public/team/core-6.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎵</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0f8f0;">
+        <img src="/public/team/core-7.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">⭐</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffd0d0;">
+        <img src="/public/team/core-8.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌸</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d8ffd0;">
+        <img src="/public/team/core-9.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🍀</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0e0ff;">
+        <img src="/public/team/core-10.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎯</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffe0f0;">
+        <img src="/public/team/core-11.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌈</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#f0ffe0;">
+        <img src="/public/team/core-12.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🦋</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffefd0;">
+        <img src="/public/team/core-13.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌻</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0ffee;">
+        <img src="/public/team/core-14.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎪</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffe8d0;">
+        <img src="/public/team/core-15.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🍵</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#e0d0ff;">
+        <img src="/public/team/core-16.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🌙</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0f0ff;">
+        <img src="/public/team/core-17.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">⚡</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#ffd0e8;">
+        <img src="/public/team/core-18.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🎭</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+    <div class="team-card team-card-photo">
+      <div class="team-photo-avatar" style="--ph-color:#d0ffd8;">
+        <img src="/public/team/core-19.jpg" alt="Core Team" class="team-member-photo" onerror="this.style.display='none'">
+        <span class="team-photo-emoji">🐾</span>
+      </div>
+      <h4>Name Here</h4>
+      <span class="batch">Batch of 'XX</span>
+    </div>
+  </div>
+
+    </div><!-- /team-col-body core -->
+  </div><!-- /col-core -->
+
+  <!-- ── MEMBERS ── -->
+  <div class="team-col" id="col-members">
+    <div class="team-col-hdr" style="--col-accent:var(--accent2);">
+      <span class="team-col-icon">🐾</span>
+      <div class="team-col-hdr-text">
+        <span class="team-col-title">Members</span>
+        <span class="team-col-subtitle">every act of kindness — that's them</span>
+      </div>
+      <span class="team-col-count">42</span>
+    </div>
+    <div class="team-col-body">
+  <div class="team-members-grid">
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+    <div class="member-chip"><span class="member-name">Name Here</span><span class="member-batch">Batch of 'XX</span></div>
+  </div>
+    </div><!-- /team-col-body members -->
+  </div><!-- /col-members -->
+
+</div><!-- /team-columns-wrap -->
+
 <footer>made with <span class="heart">❤️</span> by pawsitive <span class="footer-sep">·</span> built by <a href="https://github.com/28nitin07" target="_blank" rel="noopener noreferrer" title="Nitin's GitHub">Nitin S</a> <span class="footer-sep">·</span> ashoka university <span class="footer-sep">·</span> 🐾</footer>
