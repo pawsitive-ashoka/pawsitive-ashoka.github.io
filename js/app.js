@@ -3,7 +3,7 @@
 const PAGES = ['home','about','dogs','departments','team','gallery','donate','contact'];
 const DEPT_SLUGS = ['events','finance','ground','social'];
 const _loaded = {};
-const _deptLoaded = {};
+let _currentDept = null;
 
 async function loadPage(name) {
   if (_loaded[name]) return;
@@ -52,25 +52,18 @@ async function showDeptDetail(slug) {
   // Mark departments nav as active (we're a sub-page)
   const deptBtn = document.getElementById('nav-departments');
   if (deptBtn) deptBtn.classList.add('active');
-  // Load the detail page if not yet loaded
+  // Always load the requested dept page (replace whatever is currently showing)
   const detailContainer = document.getElementById('page-dept-detail');
   try {
-    if (!_deptLoaded[slug]) {
+    if (_currentDept !== slug) {
       const res = await fetch('pages/dept-' + slug + '.html');
       if (!res.ok) throw new Error(res.status);
       detailContainer.innerHTML = await res.text();
-      _deptLoaded[slug] = true;
-    } else {
-      // Re-fetch to replace any cached version from another dept
-      if (detailContainer.dataset.dept !== slug) {
-        const res = await fetch('pages/dept-' + slug + '.html');
-        if (!res.ok) throw new Error(res.status);
-        detailContainer.innerHTML = await res.text();
-      }
+      _currentDept = slug;
     }
-    detailContainer.dataset.dept = slug;
   } catch (e) {
     detailContainer.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">⚠️ couldn't load this page right now. try refreshing.</div>`;
+    _currentDept = null;
   }
   detailContainer.classList.add('active');
   closeNav();
