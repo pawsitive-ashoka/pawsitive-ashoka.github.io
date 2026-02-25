@@ -1,5 +1,14 @@
 /* ─── gallery.js ─── media grid & lightbox ─── */
 
+/* ── CDN bases ── */
+const _CLD = 'https://res.cloudinary.com/duij1lw6u';
+function _imgUrl(filename) {
+  return _CLD + '/image/upload/q_auto,f_auto/gallery/' + filename.replace(/\.[^.]+$/, '');
+}
+function _vidUrl(filename) {
+  return _CLD + '/video/upload/q_auto,f_auto/gallery/' + filename.replace(/\.[^.]+$/, '');
+}
+
 /* ── Media manifest — all files from public/gallery/ ── */
 const mediaImages = [
   "00b03838-f9cd-47c0-8b46-a443b4de541c.JPG",
@@ -267,7 +276,7 @@ function renderMediaGrid() {
 
   // Videos first, then images
   mediaVideos.forEach(filename => {
-    const src = '/public/gallery/' + filename;
+    const src = _vidUrl(filename);
     const tile = document.createElement('div');
     tile.className = 'media-tile video-tile vt-loading';
     tile.dataset.vsrc = src;
@@ -330,7 +339,7 @@ function renderMediaGrid() {
     const tile = document.createElement('div');
     tile.className = 'media-tile media-tile-loading';
     const img = document.createElement('img');
-    img.dataset.src = '/public/gallery/' + filename;
+    img.dataset.src = _imgUrl(filename);
     img.alt = 'Pawsitive campus photo';
     img.onload = () => {
       img.classList.add('loaded');
@@ -366,7 +375,7 @@ let _lbIndex = 0;
 function openLightbox(i) {
   _lbIndex = i;
   const lb = document.getElementById('imgLightbox');
-  document.getElementById('lbImg').src = '/public/gallery/' + mediaImages[_lbIndex];
+  document.getElementById('lbImg').src = _imgUrl(mediaImages[_lbIndex]);
   document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + mediaImages.length;
   lb.classList.add('open');
 }
@@ -381,7 +390,7 @@ function lightboxNav(dir) {
   const img = document.getElementById('lbImg');
   img.style.opacity = '0';
   setTimeout(() => {
-    img.src = '/public/gallery/' + mediaImages[_lbIndex];
+    img.src = _imgUrl(mediaImages[_lbIndex]);
     document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + mediaImages.length;
     img.style.opacity = '1';
   }, 150);
