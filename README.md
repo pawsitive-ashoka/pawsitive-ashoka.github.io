@@ -19,7 +19,7 @@ This repository contains the source for the Pawsitive static site served as a Gi
 - This is a static site; deploy by pushing to the repository used for GitHub Pages or serving the built files from a web server.
 
 ## Contributing
-- See the CONTRIBUTING.md file for contribution guidelines: [CONTRIBUTING.md](CONTRIBUTING.md)
+- See the [CONTRIBUTING.md](CONTRIBUTING.md) file for contribution guidelines: 
 
 ## Developers
 <a href="https://github.com/pawsitive-ashoka/pawsitive-ashoka.github.io/graphs/contributors">
