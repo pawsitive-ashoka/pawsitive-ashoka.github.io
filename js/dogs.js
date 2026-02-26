@@ -81,17 +81,21 @@ function buildDogCard(meta, body) {
   if (meta.breed) {
     meta.breed = meta.breed.replace(/~?\d+\s*(?:yrs?|months?)/, calcAge(meta.born));
   }
-  const searchText = [meta.name, meta.breed, meta.tags, body].join(' ').toLowerCase();
+  const rawName = meta.name || 'Dog';
+  const nameEmoji = meta.nameEmoji || '';
+  const displayName = rawName.replace(nameEmoji, '').trim();
+
+  const searchText = [rawName, meta.breed, meta.tags, body].join(' ').toLowerCase();
   const bg = getIllustrationBg(meta);
 
   const photoArea = meta.image
-    ? `<div class="dog-tile-photo"><img src="${meta.image}" alt="${esc(meta.name)}" class="dog-photo" loading="lazy"></div>`
+    ? `<div class="dog-tile-photo"><img src="${meta.image}" alt="${esc(rawName)}" class="dog-photo" loading="lazy"></div>`
     : `<div class="dog-tile-emoji" style="background:${bg}"><span class="dog-emoji-big">${meta.emoji || '🐕'}</span></div>`;
 
   return `<div class="dog-card"
       data-search="${esc(searchText)}"
-      data-name="${esc(meta.name || 'Dog')}"
-      data-name-emoji="${esc(meta.nameEmoji)}"
+      data-name="${esc(displayName)}"
+      data-name-emoji="${esc(nameEmoji)}"
       data-breed="${esc(meta.breed)}"
       data-body="${esc(body)}"
       data-tags="${esc(meta.tags)}"
@@ -100,7 +104,7 @@ function buildDogCard(meta, body) {
       data-bg-light="${esc(meta.bgLight)}"
       data-bg-dark="${esc(meta.bgDark)}">
     ${photoArea}
-    <div class="dog-tile-name">${meta.name || 'Dog'} ${meta.nameEmoji || ''}</div>
+    <div class="dog-tile-name">${esc(displayName)}</div>
   </div>`;
 }
 
