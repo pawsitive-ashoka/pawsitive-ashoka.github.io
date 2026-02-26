@@ -3,6 +3,7 @@ name: Brownie
 nameEmoji: 🐺
 emoji: 🐕
 breed: 📍 ASG · ♂ · 8 yrs · Grey & White
+born: 2017
 image: public/dogs/images/brownie.jpg
 tags: 🐺 wolf-like looks, 🤗 exceptionally friendly, 💪 impressive build, 💛 gentle at heart
 bgLight: linear-gradient(135deg,#e8e8e0,#d8d8c8)

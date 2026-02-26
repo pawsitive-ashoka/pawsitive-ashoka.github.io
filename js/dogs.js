@@ -43,8 +43,33 @@ function getIllustrationBg(meta) {
 /** Escape a string for use in an HTML attribute value */
 function esc(s) { return (s || '').replace(/"/g, '&quot;').replace(/\n/g, ' '); }
 
+/**
+ * Calculate a dog's age from a birth year (YYYY).
+ * Assumes July 1 of the birth year as a mid-year estimate.
+ * Returns "~X yrs", "X months", or "age unknown".
+ */
+function calcAge(born) {
+  if (!born) return 'age unknown';
+  const year = parseInt(born, 10);
+  if (isNaN(year)) return 'age unknown';
+  const now = new Date();
+  const birthDate = new Date(year, 6, 1); // July 1 of birth year
+  if (birthDate > now) return '< 1 month';
+  const totalMonths =
+    (now.getFullYear() - birthDate.getFullYear()) * 12 +
+    (now.getMonth() - birthDate.getMonth());
+  if (totalMonths < 1) return '< 1 month';
+  if (totalMonths < 12) return totalMonths === 1 ? '1 month' : `${totalMonths} months`;
+  const years = Math.floor(totalMonths / 12);
+  return years === 1 ? '~1 yr' : `~${years} yrs`;
+}
+
 /** Build compact tile HTML for a single dog */
 function buildDogCard(meta, body) {
+  // Auto-update age in the breed field using the born: year from frontmatter
+  if (meta.breed) {
+    meta.breed = meta.breed.replace(/~?\d+\s*(?:yrs?|months?)/, calcAge(meta.born));
+  }
   const searchText = [meta.name, meta.breed, meta.tags, body].join(' ').toLowerCase();
   const bg = getIllustrationBg(meta);
 

@@ -3,6 +3,7 @@ name: Airbender
 nameEmoji: 💨
 emoji: 🐕
 breed: 📍 Around Gate 3 · ♂ · 8 yrs · Black & White
+born: 2017
 image: public/dogs/images/airbender.jpg
 tags: 💨 territorial, 🐾 happy hops for favourites, 🎮 playful, 🤝 good with head-pats
 bgLight: linear-gradient(135deg,#e0e8f0,#d0d8e8)

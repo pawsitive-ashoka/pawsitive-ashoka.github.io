@@ -3,6 +3,7 @@ name: Midnight
 nameEmoji: 🌙
 emoji: 🐕
 breed: 📍 Tapri · ♂ · 9 yrs · Black & White
+born: 2016
 image: public/dogs/images/midnight.jpg
 tags: 🌙 blends into background, 🕊️ reserved & gentle, 😇 absolute angel, 🐾 slow to trust
 bgLight: linear-gradient(135deg,#d8d8e8,#c0c0d8)

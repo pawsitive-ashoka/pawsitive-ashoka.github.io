@@ -3,6 +3,7 @@ name: Custard
 nameEmoji: 🌼
 emoji: 🐕
 breed: 📍 Gate 2/WUD · ♀ · 5 yrs · Brown
+born: 2020
 image: public/dogs/images/custard.jpg
 tags: 🌼 extremely shy, 🚫 doesn't allow pets, 🧡 loves from afar, 👩‍👧 devoted godmother
 bgLight: linear-gradient(135deg,#f8ead8,#f0d8b0)

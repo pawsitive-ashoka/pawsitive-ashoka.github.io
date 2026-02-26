@@ -3,6 +3,7 @@ name: Snowwhite
 nameEmoji: ❄️
 emoji: 🐕
 breed: 📍 Around Gate 3 · ♂ · 2 yrs · White
+born: 2023
 image: public/dogs/images/snowwhite.jpg
 tags: ❄️ stunningly gorgeous, 🙈 very shy, 🚶 keeps distance, 💛 trusts a special few
 bgLight: linear-gradient(135deg,#f0f8ff,#e0f0ff)

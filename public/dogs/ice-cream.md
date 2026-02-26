@@ -3,6 +3,7 @@ name: Ice Cream
 nameEmoji: 🤗
 emoji: 🐕
 breed: 📍 Gate 1/Gate 2 · ♂ · ~7 yrs · White & Black
+born: 2018
 image: public/dogs/images/ice-cream.jpg
 tags: 🤗 maximum affection, 💪 brave fighter, 🌟 mange survivor, 🫂 body contact king
 bgLight: linear-gradient(135deg,#e8f4ff,#d0e8f8)

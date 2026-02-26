@@ -3,6 +3,7 @@ name: Barfi
 nameEmoji: 🍭
 emoji: 🐕
 breed: 📍 Gate 2 · ♂ · 10 months · White
+born: 2025
 image: public/dogs/images/barfi.jpg
 tags: 🍭 Sultan's son, 👂 barks at everything, 😬 easily startled, 🛟 still working on bladder control
 bgLight: linear-gradient(135deg,#fff4e8,#ffead0)

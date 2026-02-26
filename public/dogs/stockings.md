@@ -3,6 +3,7 @@ name: Stockings
 nameEmoji: 😴
 emoji: 🐕
 breed: 📍 Gate 1 · ♀ · 9 yrs · Black & White
+born: 2016
 image: public/dogs/images/stockings.jpg
 tags: 😴 professional napper, 🕳️ hole digger, 🚗 road hazard, 💪 resilient
 bgLight: linear-gradient(135deg,#e8e8f5,#d0d0e8)
