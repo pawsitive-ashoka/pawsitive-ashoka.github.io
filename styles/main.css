@@ -114,6 +114,7 @@ nav::after {
 .card h3{font-family:'Caveat',cursive;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;}
 .card p{font-size:0.95rem;color:var(--ink-soft);line-height:1.6;}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+.what-we-do-cards{grid-template-columns:repeat(3,1fr);max-width:960px;margin-inline:auto;}
 .tag-pill{font-family:'Caveat',cursive;font-size:0.95rem;background:var(--accent);color:#fff;padding:0.2rem 0.8rem;border-radius:8px;display:inline-block;transform:rotate(-1deg);}
 .sketch-underline{position:relative;display:inline-block;}
 .sketch-underline::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:4px;background:var(--accent2);border-radius:2px;transform:rotate(-0.5deg) scaleX(1.02);}
@@ -553,6 +554,7 @@ footer .footer-sep {
 @media(max-width:900px) and (min-width:769px){
   .dept-grid-row{grid-template-columns:repeat(2,1fr);}
   .dept-highlights{grid-template-columns:1fr;}
+  .what-we-do-cards{grid-template-columns:repeat(2,1fr);}
 }
 
 /* RESPONSIVE */
@@ -603,6 +605,7 @@ footer .footer-sep {
 
   /* CARDS */
   .cards { grid-template-columns: 1fr; }
+  .what-we-do-cards { grid-template-columns: 1fr; }
 
   /* DOGS */
   .dogs-search-wrap { padding: 0 1.2rem 0.8rem; }
