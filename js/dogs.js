@@ -1,5 +1,16 @@
 /* ─── dogs.js ─── load & render dog cards from public/dogs/*.md ─── */
 
+/** Row unit must match grid-auto-rows in CSS */
+const GRID_ROW_UNIT = 4;
+
+/** Measure a card's rendered height and set its grid row span */
+function setCardSpan(card) {
+  card.style.gridRowEnd = ''; // reset so getBoundingClientRect reflects content height
+  const h = card.getBoundingClientRect().height;
+  if (!h) return;
+  card.style.gridRowEnd = `span ${Math.ceil(h / GRID_ROW_UNIT)}`;
+}
+
 /**
  * Parse simple YAML-style frontmatter from a markdown string.
  * Returns { meta, body } where meta is an object of key: value pairs
@@ -101,7 +112,7 @@ async function fetchDog(filename) {
   return parseDogMd(text);
 }
 
-/** Apply the image's natural aspect-ratio to its container, then mark it loaded */
+/** Apply the image's natural aspect-ratio to its container and recalculate masonry span */
 function applyDogOrientation(img) {
   const w = img.naturalWidth;
   const h = img.naturalHeight;
@@ -109,7 +120,21 @@ function applyDogOrientation(img) {
   const container = img.closest('.dog-tile-photo');
   const card      = img.closest('.dog-card');
   if (container) container.style.aspectRatio = `${w} / ${h}`;
-  if (card)      card.dataset.orientation = w >= h ? 'landscape' : 'portrait';
+  if (card) {
+    card.dataset.orientation = w >= h ? 'landscape' : 'portrait';
+    // defer span calc until browser has reflowed with the new aspect-ratio
+    requestAnimationFrame(() => setCardSpan(card));
+  }
+}
+
+/** Recalculate all card spans when the grid resizes (e.g. window resize) */
+function initMasonryResize() {
+  const grid = document.getElementById('dogs-grid');
+  if (!grid || !window.ResizeObserver) return;
+  const ro = new ResizeObserver(() => {
+    grid.querySelectorAll('.dog-card[data-orientation]').forEach(setCardSpan);
+  });
+  ro.observe(grid);
 }
 
 /** Attach load/error listeners to all .dog-photo images (handles cached images too) */
@@ -234,6 +259,7 @@ async function loadDogs() {
     initDogPhotos();
     initDogSearch();
     initDogModals();
+    initMasonryResize();
 
     if (errors.length) {
       const errDiv = document.createElement('div');
