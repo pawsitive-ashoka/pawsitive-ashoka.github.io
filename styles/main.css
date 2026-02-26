@@ -329,6 +329,7 @@ nav::after {
 /* Photo-card variant */
 .team-grid-leadership{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.2rem;max-width:600px;margin:0 auto 0.5rem;}
 .team-grid-leadership.team-grid-center{justify-items:center;}
+.team-grid-4col{grid-template-columns:repeat(4,1fr);}
 .team-grid-core{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1.1rem;}
 .team-card-photo{padding:1.4rem 1rem 1.2rem;}
 .team-photo-avatar{position:relative;width:86px;height:86px;border-radius:50%;margin:0 auto 0.85rem;border:3px solid var(--border);box-shadow:3px 3px 0 var(--sketch);background:var(--ph-color,var(--bg2));overflow:hidden;display:flex;align-items:center;justify-content:center;}
@@ -608,8 +609,32 @@ footer .footer-sep {
   .what-we-do-cards { grid-template-columns: 1fr; }
 
   /* DOGS */
+  .dogs-header { padding: 2.5rem 1.2rem 0.8rem !important; }
+  .dogs-header h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; margin-bottom: 0.5rem !important; }
+  .dogs-header p { font-size: 1rem !important; }
   .dogs-search-wrap { padding: 0 1.2rem 0.8rem; }
-  .dogs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0 1.2rem 2rem; margin: 0.5rem auto; }
+  .dogs-search { font-size: 1rem; padding: 0.45rem 0.9rem; }
+  .dogs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0 1rem 2rem; margin: 0.5rem auto; }
+  .dog-card { margin: 0; box-shadow: 2px 2px 0 var(--sketch); }
+  .dog-card:hover { transform: none; box-shadow: 2px 2px 0 var(--sketch); }
+  .dog-tile-name {
+    font-size: 0.85rem; padding: 0.3rem 0.4rem 0.35rem;
+    white-space: normal; display: -webkit-box;
+    -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; text-overflow: ellipsis; max-height: 2.4em;
+  }
+  .dog-tile-emoji { font-size: 2.5rem; }
+  .dog-modal-overlay { padding: 0.5rem; align-items: flex-end; }
+  .dog-modal {
+    max-height: 85vh; border-radius: 20px 20px 10px 10px;
+    box-shadow: 0 -4px 24px var(--shadow); animation: modalSlideUp 0.25s ease;
+  }
+  @keyframes modalSlideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .dog-modal-photo { aspect-ratio: 3/2; }
+  .dog-modal-body { padding: 1rem 1.2rem 1.4rem; }
+  .dog-modal-name { font-size: 1.7rem; }
+  .dog-modal-desc { font-size: 0.9rem; }
+  .dog-modal-close { top: 0.5rem; right: 0.5rem; }
 
   /* DEPARTMENTS */
   .dept-grid, .dept-grid-row { grid-template-columns: 1fr; padding: 1.5rem 1.2rem 3rem; }
@@ -674,6 +699,68 @@ footer .footer-sep {
   /* DOODLES — hide on small screens to reduce clutter */
   .doodle { display: none; }
 
+  /* ABOUT */
+  .about-header { padding: 3rem 1.2rem 1.5rem !important; }
+  .about-header h1 { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+  .about-header p { font-size: 0.95rem !important; line-height: 1.7 !important; }
+  .manifesto-block { padding: 1.6rem; margin-bottom: 1.2rem; }
+  .manifesto-block h3 { font-size: 1.4rem; }
+
+  /* HOME — disable hover transforms on touch */
+  .card:hover { transform: none; box-shadow: 5px 5px 0 var(--sketch); }
+  .hero-btn { font-size: 1.2rem; padding: 0.65rem 1.8rem; }
+
+  /* DEPARTMENTS DETAIL */
+  .dept-detail-hero { padding: 1.5rem 1.2rem; }
+  .dept-detail-title { font-size: 1.9rem; }
+  .dept-detail-tagline { font-size: 1.05rem; }
+  .dept-detail-icon { font-size: 2.8rem; }
+  .event-acc-top { padding: 0.9rem 1rem; gap: 0.7rem; }
+  .event-acc-img { width: 48px; height: 48px; font-size: 1.6rem; }
+  .event-acc-title { font-size: 1.05rem; }
+  .event-acc-body-inner { padding: 0.7rem 1rem 1rem; }
+  .social-connect-item { padding: 0.8rem 1rem; }
+  .social-connect-label { font-size: 1.05rem; }
+  .social-connect-sub { font-size: 0.78rem; }
+  .dept-donate-cta { padding: 1.2rem 1rem; }
+  .dept-donate-btn { font-size: 1.15rem; padding: 0.6rem 1.5rem; }
+
+  /* TEAM */
+  .team-grid-4col { grid-template-columns: repeat(2, 1fr); }
+  .team-hero-photo .team-photo-inner { aspect-ratio: 16/7; }
+  .team-card { padding: 1.2rem 0.8rem; box-shadow: 3px 3px 0 var(--sketch); }
+  .team-card:hover { transform: none; }
+  .team-card h4 { font-size: 1.05rem; }
+  .team-card .role { font-size: 0.78rem; }
+  .team-photo-avatar { width: 72px; height: 72px; }
+  .team-grid-leadership .team-photo-avatar { width: 82px; height: 82px; }
+  .team-section-sub { font-size: 1.15rem; }
+
+  /* DONATE */
+  .donate-why { padding: 1.4rem 1.2rem; gap: 1rem; flex-direction: column; align-items: center; text-align: center; }
+  .donate-why .big-paw { font-size: 2.5rem; }
+  .donate-why h3 { font-size: 1.4rem; }
+  .donate-card-head { padding: 1.2rem 1.2rem 1rem; }
+  .donate-card-head h3 { font-size: 1.35rem; }
+  .donate-card-body { padding: 1.2rem; }
+  .upi-qr-img { width: 160px; height: 160px; }
+  .amount-chips { gap: 0.4rem; }
+  .chip { font-size: 0.95rem; padding: 0.25rem 0.7rem; }
+  .rzp-btn { font-size: 1.1rem; padding: 0.6rem 0.8rem; }
+
+  /* CONTACT */
+  .contact-form-card h3, .contact-info-card h3 { font-size: 1.4rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    font-size: 1rem; padding: 0.7rem 0.9rem;
+  }
+  .form-submit { font-size: 1.15rem; padding: 0.7rem; }
+  .contact-icon { width: 36px; height: 36px; font-size: 1.1rem; }
+
+  /* GALLERY LIGHTBOX */
+  .lb-nav { width: 2.5rem; height: 2.5rem; font-size: 1.5rem; }
+  .lb-close { width: 2.2rem; height: 2.2rem; }
+  .video-modal-box { max-width: 95vw; border-radius: 12px; }
+
   /* FOOTER */
   footer { padding: 1.5rem 1rem; font-size: 1rem; }
 }
@@ -693,4 +780,105 @@ footer .footer-sep {
   .stats-strip { flex-direction: column; gap: 1rem; }
   .social-chips { gap: 0.4rem; }
   .social-chip { font-size: 0.88rem; padding: 0.3rem 0.7rem; }
+
+  /* ABOUT */
+  .about-header { padding: 2rem 0.8rem 1rem !important; }
+  .about-header p { font-size: 0.9rem !important; }
+  .manifesto-block { padding: 1.3rem; }
+  .manifesto-block .tag { font-size: 0.85rem; }
+
+  /* HOME */
+  .hero-tagline { font-size: 0.95rem; max-width: 85vw; }
+  .hero-btn { font-size: 1.1rem; padding: 0.55rem 1.5rem; }
+  .hero-badge { font-size: 0.85rem; padding: 0.2rem 0.7rem; }
+  .what-we-do-cards .card { padding: 1.4rem; }
+  .card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .card h3 { font-size: 1.3rem; }
+  .card p { font-size: 0.88rem; }
+
+  /* DOGS */
+  .dogs-header { padding: 2rem 0.8rem 0.6rem !important; }
+  .dogs-search-wrap { padding: 0 0.8rem 0.6rem; }
+  .dogs-search { font-size: 0.95rem; padding: 0.4rem 0.8rem; min-width: 120px; }
+  .dogs-count { font-size: 0.9rem; }
+  .dogs-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; padding: 0 0.6rem 2rem; }
+  .dog-tile-name { font-size: 0.9rem; max-height: 2.6em; }
+  .dog-modal-name { font-size: 1.5rem; }
+  .dog-modal-body { padding: 0.9rem 1rem 1.2rem; }
+  .dog-modal-breed { font-size: 0.8rem; }
+  .dog-modal-tag { font-size: 0.72rem; padding: 0.15rem 0.5rem; }
+
+  /* DEPARTMENTS */
+  .dept-card h3 { font-size: 1.3rem; }
+  .dept-body p { font-size: 0.85rem; }
+  .dept-detail-hero { margin: 0.8rem 0.8rem; padding: 1.4rem 1rem; }
+  .dept-detail-title { font-size: 1.7rem; }
+  .dept-detail-tagline { font-size: 0.95rem; }
+  .dept-detail-content { padding: 0 0.8rem; }
+  .dept-detail-back { padding: 1rem 0.8rem 0; }
+  .dept-highlight-card { padding: 0.9rem; }
+  .dept-highlight-card strong { font-size: 1rem; }
+  .dept-highlight-card p { font-size: 0.8rem; }
+  .event-acc-title { font-size: 0.95rem; }
+  .event-acc-img { width: 40px; height: 40px; font-size: 1.3rem; border-radius: 10px; }
+
+  /* TEAM */
+  .page-header h1 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+  .page-header p { font-size: 0.95rem; }
+  .team-hero-photo .team-photo-inner { aspect-ratio: 16/9; }
+  .team-hero-photo .big-icon { font-size: 2.8rem; }
+  .team-hero-photo .team-photo-inner p { font-size: 1.05rem; }
+  .team-photo-caption { font-size: 0.9rem; padding: 0.5rem 1rem; }
+  .team-desc-block .manifesto-block { padding: 1.3rem; }
+  .team-grid-4col { grid-template-columns: repeat(2, 1fr); }
+  .dept-heads-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .team-card-photo { padding: 1rem 0.7rem 0.9rem; }
+  .team-photo-avatar { width: 64px; height: 64px; }
+  .team-grid-leadership .team-photo-avatar { width: 72px; height: 72px; }
+  .team-card h4 { font-size: 1rem; }
+  .team-card .role { font-size: 0.72rem; }
+  .team-card .batch, .team-card .dept { font-size: 0.72rem; }
+  .team-section-sub { font-size: 1.05rem; margin: 1.2rem 0 0.6rem; }
+  .team-section-wrap { padding: 0 0.8rem 2rem; }
+  .team-grid-section { padding: 0.8rem 0.8rem 2rem; }
+  .members-list li { padding: 0.45rem 0.7rem; }
+  .members-list .m-name { font-size: 0.95rem; }
+
+  /* DONATE */
+  .donate-inner { padding: 0.8rem 0.8rem 3rem; }
+  .donate-why h3 { font-size: 1.25rem; }
+  .donate-why p { font-size: 0.88rem; }
+  .upi-qr-img { width: 140px; height: 140px; }
+  .upi-id-row { padding: 0.6rem 0.8rem; gap: 0.6rem; }
+  .upi-id-text { font-size: 0.95rem; }
+  .copy-btn { font-size: 0.85rem; padding: 0.2rem 0.6rem; }
+  .amount-chips { gap: 0.35rem; }
+  .chip { font-size: 0.88rem; padding: 0.2rem 0.6rem; }
+  .amount-input-row { padding: 0.4rem 0.6rem; }
+  .rzp-btn { font-size: 1rem; }
+  .donate-card-head h3 { font-size: 1.2rem; }
+
+  /* CONTACT */
+  .contact-inner { padding: 0.8rem 0.8rem 3rem; }
+  .contact-info-card { padding: 1.2rem; }
+  .contact-form-card { padding: 1.2rem; }
+  .contact-info-card h3, .contact-form-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+  .contact-row { gap: 0.7rem; margin-bottom: 1rem; }
+  .contact-icon { width: 32px; height: 32px; font-size: 1rem; }
+  .contact-row strong { font-size: 0.95rem; }
+  .contact-row span { font-size: 0.82rem; }
+  .form-group label { font-size: 0.9rem; }
+  .form-submit { font-size: 1.1rem; }
+
+  /* GALLERY / LIGHTBOX */
+  .media-section { padding: 0.5rem 0.8rem 3rem; }
+  .media-section-title { font-size: 1.8rem; }
+  .media-section-sub { font-size: 0.9rem; margin-bottom: 1.2rem; }
+  .lb-nav { width: 2.2rem; height: 2.2rem; font-size: 1.3rem; }
+  .lb-prev { left: 0.2rem; }
+  .lb-next { right: 0.2rem; }
+
+  /* FOOTER */
+  footer { font-size: 0.92rem; padding: 1.2rem 0.8rem; }
+  footer .footer-sep { margin: 0 0.2em; }
 }
