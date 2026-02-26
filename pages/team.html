@@ -7,6 +7,7 @@
 .members-list .m-batch{font-size:0.76rem;color:var(--ink-soft);background:var(--bg2);padding:0.12rem 0.48rem;border-radius:6px;border:1.5px solid var(--border);white-space:nowrap;flex-shrink:0;}
 /* dept heads grid — wider than the centered leadership grid */
 .dept-heads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.2rem;margin-top:0.3rem;}
+@media(min-width:1200px){.dept-heads-grid{grid-template-columns:repeat(6,1fr);}}
 @media(max-width:768px){.members-list{columns:2 160px;}.dept-heads-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:480px){.members-list{columns:1;}}
 </style>
@@ -155,31 +156,8 @@
       <span class="batch">UG'2024</span>
     </div>
 
-    <!-- Finance & Outreach -->
-    <!-- 🖊 SWAP 9 → Name · Batch · Photo: public/team/hod-finance-1.jpg -->
-    <div class="team-card team-card-photo" style="--ph-color:#d8f0e8;">
-      <div class="team-photo-avatar">
-        <!-- <img class="team-member-photo" src="public/team/hod-finance-1.jpg" alt="Finance HoD"> -->
-        <span class="team-photo-emoji">🐾</span>
-      </div>
-      <h4>Karan Kapadia</h4>
-      <span class="role">HoD · Finance &amp; Outreach</span>
-      <span class="batch">UG'2022</span>
-    </div>
-
-    <!-- 🖊 SWAP 10 → Name · Batch · Photo: public/team/hod-finance-2.jpg -->
-    <div class="team-card team-card-photo" style="--ph-color:#fde8d8;">
-      <div class="team-photo-avatar">
-        <!-- <img class="team-member-photo" src="public/team/hod-finance-2.jpg" alt="Finance HoD"> -->
-        <span class="team-photo-emoji">🐾</span>
-      </div>
-      <h4>Name Here</h4>
-      <span class="role">HoD · Finance &amp; Outreach</span>
-      <span class="batch">UG'XX</span>
-    </div>
-
     <!-- Social Media & Marketing -->
-    <!-- 🖊 SWAP 11 → Name · Batch · Photo: public/team/hod-social.jpg -->
+    <!-- 🖊 SWAP 9 → Name · Batch · Photo: public/team/hod-social.jpg -->
     <div class="team-card team-card-photo" style="--ph-color:#f0d8fd;">
       <div class="team-photo-avatar">
         <!-- <img class="team-member-photo" src="public/team/hod-social.jpg" alt="Social Media HoD"> -->
@@ -188,6 +166,18 @@
       <h4>Ira Malik</h4>
       <span class="role">HoD · Social Media &amp; Marketing</span>
       <span class="batch">UG'2025</span>
+    </div>
+
+    <!-- Finance & Outreach -->
+    <!-- 🖊 SWAP 10 → Name · Batch · Photo: public/team/hod-finance-1.jpg -->
+    <div class="team-card team-card-photo" style="--ph-color:#d8f0e8;">
+      <div class="team-photo-avatar">
+        <!-- <img class="team-member-photo" src="public/team/hod-finance-1.jpg" alt="Finance HoD"> -->
+        <span class="team-photo-emoji">🐾</span>
+      </div>
+      <h4>Karan Kapadia</h4>
+      <span class="role">HoD · Finance &amp; Outreach</span>
+      <span class="batch">UG'2022</span>
     </div>
 
   </div><!-- /dept-heads-grid -->
