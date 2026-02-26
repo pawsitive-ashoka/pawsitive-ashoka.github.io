@@ -101,13 +101,28 @@ async function fetchDog(filename) {
   return parseDogMd(text);
 }
 
+/** Apply the image's natural aspect-ratio to its container, then mark it loaded */
+function applyDogOrientation(img) {
+  const w = img.naturalWidth;
+  const h = img.naturalHeight;
+  if (!w || !h) return;
+  const container = img.closest('.dog-tile-photo');
+  const card      = img.closest('.dog-card');
+  if (container) container.style.aspectRatio = `${w} / ${h}`;
+  if (card)      card.dataset.orientation = w >= h ? 'landscape' : 'portrait';
+}
+
 /** Attach load/error listeners to all .dog-photo images (handles cached images too) */
 function initDogPhotos() {
   document.querySelectorAll('.dog-photo').forEach(img => {
     if (img.complete && img.naturalWidth > 0) {
+      applyDogOrientation(img);
       img.classList.add('loaded');
     } else {
-      img.addEventListener('load', () => img.classList.add('loaded'));
+      img.addEventListener('load', () => {
+        applyDogOrientation(img);
+        img.classList.add('loaded');
+      });
       img.addEventListener('error', () => { img.style.display = 'none'; });
     }
   });
