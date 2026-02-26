@@ -104,15 +104,32 @@ function showDeptDetail(slug) {
 }
 
 async function loadPage(name) {
-  if (_loaded[name]) return;
+  // Environment detection: only cache in production
+  const isDevelopment = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' || 
+                       window.location.hostname.includes('localhost');
+  
+  // Skip cache check in development mode
+  if (!isDevelopment && _loaded[name]) return;
+  
   const container = document.getElementById('page-' + name);
   if (!container) return;
   try {
-    const res = await fetch('pages/' + name + '.html');
+    // Add cache busting in development
+    const url = isDevelopment ? 
+      `pages/${name}.html?v=${Date.now()}` : 
+      `pages/${name}.html`;
+    
+    const res = await fetch(url);
     if (!res.ok) throw new Error(res.status);
     const html = await res.text();
     container.innerHTML = html;
-    _loaded[name] = true;
+    
+    // Only mark as loaded in production
+    if (!isDevelopment) {
+      _loaded[name] = true;
+    }
+    
     if (name === 'dogs') loadDogs();
     if (name === 'departments') setupDeptCards();
     if (name === 'gallery') renderMediaGrid();
@@ -150,14 +167,30 @@ async function showDeptDetail(slug) {
   // Mark departments nav as active (we're a sub-page)
   const deptBtn = document.getElementById('nav-departments');
   if (deptBtn) deptBtn.classList.add('active');
+  
+  // Environment detection
+  const isDevelopment = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' || 
+                       window.location.hostname.includes('localhost');
+  
   // Always load the requested dept page (replace whatever is currently showing)
   const detailContainer = document.getElementById('page-dept-detail');
   try {
-    if (_currentDept !== slug) {
-      const res = await fetch('pages/dept-' + slug + '.html');
+    // Skip dept cache check in development or if different dept
+    if (isDevelopment || _currentDept !== slug) {
+      // Add cache busting in development
+      const url = isDevelopment ? 
+        `pages/dept-${slug}.html?v=${Date.now()}` : 
+        `pages/dept-${slug}.html`;
+      
+      const res = await fetch(url);
       if (!res.ok) throw new Error(res.status);
       detailContainer.innerHTML = await res.text();
-      _currentDept = slug;
+      
+      // Only update current dept in production
+      if (!isDevelopment) {
+        _currentDept = slug;
+      }
     }
   } catch (e) {
     detailContainer.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">⚠️ couldn't load this page right now. try refreshing.</div>`;
