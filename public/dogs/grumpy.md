@@ -3,6 +3,7 @@ name: Grumpy
 nameEmoji: 😤
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♂ · 12 yrs · Black & White
+born: 2013
 image: public/dogs/images/grumpy.jpg
 tags: 😤 moody teenager, 🍫 food motivated, 🏃 goes AWOL, 🛡️ shows up for his pack
 bgLight: linear-gradient(135deg,#e4e4e0,#d4d4cc)

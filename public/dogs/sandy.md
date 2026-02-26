@@ -3,6 +3,7 @@ name: Sandy
 nameEmoji: 🌸
 emoji: 🐕
 breed: 📍 Gate 2/WUD · ♀ · 6 yrs · Brown
+born: 2019
 tags: 🌸 sweet & shy, 🕊️ gentle, 🚶 passes through quietly, ☮️ never causes conflict
 bgLight: linear-gradient(135deg,#f8e8d8,#f0d8b8)
 bgDark: linear-gradient(135deg,#2a1a08,#382010)

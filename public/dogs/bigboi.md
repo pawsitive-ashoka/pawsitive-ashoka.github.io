@@ -3,6 +3,7 @@ name: Big Boi
 nameEmoji: 👴
 emoji: 🐕
 breed: 📍 Police Station · ♂ · 10 yrs · White
+born: 2015
 image: public/dogs/images/bigboi.jpg
 tags: 👴 old soul, 👁️ cataracts, ⚡ famously fast, 🦁 not to be underestimated
 bgLight: linear-gradient(135deg,#f5f0e8,#ede4d0)

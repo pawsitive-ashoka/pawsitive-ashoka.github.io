@@ -3,6 +3,7 @@ name: Boop
 nameEmoji: 💪
 emoji: 🐕
 breed: 📍 Gate 1 · ♂ · 10 yrs · White
+born: 2015
 image: public/dogs/images/boop.jpg
 tags: 💪 macho energy, 👁️ attention seeker, 🛡️ campus guardian, 🥰 big softie
 bgLight: linear-gradient(135deg,#fff8e8,#ffeecc)

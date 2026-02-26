@@ -3,6 +3,7 @@ name: Goofy
 nameEmoji: 😄
 emoji: 🐕
 breed: 📍 ASG · ♂ · 7 yrs · Brown & Black
+born: 2018
 image: public/dogs/images/goofy.jpg
 tags: 😄 tail-wagger, 🍴 picky eater, 🫶 loves pets, 💊 vet avoider
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)

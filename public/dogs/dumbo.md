@@ -3,6 +3,7 @@ name: Dumbo
 nameEmoji: 🤔
 emoji: 🐕
 breed: 📍 Tapri · ♂ · 9 yrs · Brown
+born: 2016
 image: public/dogs/images/dumbo.jpg
 tags: 🤔 perpetually confused, 🤗 friendly & affectionate, 🥈 second in command, 💛 loyal
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d8b8)

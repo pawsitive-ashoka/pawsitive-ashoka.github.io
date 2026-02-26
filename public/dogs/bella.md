@@ -3,6 +3,7 @@ name: Bella
 nameEmoji: 🌺
 emoji: 🐕
 breed: 📍 Near WUD · ♀ · 2 yrs · Brown & White
+born: 2023
 image: public/dogs/images/bella.jpg
 tags: 🌺 gentle sweetheart, 🍪 treat lover, 🐾 new mother, 😤 hates being mistaken for Coco
 bgLight: linear-gradient(135deg,#f8e8d8,#f0d8c0)

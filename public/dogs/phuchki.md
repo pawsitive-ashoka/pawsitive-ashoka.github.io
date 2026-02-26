@@ -3,6 +3,7 @@ name: Phuchki
 nameEmoji: 👑
 emoji: 🐕
 breed: 📍 ASG · ♂ · 8 yrs · White
+born: 2017
 image: public/dogs/images/phuchki.jpg
 tags: 👑 silent authority, 😌 calm & composed, 🛡️ unspoken dominance, ☮️ never snarls
 bgLight: linear-gradient(135deg,#fff0e8,#ffe4d0)

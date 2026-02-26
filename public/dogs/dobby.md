@@ -3,6 +3,7 @@ name: Dobby
 nameEmoji: 🧝
 emoji: 🐕
 breed: 📍 Gate 2 · ♀ · 10 months · Brown
+born: 2025
 image: public/dogs/images/dobby.jpg
 tags: 🧝 Sultan's daughter, 💬 highly vocal, 🚗 naps under cars, 🏃 vet sprinter
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)

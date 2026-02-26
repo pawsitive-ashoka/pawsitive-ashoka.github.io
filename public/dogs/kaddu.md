@@ -3,6 +3,7 @@ name: Kaddu
 nameEmoji: 🥲
 emoji: 🐕
 breed: 📍 Gate 3 · ♂ · 6 months · Brown & Black
+born: 2025
 image: public/dogs/images/kaddu.jpg
 tags: 🥲 perpetual flight risk, 😕 permanent worried look, 🐾 Coco's pup, 🌍 explorer (sort of)
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)

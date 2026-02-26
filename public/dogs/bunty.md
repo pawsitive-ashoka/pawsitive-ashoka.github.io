@@ -3,6 +3,7 @@ name: Bunty
 nameEmoji: 🌸
 emoji: 🐕
 breed: 📍 Gate 1 · ♂ · 6 yrs · White
+born: 2019
 image: public/dogs/images/bunty.jpg
 tags: 🌸 shy & sweet, 🕐 slow to trust, 👫 loyal shadow
 bgLight: linear-gradient(135deg,#fff0e8,#ffe4cc)

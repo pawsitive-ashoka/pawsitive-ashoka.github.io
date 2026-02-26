@@ -3,6 +3,7 @@ name: Biscuit
 nameEmoji: 🌱
 emoji: 🐕
 breed: 📍 Gate 3 Construction · ♀ · 2 months · Brown & White
+born: 2025
 image: public/dogs/images/biscuit.jpg
 tags: 🌱 tiny pup, 🔧 personality in development, 🏗️ construction baby
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d8b8)

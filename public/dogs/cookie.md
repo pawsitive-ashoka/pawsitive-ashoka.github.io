@@ -3,6 +3,7 @@ name: Cookie
 nameEmoji: 🚶
 emoji: 🐕
 breed: 📍 Police Station/ASG · ♂ · 2 yrs · Black & White
+born: 2023
 image: public/dogs/images/cookie.jpg
 tags: 🚶 independent flâneur, 🤝 no fixed pack, 🥚 loves eggs, 🛡️ packs a punch
 bgLight: linear-gradient(135deg,#e8e8e8,#d8d8d8)

@@ -3,6 +3,7 @@ name: Mighty Raju
 nameEmoji: 🌱
 emoji: 🐕
 breed: 📍 Gate 3 Construction · ♂ · 2 months · Brown & White
+born: 2025
 image: public/dogs/images/mighty-raju.jpg
 tags: 🌱 tiny pup, 🔧 personality in development, 🏗️ construction baby
 bgLight: linear-gradient(135deg,#f0e8d0,#e8d8b8)

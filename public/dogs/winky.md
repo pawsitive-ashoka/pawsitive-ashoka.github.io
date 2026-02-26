@@ -3,6 +3,7 @@ name: Winky
 nameEmoji: 😜
 emoji: 🐕
 breed: 📍 Gate 2 · ♂ · 10 months · Brown
+born: 2025
 image: public/dogs/images/winky.jpg
 tags: 😜 pure chaos, 🏋️ tries to jump over dogs, 🤸 no grace whatsoever, 😂 can't be ignored
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)

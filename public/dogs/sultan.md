@@ -3,6 +3,7 @@ name: Sultan
 nameEmoji: 🦁
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♂ · 10 yrs · Brown
+born: 2015
 image: public/dogs/images/sultan.jpg
 tags: 🦁 pack king, 🤗 full-body hugs, 🍗 food connoisseur, 👨‍👧‍👦 proud father of 3
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d0a8)

@@ -3,6 +3,7 @@ name: Tikka
 nameEmoji: 🫶
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♀ · 12 yrs · Brown
+born: 2013
 image: public/dogs/images/tikka.jpg
 tags: 🫶 gentle senior, 👁️ visually impaired, 😌 calming presence, 🌿 rests & observes
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)

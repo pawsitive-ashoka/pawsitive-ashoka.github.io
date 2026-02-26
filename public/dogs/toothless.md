@@ -3,6 +3,7 @@ name: Toothless
 nameEmoji: 🖤
 emoji: 🐕
 breed: 📍 Shelter · ♂ · 9 yrs · Black
+born: 2016
 tags: 🖤 shelter resident, 🏠 needs a home, 🐾 Pawsitive care
 bgLight: linear-gradient(135deg,#d8d8d8,#c8c8c8)
 bgDark: linear-gradient(135deg,#181818,#222222)

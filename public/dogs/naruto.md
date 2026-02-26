@@ -3,6 +3,7 @@ name: Naruto
 nameEmoji: 🍜
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♂ · 9 yrs · Black & White
+born: 2016
 image: public/dogs/images/naruto.jpg
 tags: 🍜 bold challenger, 🥰 best friend to humans, 🐾 sprints toward you, 🫃 belly rub addict
 bgLight: linear-gradient(135deg,#e8e8f0,#d0d0e8)

@@ -3,6 +3,7 @@ name: Caramel
 nameEmoji: 🍮
 emoji: 🐕
 breed: 📍 Gate 2/WUD Tapri · ♀ · 2 yrs · White & Brown
+born: 2023
 image: public/dogs/images/caramel.jpg
 tags: 🍮 gentle & shy, 🥚 loves boiled eggs, 🍪 unlimited biscuits, 💪 glow-up story
 bgLight: linear-gradient(135deg,#fff0d8,#ffe4b8)
