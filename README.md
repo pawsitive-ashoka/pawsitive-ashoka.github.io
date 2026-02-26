@@ -13,13 +13,13 @@ This repository contains the source for the Pawsitive static site served as a Gi
 - `public/` and `dogs/` — static assets and images
 
 ## Documentation
-- See the documentation folder for additional notes: [documentation](documentation/)
+- See the [documentation](documentation/) folder for additional notes.
 
 ## Deployment
 - This is a static site; deploy by pushing to the repository used for GitHub Pages or serving the built files from a web server.
 
 ## Contributing
-- See the [CONTRIBUTING.md](CONTRIBUTING.md) file for contribution guidelines: 
+- See the [CONTRIBUTING.md](CONTRIBUTING.md) file for contribution guidelines. 
 
 ## Developers
 <a href="https://github.com/pawsitive-ashoka/pawsitive-ashoka.github.io/graphs/contributors">
