@@ -1,4 +1,4 @@
-#Pawsitive
+# Pawsitive
 
 This repository contains the source for the Pawsitive static site served as a GitHub Pages site.
 
