@@ -621,6 +621,7 @@ footer .footer-sep {
   }
   .dog-card { margin: 0; box-shadow: 2px 2px 0 var(--sketch); grid-row-end: auto !important; }
   .dog-card:hover { transform: none; box-shadow: 2px 2px 0 var(--sketch); }
+  .dog-tile-photo { aspect-ratio: 1 / 1 !important; }
   .dog-tile-name {
     font-size: 0.85rem; padding: 0.3rem 0.4rem 0.35rem;
     white-space: normal; display: -webkit-box;
