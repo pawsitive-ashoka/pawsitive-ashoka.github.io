@@ -378,11 +378,12 @@ function openLightbox(i) {
   document.getElementById('lbImg').src = _imgUrl(mediaImages[_lbIndex]);
   document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + mediaImages.length;
   lb.classList.add('open');
+  lockScroll();
 }
 
 function closeLightbox(e) {
   const lb = document.getElementById('imgLightbox');
-  if (e.target === lb || e.closeForced) lb.classList.remove('open');
+  if (e.target === lb || e.closeForced) { lb.classList.remove('open'); unlockScroll(); }
 }
 
 function lightboxNav(dir) {
@@ -404,6 +405,7 @@ function openVideoModal(src, startTime = 0) {
     vid.addEventListener('loadedmetadata', () => { vid.currentTime = startTime; }, { once: true });
   }
   document.getElementById('videoModal').classList.add('open');
+  lockScroll();
   vid.play().catch(() => {});
 }
 
@@ -414,6 +416,7 @@ function closeVideoModal(e) {
     vid.pause();
     vid.src = '';
     modal.classList.remove('open');
+    unlockScroll();
   }
 }
 

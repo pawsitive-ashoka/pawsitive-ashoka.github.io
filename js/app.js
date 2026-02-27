@@ -1,5 +1,15 @@
 /* ─── app.js ─── page navigation, page loading, theme ─── */
 
+/* ── Shared scroll-lock utility (used by all modals) ── */
+function lockScroll() {
+  document.body.style.overflow = 'hidden';
+}
+function unlockScroll() {
+  document.body.style.overflow = '';
+  document.body.classList.add('scroll-unlocked');
+  setTimeout(() => document.body.classList.remove('scroll-unlocked'), 200);
+}
+
 const PAGES = ['home','about','dogs','departments','team','gallery','donate','contact'];
 const DEPT_SLUGS = ['events','finance','ground','social'];
 const _loaded = {};
@@ -223,6 +233,7 @@ function toggleNav() {
   const open = links.classList.toggle('open');
   btn.classList.toggle('open', open);
   btn.setAttribute('aria-expanded', open);
+  if (open) lockScroll(); else unlockScroll();
 }
 
 function closeNav() {
@@ -231,7 +242,22 @@ function closeNav() {
   links.classList.remove('open');
   btn.classList.remove('open');
   btn.setAttribute('aria-expanded', 'false');
+  unlockScroll();
 }
+
+/* Close hamburger on outside click or Escape */
+document.addEventListener('click', e => {
+  const links = document.getElementById('nav-links');
+  if (!links || !links.classList.contains('open')) return;
+  const nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) closeNav();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const links = document.getElementById('nav-links');
+    if (links && links.classList.contains('open')) closeNav();
+  }
+});
 
 function toggleTheme() {
   const html = document.documentElement;
