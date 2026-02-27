@@ -110,7 +110,7 @@ function buildDogCard(meta, body) {
 
 /** Fetch a single dog markdown file and return parsed data */
 async function fetchDog(filename) {
-  const res = await fetch('public/dogs/' + filename);
+  const res = await fetch('public/dogs/content/' + filename);
   if (!res.ok) throw new Error('Could not load ' + filename);
   const text = await res.text();
   return parseDogMd(text);
@@ -272,11 +272,11 @@ async function loadDogs() {
     }
 
     if (cards.length === 0) {
-      grid.innerHTML = '<div class="dogs-loading">no dogs found — add .md files to public/dogs/ 🐾</div>';
+      grid.innerHTML = '<div class="dogs-loading">no dogs found — add .md files to public/dogs/content/ 🐾</div>';
     }
   } catch (e) {
     grid.innerHTML = `<div class="dogs-error">
-      ⚠️ couldn't load dogs — make sure public/dogs/manifest.json exists and lists your .md files.<br>
+      ⚠️ couldn't load dogs — make sure public/dogs/manifest.json exists and lists your .md files under content/.<br>
       <small style="opacity:0.7;">${e.message}</small>
     </div>`;
   }
