@@ -228,13 +228,15 @@ function initDogModals() {
       </div>`;
 
     document.body.appendChild(overlay);
+    lockScroll();
 
-    const close = () => overlay.remove();
+    const ac = new AbortController();
+    const close = () => { overlay.remove(); unlockScroll(); ac.abort(); };
     overlay.querySelector('.dog-modal-close').addEventListener('click', close);
     overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
-    document.addEventListener('keydown', function esc(e) {
-      if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
-    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') close();
+    }, { signal: ac.signal });
   });
 }
 

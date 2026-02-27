@@ -20,22 +20,41 @@ function handleRazorpay() {
   const amount = document.getElementById('donationAmt').value;
   if (!amount || amount < 1) { alert('please enter a donation amount 🐾'); return; }
 
+  const restoreScroll = () => {
+    if (typeof unlockScroll === 'function') unlockScroll();
+    else { document.body.style.overflow = ''; document.body.style.overflowX = 'hidden'; }
+  };
+
   const init = () => {
-    new Razorpay({
+    const rzp = new Razorpay({
       key: 'YOUR_RAZORPAY_KEY_HERE',   // ← replace with your key
       amount: amount * 100,
       currency: 'INR',
       name: 'Pawsitive',
       description: 'Donation for Campus Animal Welfare',
-      handler: r => alert('thank you so much! 🐾\npayment id: ' + r.razorpay_payment_id),
+      handler: r => {
+        restoreScroll();
+        alert('thank you so much! 🐾\npayment id: ' + r.razorpay_payment_id);
+      },
+      modal: {
+        ondismiss: () => restoreScroll(),
+        escape: true,
+        backdropclose: false
+      },
       theme: { color: '#e8654a' }
-    }).open();
+    });
+    rzp.on('payment.failed', resp => {
+      restoreScroll();
+      alert('payment failed 😿\n' + (resp.error?.description || 'please try again'));
+    });
+    rzp.open();
   };
 
   if (typeof Razorpay === 'undefined') {
     const s = document.createElement('script');
     s.src = 'https://checkout.razorpay.com/v1/checkout.js';
     s.onload = init;
+    s.onerror = () => alert('could not load payment gateway — please try again later 😿');
     document.body.appendChild(s);
   } else {
     init();
