@@ -614,8 +614,12 @@ footer .footer-sep {
   .dogs-header p { font-size: 1rem !important; }
   .dogs-search-wrap { padding: 0 1.2rem 0.8rem; }
   .dogs-search { font-size: 1rem; padding: 0.45rem 0.9rem; }
-  .dogs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0 1rem 2rem; margin: 0.5rem auto; }
-  .dog-card { margin: 0; box-shadow: 2px 2px 0 var(--sketch); }
+  .dogs-grid {
+    grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
+    padding: 0 1rem 2rem; margin: 0.5rem auto;
+    grid-auto-rows: auto;
+  }
+  .dog-card { margin: 0; box-shadow: 2px 2px 0 var(--sketch); grid-row-end: auto !important; }
   .dog-card:hover { transform: none; box-shadow: 2px 2px 0 var(--sketch); }
   .dog-tile-name {
     font-size: 0.85rem; padding: 0.3rem 0.4rem 0.35rem;
