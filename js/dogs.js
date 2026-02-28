@@ -5,12 +5,14 @@ const GRID_ROW_UNIT = 4;
 
 /** Set a card's grid-row-end span to match its actual rendered height + margins */
 function setCardSpan(card) {
-  card.style.gridRowEnd = '';
+  // Measure BEFORE writing — clearing gridRowEnd first causes a reflow that
+  // collapses the card to its minimum height, corrupting the measurement.
   const h = card.getBoundingClientRect().height;
   if (!h) return;
   const style = getComputedStyle(card);
   const vMargin = parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-  card.style.gridRowEnd = `span ${Math.ceil((h + vMargin) / GRID_ROW_UNIT)}`;
+  const span = Math.ceil((h + vMargin) / GRID_ROW_UNIT);
+  card.style.gridRowEnd = `span ${span}`;
 }
 
 /**
@@ -128,7 +130,9 @@ function applyDogOrientation(img) {
   if (container) container.style.aspectRatio = `${w} / ${h}`;
   if (card) {
     card.dataset.orientation = w >= h ? 'landscape' : 'portrait';
-    requestAnimationFrame(() => setCardSpan(card));
+    // Double-RAF: 1st frame commits the new aspectRatio style to layout,
+    // 2nd frame measures the fully-settled height.
+    requestAnimationFrame(() => requestAnimationFrame(() => setCardSpan(card)));
   }
 }
 
@@ -189,6 +193,11 @@ function initDogSearch() {
       grid.appendChild(msg);
     }
     updateCount();
+    // Recalculate spans for all newly-visible cards — the grid reflows when
+    // cards are hidden/shown, which can invalidate previously-set spans.
+    requestAnimationFrame(() => {
+      grid.querySelectorAll('.dog-card:not(.dog-card-hidden)').forEach(setCardSpan);
+    });
   };
   input.addEventListener('input', handleSearch);
   input.addEventListener('search', handleSearch); // Chrome fires 'search' when × is clicked
