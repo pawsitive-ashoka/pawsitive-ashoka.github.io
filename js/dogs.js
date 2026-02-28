@@ -3,12 +3,14 @@
 /** Row unit must match grid-auto-rows in CSS (px) */
 const GRID_ROW_UNIT = 4;
 
-/** Set a card's grid-row-end span to match its actual rendered height */
+/** Set a card's grid-row-end span to match its actual rendered height + margins */
 function setCardSpan(card) {
   card.style.gridRowEnd = '';
   const h = card.getBoundingClientRect().height;
   if (!h) return;
-  card.style.gridRowEnd = `span ${Math.ceil(h / GRID_ROW_UNIT)}`;
+  const style = getComputedStyle(card);
+  const vMargin = parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+  card.style.gridRowEnd = `span ${Math.ceil((h + vMargin) / GRID_ROW_UNIT)}`;
 }
 
 /**
@@ -170,7 +172,7 @@ function initDogSearch() {
   };
   updateCount();
 
-  input.addEventListener('input', () => {
+  const handleSearch = () => {
     const q = input.value.trim().toLowerCase();
     const prev = grid.querySelector('.dogs-no-results');
     if (prev) prev.remove();
@@ -187,7 +189,9 @@ function initDogSearch() {
       grid.appendChild(msg);
     }
     updateCount();
-  });
+  };
+  input.addEventListener('input', handleSearch);
+  input.addEventListener('search', handleSearch); // Chrome fires 'search' when × is clicked
 }
 
 /** Open a full-detail modal when a tile is clicked */
