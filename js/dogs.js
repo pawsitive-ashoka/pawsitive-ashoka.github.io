@@ -89,7 +89,7 @@ function buildDogCard(meta, body) {
   const nameEmoji = meta.nameEmoji || '';
   const displayName = rawName.replace(nameEmoji, '').trim();
 
-  const searchText = [rawName, meta.breed, meta.tags, body].join(' ').toLowerCase();
+  const searchText = [rawName, meta.breed, meta.tags].join(' ').toLowerCase();
   const bg = getIllustrationBg(meta);
 
   const photoArea = meta.image
