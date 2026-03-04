@@ -2,10 +2,13 @@
 name: Toothless
 nameEmoji: 🖤
 emoji: 🐕
-breed: 📍 Shelter · ♂ · 9 yrs · Black
+breed: 📍 Shelter · ♂ · ~9 yrs · Black
 born: 2016
-tags: 🖤 shelter resident, 🏠 needs a home, 🐾 Pawsitive care
+image: public/dogs/images/toothless.jpg
+tags: 🖤 gentle soul, 🏥 recovering, 💛 angel with people
 bgLight: linear-gradient(135deg,#d8d8d8,#c8c8c8)
 bgDark: linear-gradient(135deg,#181818,#222222)
 ---
-Toothless is a resident of the Pawsitive shelter. He's a 9-year-old black dog currently under our care. If you'd like to know more about him or how you can help, feel free to reach out to us.
+Toothless is a black dog who used to live around ASG, though he never quite belonged to either of the packs there. In August 2025, he developed a serious maggot infection on his head and is now being rehabilitated at a trusted local shelter while he recovers.
+
+An older and gentle soul, Toothless is typically calm and non-reactive unless provoked. With people, however, he is nothing short of an angel.
