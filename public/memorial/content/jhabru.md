@@ -4,6 +4,7 @@ nameEmoji: 🦁
 emoji: 🐕
 breed: 📍 Opposite Gate 2 · ♀ · 2 months · Brown, Black & White
 born: 2025
+dates: "December 2025 – February 2026"
 image: public/memorial/images/jhabru.jpg
 tags: 🦁 heart of a lion, 👑 strongest of the litter, 🍳 loves puppy formula & eggs, 💪 bold & fearless
 bgLight: linear-gradient(135deg,#e8e8e8,#d0d0d0)

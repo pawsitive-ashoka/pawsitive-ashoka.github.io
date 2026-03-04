@@ -4,6 +4,7 @@ nameEmoji: �
 emoji: 🐕
 breed: 📍 Asawarpur Village · ♀ · ~3 yrs · Light Brown & White
 born: 2022
+dates: "2023 – 2026"
 image: public/memorial/images/jimmy.jpeg
 tags: 🌸 new mother, 🏡 village dog, 🙏 named posthumously, ❤️ remembered with love
 bgLight: linear-gradient(135deg,#e8e8e8,#d0d0d0)

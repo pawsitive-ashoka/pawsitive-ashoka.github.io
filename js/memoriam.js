@@ -16,10 +16,8 @@ function buildMemorialCard(meta, body) {
   const passed     = meta.passed   || '';
   const born       = meta.born     || '';
 
-  // Extract age from breed field, e.g. "📍 Gate 1 · ♂ · ~12 yrs · Brown & Black" → "~12 yrs"
-  const ageMatch = (meta.breed || '').match(/~?\d+\s*(?:years?|yrs?|months?)/i);
-  const ageBadge = ageMatch
-    ? `<div class="memorial-tile-dates">${ageMatch[0]}</div>`
+  const datesBadge = meta.dates
+    ? `<div class="memorial-tile-dates">${meta.dates}</div>`
     : '';
 
   const searchText = [rawName, meta.breed, meta.tags].join(' ').toLowerCase();
@@ -53,7 +51,7 @@ function buildMemorialCard(meta, body) {
     <div class="memorial-card-inner">
       ${photoArea}
       <div class="dog-tile-name">${esc(displayName)}</div>
-      ${ageBadge}
+      ${datesBadge}
     </div>
   </div>`;
 }
