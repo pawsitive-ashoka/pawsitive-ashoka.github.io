@@ -891,13 +891,14 @@ footer .footer-sep {
 
 /* ═══════════════════════════════════════════════════════
    IN MEMORIAM PAGE
-   Everything inside .memoriam-page-wrap renders in greyscale.
-   The modal is appended to <body> (outside the wrapper),
-   so it naturally shows in full colour — no extra JS needed.
+   The entire #page-memoriam container renders in greyscale,
+   including the footer. The modal is appended to <body>
+   (outside #page-memoriam), so it shows in full colour —
+   no extra JS needed.
    ═══════════════════════════════════════════════════════ */
 
-/* ── Greyscale wrapper ── */
-.memoriam-page-wrap {
+/* ── Greyscale: full page including footer ── */
+#page-memoriam {
   filter: grayscale(1) contrast(0.92);
 }
 
