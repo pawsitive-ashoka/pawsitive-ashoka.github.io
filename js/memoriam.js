@@ -16,6 +16,12 @@ function buildMemorialCard(meta, body) {
   const passed     = meta.passed   || '';
   const born       = meta.born     || '';
 
+  // Extract age from breed field, e.g. "📍 Gate 1 · ♂ · ~12 yrs · Brown & Black" → "~12 yrs"
+  const ageMatch = (meta.breed || '').match(/~?\d+\s*(?:years?|yrs?|months?)/i);
+  const ageBadge = ageMatch
+    ? `<div class="memorial-tile-dates">${ageMatch[0]}</div>`
+    : '';
+
   const searchText = [rawName, meta.breed, meta.tags].join(' ').toLowerCase();
   const candleDelay = randBetween(0, 2.5).toFixed(2);
 
@@ -27,9 +33,7 @@ function buildMemorialCard(meta, body) {
          <span class="dog-emoji-big">${meta.emoji || '🐕'}</span>
        </div>`;
 
-  const datesBadge = (born || passed)
-    ? `<div class="memorial-tile-dates">${born || '?'} – ${passed || '?'}</div>`
-    : '';
+  const datesBadge = '';
 
   return `<div class="dog-card memorial-card"
       data-search="${esc(searchText)}"
@@ -46,7 +50,7 @@ function buildMemorialCard(meta, body) {
       data-passed="${esc(passed)}">
     ${photoArea}
     <div class="dog-tile-name">${esc(displayName)}</div>
-    ${datesBadge}
+    ${ageBadge}
     <span class="memorial-candle" style="animation-delay:${candleDelay}s" aria-hidden="true">🕯️</span>
   </div>`;
 }
