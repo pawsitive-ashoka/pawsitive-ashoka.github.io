@@ -7,10 +7,8 @@ function randBetween(min, max) {
 
 /** Build a memorial tile card for a single dog */
 function buildMemorialCard(meta, body) {
-  // Update age field same as dogs.js
-  if (meta.breed) {
-    meta.breed = meta.breed.replace(/~?\d+\s*(?:yrs?|months?)/, calcAge(meta.born));
-  }
+  // Do NOT recalculate age — memorial dogs show the age at time of passing,
+  // exactly as written in their .md file.
 
   const rawName    = meta.name     || 'Dog';
   const nameEmoji  = meta.nameEmoji || '';
