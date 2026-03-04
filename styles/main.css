@@ -163,13 +163,13 @@ nav::after {
 .manifesto-block p{color:var(--ink-soft);line-height:1.7;font-size:1rem;}
 
 /* DOGS — search bar */
-.dogs-search-wrap{width:100%;max-width:1400px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.dogs-search-wrap{max-width:1400px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .dogs-search{flex:1;min-width:160px;padding:0.5rem 1rem;border:2px solid var(--border);border-radius:20px;background:var(--card);color:var(--ink);font-family:'Caveat',cursive;font-size:1.1rem;outline:none;transition:border-color 0.2s;}
 .dogs-search:focus{border-color:var(--accent);}
 .dogs-count{font-family:'Caveat',cursive;font-size:1rem;color:var(--ink-soft);white-space:nowrap;}
 /* DOGS — compact tile grid */
-.dogs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(130px,100%),1fr));grid-auto-rows:4px;gap:0;width:100%;max-width:1400px;margin:0.5rem auto 3rem;padding:0.5rem 1.5rem 2rem;align-items:start;overflow-x:clip;}
-.dog-card{background:var(--card);border:2px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 var(--sketch);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;margin:0.375rem;will-change:transform;}
+.dogs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));grid-auto-rows:4px;gap:0;max-width:1400px;margin:0.5rem auto 3rem;padding:0 1.5rem 2rem;align-items:start;}
+.dog-card{background:var(--card);border:2px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 var(--sketch);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;margin:0.375rem;}
 .dog-card:hover{transform:translateY(-4px);box-shadow:6px 6px 0 var(--sketch);}
 .dog-card-hidden{display:none !important;}
 .dog-tile-photo{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--bg2);}
@@ -183,9 +183,6 @@ nav::after {
 .dogs-no-results{grid-column:1/-1;text-align:center;padding:3rem 2rem;font-family:'Caveat',cursive;font-size:1.5rem;color:var(--ink-soft);}
 .dogs-loading{text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.5rem;color:var(--ink-soft);}
 .dogs-error{text-align:center;padding:2rem;font-family:'Caveat',cursive;font-size:1.1rem;color:var(--accent);background:var(--card);border:2px solid var(--border);border-radius:14px;margin:1rem 2rem;}
-/* DOGS — responsive grid breakpoints */
-@media(max-width:480px){.dogs-grid{grid-template-columns:repeat(auto-fill,minmax(min(110px,100%),1fr));padding:0.5rem 0.75rem 2rem;}.dogs-search-wrap{padding:0 0.75rem 1rem;}}
-@media(max-width:360px){.dogs-grid{grid-template-columns:repeat(auto-fill,minmax(min(100px,100%),1fr));padding:0.5rem 0.5rem 2rem;}.dogs-search-wrap{padding:0 0.5rem 1rem;}}
 /* DOGS — modal */
 .dog-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px);}
 .dog-modal{background:var(--card);border:2.5px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:10px 10px 0 var(--sketch);max-width:420px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:modalPop 0.2s ease;}
@@ -894,19 +891,21 @@ footer .footer-sep {
 
 /* ═══════════════════════════════════════════════════════
    IN MEMORIAM PAGE
-   The entire #page-memoriam container renders in greyscale,
-   including the footer. The modal is appended to <body>
-   (outside #page-memoriam), so it shows in full colour —
-   no extra JS needed.
+   Everything inside .memoriam-page-wrap renders in greyscale.
+   The modal is appended to <body> (outside the wrapper),
+   so it naturally shows in full colour — no extra JS needed.
    ═══════════════════════════════════════════════════════ */
 
-/* ── Greyscale: full page including footer ── */
-#page-memoriam {
-  filter: grayscale(1) contrast(0.92);
+/* ── Greyscale: removed from wrapper — header and card-inner handle it
+   separately so the candle (outside .memorial-card-inner) can light up
+   instantly while the rest of the card transitions in after a delay ── */
+.memoriam-page-wrap {
+  /* no filter here */
 }
 
-/* ── Page header ── */
+/* ── Page header: always greyscale ── */
 .memoriam-header-section {
+  filter: grayscale(1) contrast(0.92);
   text-align: center;
   padding: 4rem 2rem 1.5rem;
 }
@@ -954,12 +953,24 @@ footer .footer-sep {
   overflow-x: clip;
 }
 
-/* ── Memorial card (same visual language as .dog-card) ── */
+/* ── Memorial card — no filter here; candle lives at this level ── */
 .memorial-card {
-  position: relative; /* needed for .memorial-candle absolute positioning */
+  position: relative;
 }
 .memorial-card .dog-tile-name {
   color: var(--ink);
+}
+
+/* ── Inner wrapper carries the greyscale; transitions to colour
+   after the candle has had 0.4s to light up first ── */
+.memorial-card-inner {
+  filter: grayscale(1) contrast(0.92);
+  transition: filter 1.1s ease 0.4s;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.memorial-card:hover .memorial-card-inner {
+  filter: grayscale(0) contrast(1);
 }
 
 /* ── Dates badge on tile ── */
@@ -972,7 +983,8 @@ footer .footer-sep {
   opacity: 0.75;
 }
 
-/* ── Candle — absolutely positioned top-right of each tile ── */
+/* ── Candle — sibling of .memorial-card-inner, NOT inside it.
+   Free of any greyscale, so it lights up instantly on hover ── */
 .memorial-candle {
   position: absolute;
   top: 0.4rem;
@@ -982,6 +994,15 @@ footer .footer-sep {
   pointer-events: none;
   transform-origin: bottom center;
   animation: candleFlicker 2.8s ease-in-out infinite;
+  /* snap immediately — candle must light before card colour arrives */
+  transition: transform 0.25s ease, filter 0.3s ease;
+  z-index: 1;
+}
+.memorial-card:hover .memorial-candle {
+  transform: scale(1.6);
+  filter: drop-shadow(0 0 4px rgba(255, 160, 0, 1))
+          drop-shadow(0 0 12px rgba(255, 80, 0, 0.65));
+  animation: candleLit 1s ease-in-out infinite;
 }
 
 @keyframes candleFlicker {
@@ -990,6 +1011,14 @@ footer .footer-sep {
   45%        { opacity: 0.72; transform: scaleY(0.93) rotate(0.5deg);  }
   65%        { opacity: 0.92; transform: scaleY(0.98) rotate(-0.3deg); }
   80%        { opacity: 0.80; transform: scaleY(0.95) rotate(0.2deg);  }
+}
+
+/* Brighter, livelier flicker used when the candle is lit on hover */
+@keyframes candleLit {
+  0%,  100% { opacity: 1;    transform: scale(1.6) scaleY(1)    rotate(0deg);    }
+  25%        { opacity: 0.95; transform: scale(1.65) scaleY(1.06) rotate(-0.5deg); }
+  55%        { opacity: 0.98; transform: scale(1.56) scaleY(0.96) rotate(0.4deg);  }
+  80%        { opacity: 0.93; transform: scale(1.62) scaleY(1.03) rotate(-0.3deg); }
 }
 
 /* ── Nav button: memoriam gets a subdued active state ── */

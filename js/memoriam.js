@@ -33,8 +33,9 @@ function buildMemorialCard(meta, body) {
          <span class="dog-emoji-big">${meta.emoji || '🐕'}</span>
        </div>`;
 
-  const datesBadge = '';
-
+  // Candle is a direct child of .memorial-card, NOT inside .memorial-card-inner.
+  // .memorial-card-inner carries the grayscale filter; the candle is free of it
+  // so it can gain colour and glow immediately on hover, before the card reveals.
   return `<div class="dog-card memorial-card"
       data-search="${esc(searchText)}"
       data-name="${esc(displayName)}"
@@ -48,10 +49,12 @@ function buildMemorialCard(meta, body) {
       data-bg-dark="${esc(meta.bgDark)}"
       data-born="${esc(born)}"
       data-passed="${esc(passed)}">
-    ${photoArea}
-    <div class="dog-tile-name">${esc(displayName)}</div>
-    ${ageBadge}
     <span class="memorial-candle" style="animation-delay:${candleDelay}s" aria-hidden="true">🕯️</span>
+    <div class="memorial-card-inner">
+      ${photoArea}
+      <div class="dog-tile-name">${esc(displayName)}</div>
+      ${ageBadge}
+    </div>
   </div>`;
 }
 
