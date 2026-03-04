@@ -4,7 +4,7 @@ nameEmoji: ⚡
 emoji: 🐕
 breed: 📍 Gate 3 · ♀ · 4 months · Black
 born: 2025
-dates: "July 2025 – October 2025"
+dates: July 2025 – October 2025
 image: public/memorial/images/brucie.jpg
 tags: ⚡ independent spirit, 🥊 stood her ground, 🎉 filled our days with joy, 💪 fearless from day one
 bgLight: linear-gradient(135deg,#e8e8e8,#d0d0d0)

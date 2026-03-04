@@ -4,7 +4,7 @@ nameEmoji: 🌸
 emoji: 🐕
 breed: 📍 Gate 2 · ♀ · 2 yrs · Light Brown & White
 born: 2023
-dates: "2023 – 2025"
+dates: 2023 – 2025
 image: public/memorial/images/leia.jpg
 tags: 🌸 gentle & timid, 🐾 affectionate, 💪 fought until the end, 🤍 quietly beloved
 bgLight: linear-gradient(135deg,#e8e8e8,#d0d0d0)
