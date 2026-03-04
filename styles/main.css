@@ -331,7 +331,7 @@ nav::after {
 .team-grid-leadership{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.2rem;max-width:600px;margin:0 auto 0.5rem;}
 .team-grid-leadership.team-grid-center{justify-items:center;}
 .team-grid-4col{grid-template-columns:repeat(4,1fr);}
-.team-grid-core{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1.1rem;}
+.team-grid-core{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.1rem;max-width:800px;margin:0 auto;justify-items:center;}
 .team-card-photo{padding:1.4rem 1rem 1.2rem;}
 .team-photo-avatar{position:relative;width:86px;height:86px;border-radius:50%;margin:0 auto 0.85rem;border:3px solid var(--border);box-shadow:3px 3px 0 var(--sketch);background:var(--ph-color,var(--bg2));overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .team-member-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;}
