@@ -888,3 +888,153 @@ footer .footer-sep {
   footer { font-size: 0.92rem; padding: 1.2rem 0.8rem; }
   footer .footer-sep { margin: 0 0.2em; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   IN MEMORIAM PAGE
+   Everything inside .memoriam-page-wrap renders in greyscale.
+   The modal is appended to <body> (outside the wrapper),
+   so it naturally shows in full colour — no extra JS needed.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Greyscale wrapper ── */
+.memoriam-page-wrap {
+  filter: grayscale(1) contrast(0.92);
+}
+
+/* ── Page header ── */
+.memoriam-header-section {
+  text-align: center;
+  padding: 4rem 2rem 1.5rem;
+}
+.memoriam-heading {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transform: rotate(-0.5deg);
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+}
+.memoriam-quote {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+  margin: 0 auto 1rem;
+}
+.memoriam-rule {
+  border: none;
+  border-top: 1.5px solid var(--border);
+  max-width: 160px;
+  margin: 0 auto 1rem;
+  opacity: 0.6;
+}
+.memoriam-subtext {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* ── Memorial grid (same masonry layout as dogs grid) ── */
+.memoriam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+  grid-auto-rows: 4px;
+  gap: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0.5rem auto 3rem;
+  padding: 0.5rem 1.5rem 2rem;
+  align-items: start;
+  overflow-x: clip;
+}
+
+/* ── Memorial card (same visual language as .dog-card) ── */
+.memorial-card {
+  position: relative; /* needed for .memorial-candle absolute positioning */
+}
+.memorial-card .dog-tile-name {
+  color: var(--ink);
+}
+
+/* ── Dates badge on tile ── */
+.memorial-tile-dates {
+  font-family: 'Caveat', cursive;
+  font-size: 0.78rem;
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 0 0.5rem 0.45rem;
+  opacity: 0.75;
+}
+
+/* ── Candle — absolutely positioned top-right of each tile ── */
+.memorial-candle {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.45rem;
+  font-size: 1rem;
+  line-height: 1;
+  pointer-events: none;
+  transform-origin: bottom center;
+  animation: candleFlicker 2.8s ease-in-out infinite;
+}
+
+@keyframes candleFlicker {
+  0%,  100% { opacity: 1;    transform: scaleY(1)    rotate(0deg);   }
+  20%        { opacity: 0.88; transform: scaleY(0.97) rotate(-0.4deg); }
+  45%        { opacity: 0.72; transform: scaleY(0.93) rotate(0.5deg);  }
+  65%        { opacity: 0.92; transform: scaleY(0.98) rotate(-0.3deg); }
+  80%        { opacity: 0.80; transform: scaleY(0.95) rotate(0.2deg);  }
+}
+
+/* ── Nav button: memoriam gets a subdued active state ── */
+#nav-memoriam.active {
+  color: var(--ink-soft);
+  background: var(--sketch);
+}
+#nav-memoriam.active::after {
+  background: var(--ink-soft);
+}
+
+/* ── Memorial modal: full colour (lives outside .memoriam-page-wrap) ── */
+.memorial-modal-overlay {
+  /* re-asserts full colour by being outside the grayscale wrapper */
+}
+.memorial-modal-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--bg2);
+  overflow: hidden;
+}
+.memorial-modal-photo-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.memorial-modal-dates {
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+/* ── Responsive tweaks ── */
+@media (max-width: 480px) {
+  .memoriam-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(130px, 100%), 1fr));
+    padding: 0.5rem 0.75rem 2rem;
+  }
+  .memoriam-header-section { padding: 3rem 1.2rem 1.2rem; }
+}
+@media (max-width: 360px) {
+  .memoriam-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(110px, 100%), 1fr));
+    padding: 0.5rem 0.5rem 2rem;
+  }
+}
