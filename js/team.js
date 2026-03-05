@@ -1,4 +1,4 @@
-/* ─── team.js ─── load & render team timeline from public/team/*.md ─── */
+/* ─── team.js ─── load & render cinematic team showcase ─── */
 
 const PASTEL_COLORS = ['#fde8d8','#fdf0c0','#d8f0e8','#d8e8fd','#fde8f0','#f0d8fd'];
 
@@ -23,87 +23,171 @@ function parseTeamMd(raw) {
 
 function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-function avatarHtml(meta, idx, hasImage) {
-  const color = PASTEL_COLORS[idx % PASTEL_COLORS.length];
-  if (hasImage) {
-    return `<div class="timeline-avatar" style="--ph-color:${color};">
-      <img class="timeline-avatar-img" src="${esc(meta.image)}" alt="${esc(meta.name)}" loading="lazy" onerror="this.remove();this.parentNode.querySelector('.timeline-avatar-fallback').style.display=''">
-      <span class="timeline-avatar-fallback" style="display:none">🐾</span>
-    </div>`;
-  }
-  return `<div class="timeline-avatar" style="--ph-color:${color};">
-    <span class="timeline-avatar-fallback">🐾</span>
-  </div>`;
-}
-
 function imageExists(meta) {
   return meta.image && meta.image.trim().length > 0;
 }
 
-/* ── Leadership ── */
-function renderLeadershipTimeline(sections, container) {
-  let html = '';
-  let globalIdx = 0;
+/* ── Cinema avatar helpers ── */
+function cinemaAvatarHtml(meta, idx, hasImage) {
+  const color = PASTEL_COLORS[idx % PASTEL_COLORS.length];
+  if (hasImage) {
+    return `<div class="cinema-avatar" style="--ph-color:${color};">
+      <img class="cinema-avatar-img" src="${esc(meta.image)}" alt="${esc(meta.name)}" loading="lazy" onerror="this.remove();this.parentNode.querySelector('.cinema-avatar-fallback').style.display=''">
+      <span class="cinema-avatar-fallback" style="display:none">🐾</span>
+    </div>`;
+  }
+  return `<div class="cinema-avatar" style="--ph-color:${color};">
+    <span class="cinema-avatar-fallback">🐾</span>
+  </div>`;
+}
 
+function coreAvatarHtml(meta, idx, hasImage) {
+  const color = PASTEL_COLORS[idx % PASTEL_COLORS.length];
+  if (hasImage) {
+    return `<div class="core-avatar" style="--ph-color:${color};">
+      <img class="core-avatar-img" src="${esc(meta.image)}" alt="${esc(meta.name)}" loading="lazy" onerror="this.remove();this.parentNode.querySelector('.core-avatar-fallback').style.display=''">
+      <span class="core-avatar-fallback" style="display:none">🐾</span>
+    </div>`;
+  }
+  return `<div class="core-avatar" style="--ph-color:${color};">
+    <span class="core-avatar-fallback">🐾</span>
+  </div>`;
+}
+
+/* ── Leadership Carousel ── */
+function renderLeadershipCinema(sections, container) {
+  const flat = [];
   for (const section of sections) {
-    html += `<div class="timeline-divider"><span>${esc(section.label)}</span></div>`;
     for (const member of section.members) {
-      const side = globalIdx % 2 === 0 ? 'timeline-left' : 'timeline-right';
-      const m = member.meta;
-      const bio = member.body || 'Bio coming soon...';
-      const hasImg = imageExists(m);
-      html += `<div class="timeline-item ${side}">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content timeline-content-leadership"
-          data-name="${esc(m.name)}" data-role="${esc(m.role)}"
-          data-batch="${esc(m.batch)}" data-bio="${esc(bio)}"
-          data-image="${esc(m.image)}">
-          ${avatarHtml(m, globalIdx, hasImg)}
-          <div class="timeline-info">
-            <h4>${esc(m.name)}</h4>
-            <span class="timeline-role">${esc(m.role)}</span>
-          </div>
-        </div>
-      </div>`;
-      globalIdx++;
+      flat.push({ ...member, sectionLabel: section.label });
     }
   }
-  container.innerHTML = `<div class="timeline">${html}</div>`;
+
+  let cardsHtml = '';
+  let dotsHtml = '';
+  flat.forEach((member, idx) => {
+    const m = member.meta;
+    const bio = member.body || 'Bio coming soon...';
+    const hasImg = imageExists(m);
+    const activeClass = idx === 0 ? ' active' : '';
+    cardsHtml += `<div class="cinema-card${activeClass}" data-idx="${idx}"
+      data-name="${esc(m.name)}" data-role="${esc(m.role)}"
+      data-batch="${esc(m.batch)}" data-bio="${esc(bio)}"
+      data-image="${esc(m.image)}" data-section-label="${esc(member.sectionLabel)}">
+      ${cinemaAvatarHtml(m, idx, hasImg)}
+      <div class="cinema-info">
+        <h3 class="cinema-name">${esc(m.name)}</h3>
+        <span class="cinema-role">${esc(m.role)}</span>
+      </div>
+    </div>`;
+    dotsHtml += `<button class="cinema-dot${idx === 0 ? ' active' : ''}" data-idx="${idx}" aria-label="Go to ${esc(m.name)}"></button>`;
+  });
+
+  const firstLabel = flat.length > 0 ? esc(flat[0].sectionLabel) : '';
+  container.innerHTML = `
+    <div class="cinema-carousel">
+      <span class="cinema-section-label">${firstLabel}</span>
+      <div class="cinema-card-wrap">${cardsHtml}</div>
+      <div class="cinema-nav">
+        <button class="cinema-nav-arrow" data-dir="prev" aria-label="Previous">&#8249;</button>
+        <div class="cinema-dots">${dotsHtml}</div>
+        <button class="cinema-nav-arrow" data-dir="next" aria-label="Next">&#8250;</button>
+      </div>
+      <div class="cinema-progress-wrap"><div class="cinema-progress-bar"></div></div>
+    </div>`;
 }
 
-/* ── Core ── */
-function renderCoreTimeline(members, container) {
+/* ── Core Grid ── */
+function renderCoreGrid(members, container) {
   let html = '';
   members.forEach((member, idx) => {
-    const side = idx % 2 === 0 ? 'timeline-left' : 'timeline-right';
     const m = member.meta;
     const hasImg = imageExists(m);
-    html += `<div class="timeline-item ${side}">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content timeline-content-core">
-        ${avatarHtml(m, idx, hasImg)}
-        <div class="timeline-info">
-          <h4>${esc(m.name)}</h4>
-        </div>
-      </div>
+    html += `<div class="core-grid-item" style="--i:${idx}">
+      ${coreAvatarHtml(m, idx, hasImg)}
+      <span class="core-name">${esc(m.name)}</span>
     </div>`;
   });
-  container.innerHTML = `<div class="timeline">${html}</div>`;
+  container.innerHTML = `<div class="core-grid">${html}</div>`;
 }
 
-/* ── Members ── */
-function renderMembersTimeline(names, container) {
+/* ── Members Wall ── */
+function renderMembersWall(names, container) {
   let html = '';
   names.forEach((name, idx) => {
-    const side = idx % 2 === 0 ? 'timeline-left' : 'timeline-right';
-    html += `<div class="timeline-item ${side}">
-      <div class="timeline-dot timeline-dot-sm"></div>
-      <div class="timeline-content timeline-content-member">
-        <span class="timeline-member-name">${esc(name)}</span>
-      </div>
-    </div>`;
+    html += `<span class="member-pill" style="--i:${idx}">${esc(name)}</span>`;
   });
-  container.innerHTML = `<div class="timeline">${html}</div>`;
+  container.innerHTML = `<div class="members-wall">${html}</div>`;
+}
+
+/* ── Carousel Controller ── */
+function initLeaderCarousel() {
+  const carousel = document.querySelector('.cinema-carousel');
+  if (!carousel) return;
+
+  const cards = carousel.querySelectorAll('.cinema-card');
+  const dots = carousel.querySelectorAll('.cinema-dot');
+  const label = carousel.querySelector('.cinema-section-label');
+  const progressBar = carousel.querySelector('.cinema-progress-bar');
+  const INTERVAL = 5000;
+  let currentIdx = 0;
+  let autoTimer = null;
+
+  function show(idx) {
+    currentIdx = ((idx % cards.length) + cards.length) % cards.length;
+    cards.forEach((c, i) => c.classList.toggle('active', i === currentIdx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+    const sectionLabel = cards[currentIdx].dataset.sectionLabel;
+    if (label && sectionLabel) label.textContent = sectionLabel;
+    resetProgress();
+  }
+
+  function resetProgress() {
+    if (!progressBar) return;
+    progressBar.style.animation = 'none';
+    // force reflow
+    void progressBar.offsetWidth;
+    progressBar.style.animation = `cinemaProgress ${INTERVAL}ms linear forwards`;
+  }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(() => show(currentIdx + 1), INTERVAL);
+    resetProgress();
+  }
+
+  function stopAuto() {
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+  }
+
+  // Arrow handlers
+  carousel.addEventListener('click', e => {
+    const arrow = e.target.closest('.cinema-nav-arrow');
+    if (arrow) {
+      show(arrow.dataset.dir === 'next' ? currentIdx + 1 : currentIdx - 1);
+      startAuto();
+      return;
+    }
+    const dot = e.target.closest('.cinema-dot');
+    if (dot) {
+      show(Number(dot.dataset.idx));
+      startAuto();
+    }
+  });
+
+  // Pause on hover
+  carousel.addEventListener('mouseenter', stopAuto);
+  carousel.addEventListener('mouseleave', startAuto);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const leaderSection = document.querySelector('[data-section="leadership"]');
+    if (!leaderSection || leaderSection.style.display === 'none') return;
+    if (e.key === 'ArrowRight') { show(currentIdx + 1); startAuto(); }
+    if (e.key === 'ArrowLeft') { show(currentIdx - 1); startAuto(); }
+  });
+
+  startAuto();
 }
 
 /* ── Popup ── */
@@ -120,17 +204,17 @@ function initTeamPopup() {
   if (!leadershipSection) return;
 
   leadershipSection.addEventListener('click', e => {
-    const content = e.target.closest('.timeline-content-leadership');
-    if (!content) return;
+    const card = e.target.closest('.cinema-card');
+    if (!card) return;
 
-    const name = content.dataset.name;
-    const role = content.dataset.role;
-    const batch = content.dataset.batch;
-    const bio = content.dataset.bio;
-    const image = content.dataset.image;
+    const name = card.dataset.name;
+    const role = card.dataset.role;
+    const batch = card.dataset.batch;
+    const bio = card.dataset.bio;
+    const image = card.dataset.image;
 
-    const card = overlay.querySelector('.team-popup-card');
-    const avatarEl = card.querySelector('.team-popup-avatar');
+    const popupCard = overlay.querySelector('.team-popup-card');
+    const avatarEl = popupCard.querySelector('.team-popup-avatar');
     const imgPath = image && image.trim();
 
     if (imgPath) {
@@ -140,10 +224,10 @@ function initTeamPopup() {
       avatarEl.innerHTML = `<span class="team-popup-emoji">🐾</span>`;
     }
 
-    card.querySelector('.team-popup-name').textContent = name;
-    card.querySelector('.team-popup-role').textContent = role;
-    card.querySelector('.team-popup-batch').textContent = batch;
-    card.querySelector('.team-popup-bio').textContent = bio;
+    popupCard.querySelector('.team-popup-name').textContent = name;
+    popupCard.querySelector('.team-popup-role').textContent = role;
+    popupCard.querySelector('.team-popup-batch').textContent = batch;
+    popupCard.querySelector('.team-popup-bio').textContent = bio;
 
     overlay.classList.add('active');
   });
@@ -178,7 +262,7 @@ async function loadTeam() {
         members: results.filter(r => r.status === 'fulfilled').map(r => r.value)
       });
     }
-    renderLeadershipTimeline(leaderSections, leadershipContainer);
+    renderLeadershipCinema(leaderSections, leadershipContainer);
 
     // Fetch core
     const coreManifest = await fetch('public/team/core/manifest.json' + bust).then(r => r.json());
@@ -190,7 +274,7 @@ async function loadTeam() {
       })
     );
     const coreMembers = coreResults.filter(r => r.status === 'fulfilled').map(r => r.value);
-    renderCoreTimeline(coreMembers, coreContainer);
+    renderCoreGrid(coreMembers, coreContainer);
 
     // Fetch members
     const membersRes = await fetch('public/team/members/members.md' + bust);
@@ -198,10 +282,11 @@ async function loadTeam() {
     const memberNames = membersTxt.trim().split('\n')
       .map(line => line.replace(/^\d+\.\s*/, '').trim())
       .filter(Boolean);
-    renderMembersTimeline(memberNames, membersContainer);
+    renderMembersWall(memberNames, membersContainer);
 
-    // Init popup
+    // Init popup & carousel
     initTeamPopup();
+    initLeaderCarousel();
 
   } catch (e) {
     leadershipContainer.innerHTML = `<div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--accent);">
