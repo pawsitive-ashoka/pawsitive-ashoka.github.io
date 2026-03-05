@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "label": "presidents & secretaries",
+      "members": [
+        "ishaan-sen-dave.md",
+        "srishti-upendra.md",
+        "durga-vasumati.md",
+        "shaurya-taneja.md"
+      ]
+    },
+    {
+      "label": "department heads",
+      "members": [
+        "kaavya-kb.md",
+        "riya-kwatra.md",
+        "manthan-wavhal.md",
+        "sagarika-gothi.md",
+        "ira-malik.md",
+        "karan-kapadia.md"
+      ]
+    }
+  ]
+}
