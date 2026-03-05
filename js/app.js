@@ -144,6 +144,7 @@ async function loadPage(name) {
     if (name === 'memoriam') loadMemorial();
     if (name === 'departments') setupDeptCards();
     if (name === 'gallery') renderMediaGrid();
+    if (name === 'team') loadTeam();
   } catch (e) {
     container.innerHTML = `<div style="text-align:center;padding:4rem 2rem;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--accent);">
       ⚠️ couldn't load this page right now. try refreshing.
