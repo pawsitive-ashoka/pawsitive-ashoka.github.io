@@ -347,15 +347,24 @@ nav::after {
 .dept-donate-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
 
 /* TEAM */
-.team-hero-photo{width:100%;margin:0;border-top:2.5px solid var(--border);border-bottom:2.5px solid var(--border);background:var(--card);overflow:hidden;}
-.team-hero-photo .team-photo-inner{background:linear-gradient(135deg,#ffe8d0 0%,#d0e8d0 50%,#d0d8ff 100%);aspect-ratio:16/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;border-bottom:2px dashed var(--border);}
-[data-theme="dark"] .team-hero-photo .team-photo-inner{background:linear-gradient(135deg,#2d1a08,#082d08,#08082d);}
-.team-hero-photo .big-icon{font-size:4rem;animation:pawBounce 2s ease-in-out infinite;}
-.team-hero-photo .team-photo-inner p{font-family:'Caveat',cursive;font-size:1.3rem;color:var(--ink-soft);transform:rotate(-1deg);text-align:center;}
+
+/* members listing & dept grid (page-specific) */
+.members-list{list-style:none;padding:0;margin:0;columns:3 220px;column-gap:1.5rem;}
+.members-list li{break-inside:avoid;display:flex;justify-content:space-between;align-items:center;gap:0.5rem;padding:0.55rem 0.9rem;margin-bottom:0.55rem;background:var(--card);border:2px solid var(--border);border-radius:10px;box-shadow:2px 2px 0 var(--sketch);transition:transform 0.15s;}
+.members-list li:hover{transform:translateX(3px);}
+.members-list .m-name{font-family:'Caveat',cursive;font-size:1.08rem;font-weight:700;color:var(--ink);}
+.members-list .m-batch{font-size:0.76rem;color:var(--ink-soft);background:var(--bg2);padding:0.12rem 0.48rem;border-radius:6px;border:1.5px solid var(--border);white-space:nowrap;flex-shrink:0;}
+/* dept heads grid — wider than the centered leadership grid */
+.dept-heads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.2rem;margin-top:0.3rem;}
+@media(min-width:1200px){.dept-heads-grid{grid-template-columns:repeat(6,1fr);}}
+@media(max-width:768px){.members-list{columns:2 160px;}.dept-heads-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.members-list{columns:1;}}
+
+.team-hero-img{max-width:90%;width:100%;height:auto;max-height:50vh;display:block;margin:0 auto;border-radius:8px;object-fit:contain;}
 .team-photo-caption{padding:0.7rem 1.5rem;font-family:'Caveat',cursive;font-size:1.05rem;color:var(--ink-soft);text-align:center;border-top:none;}
 /* keep old class mapped for any legacy uses */
 .team-photo-wrap{max-width:900px;margin:2rem auto;padding:0 2rem;}
-.team-photo-box{background:var(--card);border:2.5px solid var(--border);border-radius:20px;box-shadow:6px 6px 0 var(--sketch);overflow:hidden;}
+.team-photo-box{background:var(--card);border:2.5px solid var(--border);border-radius:20px;box-shadow:6px 6px 0 var(--sketch);overflow:hidden;padding:1rem;}
 .team-desc-block{max-width:720px;margin:2rem auto;padding:0 2rem;}
 .team-grid-section{max-width:1000px;margin:0 auto;padding:2rem 2rem 4rem;}
 .team-grid-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;text-align:center;margin-bottom:2rem;transform:rotate(-0.5deg);}
@@ -790,7 +799,6 @@ footer .footer-sep {
 
   /* TEAM */
   .team-grid-4col { grid-template-columns: repeat(2, 1fr); }
-  .team-hero-photo .team-photo-inner { aspect-ratio: 16/7; }
   .team-card { padding: 1.2rem 0.8rem; box-shadow: 3px 3px 0 var(--sketch); }
   .team-card:hover { transform: none; }
   .team-card h4 { font-size: 1.05rem; }
@@ -836,6 +844,7 @@ footer .footer-sep {
   .media-grid { columns: 1; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   .team-grid-leadership { grid-template-columns: repeat(2, 1fr); }
+  .team-hero-img { max-height: 35vh; }
   .team-grid-core { grid-template-columns: repeat(2, 1fr); }
   .team-members-grid { grid-template-columns: repeat(2, 1fr); }
   .team-tabs-wrap { top: 50px; padding: 0.45rem 0.8rem; }
@@ -888,9 +897,6 @@ footer .footer-sep {
   /* TEAM */
   .page-header h1 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
   .page-header p { font-size: 0.95rem; }
-  .team-hero-photo .team-photo-inner { aspect-ratio: 16/9; }
-  .team-hero-photo .big-icon { font-size: 2.8rem; }
-  .team-hero-photo .team-photo-inner p { font-size: 1.05rem; }
   .team-photo-caption { font-size: 0.9rem; padding: 0.5rem 1rem; }
   .team-desc-block .manifesto-block { padding: 1.3rem; }
   .team-grid-4col { grid-template-columns: repeat(2, 1fr); }
