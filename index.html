@@ -66,6 +66,14 @@
   </div>
 </div>
 
+<!-- Dept entry detail modal -->
+<div class="dept-entry-modal-bg" id="deptEntryModal" onclick="closeDeptEntryModal(event)">
+  <div class="dept-entry-modal-box" onclick="event.stopPropagation()">
+    <button class="dept-entry-modal-close" onclick="closeDeptEntryModal({closeForced:true})">&#x2715;</button>
+    <div class="dept-entry-modal-content" id="deptEntryModalContent"></div>
+  </div>
+</div>
+
 <!-- JS modules -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="js/gallery.js"></script>

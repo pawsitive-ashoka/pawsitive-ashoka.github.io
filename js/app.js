@@ -198,7 +198,6 @@ async function showDeptDetail(slug) {
       const res = await fetch(url);
       if (!res.ok) throw new Error(res.status);
       detailContainer.innerHTML = await res.text();
-      initDeptEntries();
       
       // Only update current dept in production
       if (!isDevelopment) {
@@ -217,57 +216,6 @@ async function showDeptDetail(slug) {
 function backToDepartments() {
   document.getElementById('page-dept-detail').classList.remove('active');
   showPage('departments');
-}
-
-function initDeptEntries() {
-  document.querySelectorAll('.dept-event-entry').forEach(entry => {
-    const textBlocks = Array.from(entry.querySelectorAll(':scope > p, :scope > ul'));
-    const photosDiv = entry.querySelector('.dept-event-photos');
-    const amountDiv = entry.querySelector('.dept-amount-raised');
-
-    // Walk blocks, track cumulative words; cutAfter = last block that stays visible
-    let wordCount = 0;
-    let cutAfter = null;
-    for (const block of textBlocks) {
-      if (wordCount >= 100) break;
-      cutAfter = block;
-      wordCount += block.textContent.trim().split(/\s+/).filter(Boolean).length;
-    }
-
-    // Collect everything that goes into the collapsible
-    const toCollapse = [];
-    let pastCut = !cutAfter;
-    for (const block of textBlocks) {
-      if (block === cutAfter) { pastCut = true; continue; }
-      if (pastCut) toCollapse.push(block);
-    }
-    if (photosDiv) toCollapse.push(photosDiv);
-    if (amountDiv) toCollapse.push(amountDiv);
-
-    if (toCollapse.length === 0) return;
-
-    const collapsible = document.createElement('div');
-    collapsible.className = 'entry-collapsible';
-    toCollapse.forEach(el => collapsible.appendChild(el));
-    entry.appendChild(collapsible);
-
-    const btn = document.createElement('button');
-    btn.className = 'read-more-btn';
-    btn.textContent = 'read more ↓';
-    btn.addEventListener('click', () => {
-      const isOpen = collapsible.classList.contains('open');
-      if (isOpen) {
-        collapsible.style.maxHeight = '0';
-        collapsible.classList.remove('open');
-        btn.textContent = 'read more ↓';
-      } else {
-        collapsible.style.maxHeight = collapsible.scrollHeight + 'px';
-        collapsible.classList.add('open');
-        btn.textContent = 'read less ↑';
-      }
-    });
-    entry.appendChild(btn);
-  });
 }
 
 function toggleEventCard(card) {
@@ -310,8 +258,30 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     const links = document.getElementById('nav-links');
     if (links && links.classList.contains('open')) closeNav();
+    const entryModal = document.getElementById('deptEntryModal');
+    if (entryModal && entryModal.classList.contains('open')) closeDeptEntryModal({ closeForced: true });
   }
 });
+
+/* Dept entry detail modal */
+function openEntryModal(card) {
+  const tpl = card.querySelector('template.dept-entry-full');
+  if (!tpl) return;
+  const content = document.getElementById('deptEntryModalContent');
+  content.innerHTML = '';
+  content.appendChild(tpl.content.cloneNode(true));
+  document.getElementById('deptEntryModal').classList.add('open');
+  lockScroll();
+}
+
+function closeDeptEntryModal(e) {
+  const modal = document.getElementById('deptEntryModal');
+  if (!modal) return;
+  if (e && (e.target === modal || e.closeForced)) {
+    modal.classList.remove('open');
+    unlockScroll();
+  }
+}
 
 function toggleTheme() {
   const html = document.documentElement;
