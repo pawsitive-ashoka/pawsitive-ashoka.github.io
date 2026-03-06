@@ -43,14 +43,16 @@ function cinemaAvatarHtml(meta, idx, hasImage) {
 
 function coreAvatarHtml(meta, idx, hasImage) {
   const color = PASTEL_COLORS[idx % PASTEL_COLORS.length];
+  const noFallbackNames = ['Pia Rattan', 'Ishaan Sen Dave', 'Rutupurna Debalina Malik'];
   if (hasImage) {
     return `<div class="core-avatar" style="--ph-color:${color};">
       <img class="core-avatar-img" src="${esc(meta.image)}" alt="${esc(meta.name)}" loading="lazy" onerror="this.remove();this.parentNode.querySelector('.core-avatar-fallback').style.display=''">
       <span class="core-avatar-fallback" style="display:none">🐾</span>
     </div>`;
   }
+  const fallback = noFallbackNames.includes(meta.name) ? '' : '🐾';
   return `<div class="core-avatar" style="--ph-color:${color};">
-    <span class="core-avatar-fallback">🐾</span>
+    <span class="core-avatar-fallback">${fallback}</span>
   </div>`;
 }
 
