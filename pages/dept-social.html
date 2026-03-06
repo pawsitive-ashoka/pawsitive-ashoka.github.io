@@ -26,28 +26,53 @@
     </div>
     <div class="dept-detail-section">
       <h2>past highlights</h2>
-      <div class="dept-highlights">
-        <div class="dept-highlight-card">
-          <span class="dept-highlight-icon">📸</span>
-          <div>
-            <strong>Dog Spotlights</strong>
+      <div class="dept-entries">
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Dog Spotlights">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Dog Spotlights</h3>
+            <p class="dept-entry-preview">Regular features on the campus dogs — their names, personalities, and stories — building a following that genuinely cares.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Dog Spotlights</h3>
             <p>Regular features on the campus dogs — their names, personalities, and stories — building a following that genuinely cares.</p>
-          </div>
+          </template>
         </div>
-        <div class="dept-highlight-card">
-          <span class="dept-highlight-icon">✍️</span>
-          <div>
-            <strong>Animal Welfare Writing</strong>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Animal Welfare Writing">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Animal Welfare Writing</h3>
+            <p class="dept-entry-preview">Long-form posts and articles on stray animal rights, anti-cruelty laws, and responsible coexistence with campus animals.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Animal Welfare Writing</h3>
             <p>Long-form posts and articles on stray animal rights, anti-cruelty laws, and responsible coexistence with campus animals.</p>
-          </div>
+          </template>
         </div>
-        <div class="dept-highlight-card">
-          <span class="dept-highlight-icon">📣</span>
-          <div>
-            <strong>Campaign Launches</strong>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Campaign Launches">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Campaign Launches</h3>
+            <p class="dept-entry-preview">Digital-first campaigns driving online and offline action — from adoption sign-ups to donations to volunteer recruitment.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Campaign Launches</h3>
             <p>Digital-first campaigns driving online and offline action — from adoption sign-ups to donations to volunteer recruitment.</p>
-          </div>
+          </template>
         </div>
+
       </div>
     </div>
     <div class="dept-detail-section">
