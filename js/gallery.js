@@ -371,8 +371,10 @@ function renderMediaGrid() {
 
 /* ── Image lightbox ── */
 let _lbIndex = 0;
+let _lbImages = null; // null = gallery mode; array = dept entry mode
 
 function openLightbox(i) {
+  _lbImages = null;
   _lbIndex = i;
   const lb = document.getElementById('imgLightbox');
   document.getElementById('lbImg').src = _imgUrl(mediaImages[_lbIndex]);
@@ -381,18 +383,33 @@ function openLightbox(i) {
   lockScroll();
 }
 
+function openDeptLightbox(imgs, i) {
+  _lbImages = imgs;
+  _lbIndex = i;
+  const lb = document.getElementById('imgLightbox');
+  document.getElementById('lbImg').src = imgs[i];
+  document.getElementById('lbCounter').textContent = imgs.length > 1 ? (i + 1) + ' / ' + imgs.length : '';
+  lb.classList.add('open');
+  lockScroll();
+}
+
 function closeLightbox(e) {
   const lb = document.getElementById('imgLightbox');
-  if (e.target === lb || e.closeForced) { lb.classList.remove('open'); unlockScroll(); }
+  if (e.target === lb || e.closeForced) {
+    lb.classList.remove('open');
+    _lbImages = null;
+    unlockScroll();
+  }
 }
 
 function lightboxNav(dir) {
-  _lbIndex = (_lbIndex + dir + mediaImages.length) % mediaImages.length;
+  const pool = _lbImages || mediaImages;
+  _lbIndex = (_lbIndex + dir + pool.length) % pool.length;
   const img = document.getElementById('lbImg');
   img.style.opacity = '0';
   setTimeout(() => {
-    img.src = _imgUrl(mediaImages[_lbIndex]);
-    document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + mediaImages.length;
+    img.src = _lbImages ? _lbImages[_lbIndex] : _imgUrl(mediaImages[_lbIndex]);
+    document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + pool.length;
     img.style.opacity = '1';
   }, 150);
 }
