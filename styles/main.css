@@ -937,6 +937,60 @@ footer .footer-sep {
   .lb-close { width: 2.2rem; height: 2.2rem; }
   .video-modal-box { max-width: 95vw; border-radius: 12px; }
 
+  /* IN MEMORIAM — uniform grid like dogs, no masonry */
+  .memoriam-header-section { padding: 2.5rem 1.2rem 1.2rem; }
+  .memoriam-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+    gap: 0.5rem;
+    padding: 0 1rem 2rem;
+    margin: 0.5rem auto;
+  }
+  .memorial-card {
+    margin: 0;
+    box-shadow: 2px 2px 0 var(--sketch);
+    grid-row-end: auto !important;
+  }
+  .memorial-card .dog-tile-photo {
+    aspect-ratio: 1 / 1 !important;
+  }
+  /* Disable hover color-reveal on touch — handled by long-press .lit class */
+  .memorial-card:hover .memorial-card-inner {
+    filter: grayscale(1) contrast(0.92);
+  }
+  .memorial-card:hover .memorial-candle {
+    transform: none;
+    filter: none;
+    animation: candleFlicker 2.8s ease-in-out infinite;
+  }
+  /* Make candle tappable on mobile (larger touch target) */
+  .memorial-candle {
+    pointer-events: auto;
+    padding: 0.5rem;
+    margin: -0.5rem;
+    font-size: 1.1rem;
+  }
+
+  /* TOUCH TARGETS — ensure 48px minimum */
+  .nav-link, .nav-donate {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .chip {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .team-tab {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    min-height: 48px;
+  }
+
   /* FOOTER */
   footer { padding: 1.5rem 1rem; font-size: 1rem; }
 }
@@ -1230,14 +1284,73 @@ footer .footer-sep {
 /* ── Responsive tweaks ── */
 @media (max-width: 480px) {
   .memoriam-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(130px, 100%), 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
     padding: 0.5rem 0.75rem 2rem;
   }
   .memoriam-header-section { padding: 3rem 1.2rem 1.2rem; }
 }
 @media (max-width: 360px) {
   .memoriam-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(110px, 100%), 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35rem;
     padding: 0.5rem 0.5rem 2rem;
+  }
+}
+
+/* ── .lit state — long-press colour reveal on touch devices ── */
+.memorial-card.lit .memorial-card-inner {
+  filter: grayscale(0) contrast(1);
+}
+.memorial-card.lit .memorial-candle {
+  transform: scale(1.6);
+  filter: drop-shadow(0 0 4px rgba(255, 160, 0, 1))
+          drop-shadow(0 0 12px rgba(255, 80, 0, 0.65));
+  animation: candleLit 1s ease-in-out infinite;
+}
+
+/* ── Long-press hint toast ── */
+.memoriam-hint {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--card);
+  color: var(--ink);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 0.6rem 1.2rem;
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  box-shadow: 4px 4px 0 var(--sketch);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 500;
+  white-space: nowrap;
+}
+.memoriam-hint.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Landscape modal fix ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  .dog-modal-overlay, .memorial-modal-overlay {
+    align-items: center;
+  }
+  .dog-modal {
+    max-height: 95vh;
+    border-radius: 16px;
+  }
+  .dog-modal-photo {
+    aspect-ratio: 16/9;
+    max-height: 40vh;
+  }
+  .dog-modal-body {
+    padding: 0.8rem 1rem;
+  }
+  .dept-entry-modal-box {
+    max-height: 95vh;
   }
 }

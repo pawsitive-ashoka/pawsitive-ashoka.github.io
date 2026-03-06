@@ -101,10 +101,96 @@ function initMemorialModals() {
   const grid = document.getElementById('memoriam-grid');
   if (!grid) return;
 
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const LONG_PRESS_MS = 500;
+  const MOVE_THRESHOLD = 10; // px — cancel if finger moves too far
+
+  /* ── Touch: long-press toggles .lit, quick tap opens modal ── */
+  if (isTouch) {
+    let pressTimer = null;
+    let startX = 0, startY = 0;
+    let didLongPress = false;
+    let activeCard = null;
+
+    // Show a one-time hint on first visit
+    const hintKey = 'pawsitive-memoriam-hint-shown';
+    if (!sessionStorage.getItem(hintKey)) {
+      requestAnimationFrame(() => {
+        const hint = document.createElement('div');
+        hint.className = 'memoriam-hint';
+        hint.textContent = 'hold a card to light a candle 🕯️';
+        document.body.appendChild(hint);
+        setTimeout(() => hint.classList.add('show'), 600);
+        setTimeout(() => {
+          hint.classList.remove('show');
+          setTimeout(() => hint.remove(), 500);
+        }, 4000);
+        sessionStorage.setItem(hintKey, '1');
+      });
+    }
+
+    grid.addEventListener('touchstart', e => {
+      const card = e.target.closest('.dog-card');
+      if (!card) return;
+      activeCard = card;
+      didLongPress = false;
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+
+      pressTimer = setTimeout(() => {
+        didLongPress = true;
+        card.classList.toggle('lit');
+        if (navigator.vibrate) navigator.vibrate(50);
+      }, LONG_PRESS_MS);
+    }, { passive: true });
+
+    grid.addEventListener('touchmove', e => {
+      if (!pressTimer) return;
+      const touch = e.touches[0];
+      const dx = Math.abs(touch.clientX - startX);
+      const dy = Math.abs(touch.clientY - startY);
+      if (dx > MOVE_THRESHOLD || dy > MOVE_THRESHOLD) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+    }, { passive: true });
+
+    grid.addEventListener('touchend', e => {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+      if (didLongPress) {
+        didLongPress = false;
+        return;
+      }
+      if (activeCard) openMemorialModal(activeCard);
+      activeCard = null;
+    });
+
+    grid.addEventListener('touchcancel', () => {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+      didLongPress = false;
+      activeCard = null;
+    });
+
+    // Suppress native context menu on long press within the grid
+    grid.addEventListener('contextmenu', e => {
+      if (e.target.closest('.dog-card')) e.preventDefault();
+    });
+  }
+
+  /* ── Desktop: click opens modal (hover handles candle/colour via CSS) ── */
   grid.addEventListener('click', e => {
+    if (isTouch) return;
     const card = e.target.closest('.dog-card');
     if (!card) return;
+    openMemorialModal(card);
+  });
+}
 
+/** Build and show the memorial detail modal */
+function openMemorialModal(card) {
     const dark = document.documentElement.dataset.theme === 'dark';
     const bg   = dark ? (card.dataset.bgDark || '') : (card.dataset.bgLight || '');
 
@@ -121,8 +207,6 @@ function initMemorialModals() {
       .map(t => `<span class="dog-modal-tag">${t}</span>`)
       .join('');
 
-    /* Modal photo — rendered WITHOUT the grayscale filter because the overlay
-       is appended directly to <body>, outside .memoriam-page-wrap */
     const photoSection = card.dataset.image
       ? `<div class="dog-modal-photo memorial-modal-photo-wrap">
            <img src="${card.dataset.image}" alt="${card.dataset.name}" style="opacity:0;transition:opacity 0.3s" onload="this.style.opacity=1">
@@ -156,7 +240,6 @@ function initMemorialModals() {
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') close();
     }, { signal: ac.signal });
-  });
 }
 
 /** Main entry: fetch manifest, load all memorial dogs, render to grid */
