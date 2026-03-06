@@ -258,8 +258,30 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     const links = document.getElementById('nav-links');
     if (links && links.classList.contains('open')) closeNav();
+    const entryModal = document.getElementById('deptEntryModal');
+    if (entryModal && entryModal.classList.contains('open')) closeDeptEntryModal({ closeForced: true });
   }
 });
+
+/* Dept entry detail modal */
+function openEntryModal(card) {
+  const tpl = card.querySelector('template.dept-entry-full');
+  if (!tpl) return;
+  const content = document.getElementById('deptEntryModalContent');
+  content.innerHTML = '';
+  content.appendChild(tpl.content.cloneNode(true));
+  document.getElementById('deptEntryModal').classList.add('open');
+  lockScroll();
+}
+
+function closeDeptEntryModal(e) {
+  const modal = document.getElementById('deptEntryModal');
+  if (!modal) return;
+  if (e && (e.target === modal || e.closeForced)) {
+    modal.classList.remove('open');
+    unlockScroll();
+  }
+}
 
 function toggleTheme() {
   const html = document.documentElement;

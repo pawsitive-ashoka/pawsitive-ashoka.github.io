@@ -26,75 +26,146 @@
     </div>
     <div class="dept-detail-section">
       <h2>past highlights</h2>
-      <div class="dept-highlights">
-        <div class="dept-highlight-card">
-          <span class="dept-highlight-icon">🏥</span>
-          <div>
-            <strong>Emergency Response</strong>
-            <p>Rapid response to injuries and illnesses — coordinating vet visits and ensuring no animal suffers alone.</p>
+      <div class="dept-entries">
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
           </div>
-        </div>
-        <div class="dept-highlight-card">
-          <span class="dept-highlight-icon">🍖</span>
-          <div>
-            <strong>365-Day Feeding</strong>
-            <p>Uninterrupted daily feeding across all seasons, including summer and winter breaks when the campus empties.</p>
+          <div class="dept-entry-body">
+            <h3>Blanket Drive</h3>
+            <p class="dept-entry-preview">As winter temperatures in Sonipat dropped to single digits, Pawsitive organized a Blanket Drive to help campus dogs withstand the cold. Warm blankets were distributed across campus to protect the dogs during harsh winter nights.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
           </div>
+          <template class="dept-entry-full">
+            <h3>Blanket Drive</h3>
+            <p>As winter temperatures in Sonipat, Haryana dropped to single digits, Pawsitive organized a Blanket Drive to help campus dogs withstand the cold. Through this initiative, warm blankets were distributed across the campus to provide the dogs with protection and comfort during the harsh winter nights.</p>
+          </template>
         </div>
-        <div class="dept-highlight-card">
-          <span class="dept-highlight-icon">💉</span>
-          <div>
-            <strong>Vaccination Drives</strong>
-            <p>Coordinating mass vaccination and sterilisation drives with licensed vets to keep the campus dog population healthy.</p>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
           </div>
+          <div class="dept-entry-body">
+            <h3>Collar Drive</h3>
+            <p class="dept-entry-preview">Pawsitive organized a Reflective Collar Drive to improve the safety of campus dogs at night. Reflective collars now increase the dogs' visibility to drivers in low-light conditions, reducing their vulnerability to accidents.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Collar Drive</h3>
+            <p>To improve the safety of the campus dogs, Pawsitive organized a Reflective Collar Drive, through which reflective collars were fitted on dogs across the campus. These collars increase the dogs' visibility to drivers at night and in low-light conditions, significantly reducing their susceptibility to vehicular accidents.</p>
+          </template>
         </div>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Daily Feeding Drives</h3>
+            <p class="dept-entry-preview">Pawsitive feeds campus dogs twice daily — afternoon and night — using nutritious leftover meals from Ashoka University's dining facilities. This reduces food wastage while ensuring the dogs receive a balanced, reliable diet.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Daily Feeding Drives</h3>
+            <p>Pawsitive conducts daily feeding drives to ensure that the campus dogs are consistently provided with nutritious meals. The dogs are fed twice a day, once in the afternoon and again at night, by trained members of the club. The food distributed during these drives primarily consists of leftover meals from Ashoka University's dining facilities, allowing the club to reduce food wastage while ensuring that the dogs do not go hungry. These meals typically include items such as rice, roti, dal, chicken, and eggs, providing the dogs with a balanced and reliable source of nourishment.</p>
+          </template>
+        </div>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Medication Management and Treatment Monitoring</h3>
+            <p class="dept-entry-preview">When a campus dog is prescribed medication, Pawsitive volunteers coordinate to administer the correct dosage at the right intervals. The team closely monitors each treatment routine to ensure effective and timely recovery.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Medication Management and Treatment Monitoring</h3>
+            <p>When a campus dog is prescribed medication by a veterinarian, Pawsitive ensures that the treatment is administered consistently and responsibly. Volunteers coordinate to provide the correct dosage at the appropriate intervals, closely following the prescribed schedule. By monitoring these treatment routines, the team ensures that each dog receives the care required for an effective and timely recovery.</p>
+          </template>
+        </div>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Sterilization Drive</h3>
+            <p class="dept-entry-preview">Pawsitive regularly organizes sterilization drives to support the long-term health of campus dogs and promote responsible population management. Sterilization reduces uncontrolled population growth, related injuries, and health risks for individual animals.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Sterilization Drive</h3>
+            <p>Pawsitive regularly organizes sterilization drives to support the long-term health and wellbeing of the campus dogs while also promoting responsible population management. Sterilization refers to neutering (for male dogs) and spaying (for female dogs) — veterinary procedures that prevent dogs from reproducing. For dogs living on the streets, sterilization plays a crucial role in reducing uncontrolled population growth, which in turn decreases competition for food, territory, and shelter.</p>
+            <p>For female dogs, spaying prevents repeated pregnancies and protects them from several health risks, including uterine infections and certain reproductive cancers. Street dogs that are not sterilized often experience frequent pregnancies under physically demanding conditions, which can weaken their health over time. For male dogs, neutering helps reduce aggressive behaviour, territorial fights, and roaming in search of mates — factors that often lead to injuries and road accidents. Sterilized males are generally calmer and less likely to engage in conflicts with other dogs.</p>
+            <p>In addition to improving the quality of life for individual animals, sterilization helps create more stable and healthier dog communities within a given area. By preventing the birth of vulnerable puppies who may struggle to survive on the streets, these drives contribute to a more humane and sustainable approach to managing urban stray dog populations.</p>
+          </template>
+        </div>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Tick Removal</h3>
+            <p class="dept-entry-preview">Pawsitive periodically conducts tick removal drives to protect campus dogs from parasites that can cause skin irritation, weakness, and serious blood-borne infections. Volunteers apply spot-on anti-tick treatments directly to the dogs' skin.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Tick Removal</h3>
+            <p>Pawsitive periodically conducts tick removal drives to protect the campus dogs from parasites that can seriously affect their health. Ticks are small blood-feeding parasites that attach themselves to a dog's skin and feed on its blood. If left untreated, tick infestations can cause skin irritation, weakness, and the transmission of serious diseases such as tick fever and other blood-borne infections.</p>
+            <p>During these drives, volunteers apply spot-on anti-tick treatments to the dogs. These medications are applied directly to the dog's skin and work by killing existing ticks while also preventing new infestations for a period of time.</p>
+            <p>Regular tick prevention is particularly important for dogs living outdoors, as they are frequently exposed to grassy areas and other animals where ticks are commonly found. Through these drives, Pawsitive helps ensure that the campus dogs remain healthier, more comfortable, and less vulnerable to tick-borne illnesses.</p>
+          </template>
+        </div>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Vaccination Drive</h3>
+            <p class="dept-entry-preview">Pawsitive conducts regular vaccination drives to protect campus dogs from common and life-threatening diseases. Puppies receive multi-dose vaccines in early months, while adult dogs get annual boosters to maintain immunity.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Vaccination Drive</h3>
+            <p>Pawsitive conducts regular vaccination drives to protect the campus dogs from common and potentially life-threatening diseases. Vaccination is one of the most important aspects of community animal care, as it safeguards the health of individual dogs while also helping prevent the spread of infectious diseases among animals and humans.</p>
+            <p>For dogs living on the streets, vaccinations are especially important. Limited access to veterinary care and frequent interaction with other animals can increase their vulnerability to disease. By maintaining a consistent vaccination schedule, Pawsitive works to ensure that the campus dog population remains healthy and protected.</p>
+            <p>Puppies require multiple vaccinations during their early months to gradually build immunity. These typically include:</p>
+            <ul>
+              <li><strong>Nine-in-One Vaccine</strong> — administered in three doses to protect against diseases such as <em>Canine Distemper Virus (CDV), Canine Parvovirus (CPV), Canine Adenovirus (CAV-1/CAV-2), Parainfluenza,</em> and <em>Leptospirosis.</em></li>
+              <li><strong>Anti-Rabies Vaccine</strong> — administered in two doses once the puppy reaches the appropriate age to provide protection against rabies.</li>
+              <li><strong>Canine Coronavirus (CCV) Vaccine</strong> — administered in two doses to protect against canine coronavirus, which primarily affects the gastrointestinal system of young dogs.</li>
+            </ul>
+            <p>Adult dogs receive annual booster vaccinations to maintain immunity, including the Anti-Rabies vaccine and Nine-in-One vaccine administered once a year.</p>
+          </template>
+        </div>
+
+        <div class="dept-entry-card" onclick="openEntryModal(this)">
+          <div class="dept-entry-thumb">
+            <img src="../public/logo/Paws%20Logo.jpg" alt="Pawsitive">
+          </div>
+          <div class="dept-entry-body">
+            <h3>Visits to the Veterinary Clinic</h3>
+            <p class="dept-entry-preview">Pawsitive ensures campus dogs receive timely veterinary care whenever needed. For serious conditions or emergencies, the club arranges visits to larger hospitals equipped for advanced procedures, including surgeries and specialized treatment.</p>
+            <button class="dept-entry-btn" onclick="event.stopPropagation();openEntryModal(this.closest('.dept-entry-card'))">view more →</button>
+          </div>
+          <template class="dept-entry-full">
+            <h3>Visits to the Veterinary Clinic</h3>
+            <p>Pawsitive ensures that the campus dogs receive timely veterinary care whenever medical attention is required. For routine health concerns — such as minor injuries, infections, or general check-ups — dogs are taken to a local veterinary clinic, where they are examined and treated as needed.</p>
+            <p>In cases of more serious medical conditions or emergencies, Pawsitive arranges visits to larger veterinary hospitals equipped to handle advanced procedures, including surgeries and specialized treatment. Members coordinate transportation, appointments, and follow-up care to ensure that each dog receives the medical attention it requires.</p>
+          </template>
+        </div>
+
       </div>
     </div>
     <div class="dept-detail-section">
       <h2>who thrives here</h2>
       <p>You're reliable above everything else. You care deeply about animals and you're not squeamish about the hard parts of welfare work — dirt, illness, grief. You communicate well in a team because coordination is everything here. And you show up, every time, because the dogs depend on it.</p>
-    </div>
-    <div class="dept-detail-section">
-      <h2>our drives & operations</h2>
-      <p style="font-size:0.97rem;color:var(--ink-soft);line-height:1.72;margin-bottom:1rem;">Click on any drive to expand and learn more about it.</p>
-      <div class="event-cards-grid">
-        <div class="event-acc-card open" onclick="toggleEventCard(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggleEventCard(this)">
-          <div class="event-acc-top">
-            <div class="event-acc-img">💉</div>
-            <div class="event-acc-title">Vaccination Drive</div>
-            <span class="event-acc-arrow">▼</span>
-          </div>
-          <div class="event-acc-body">
-            <div class="event-acc-body-inner">
-              <p>A coordinated mass vaccination camp for campus dogs — administered by licensed veterinarians covering rabies, distemper, parvovirus, and other key immunisations to keep the entire campus dog population protected and healthy.</p>
-            </div>
-          </div>
-        </div>
-        <div class="event-acc-card open" onclick="toggleEventCard(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggleEventCard(this)">
-          <div class="event-acc-top">
-            <div class="event-acc-img">🍖</div>
-            <div class="event-acc-title">Summer Feeding Programme</div>
-            <span class="event-acc-arrow">▼</span>
-          </div>
-          <div class="event-acc-body">
-            <div class="event-acc-body-inner">
-              <p>Uninterrupted twice-daily feeding operations through summer break — coordinated via a dedicated roster of volunteers remaining on campus, ensuring no dog goes unfed even when the campus empties out.</p>
-            </div>
-          </div>
-        </div>
-        <div class="event-acc-card open" onclick="toggleEventCard(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggleEventCard(this)">
-          <div class="event-acc-top">
-            <div class="event-acc-img">🩺</div>
-            <div class="event-acc-title">Tick & Parasite Treatment Drive</div>
-            <span class="event-acc-arrow">▼</span>
-          </div>
-          <div class="event-acc-body">
-            <div class="event-acc-body-inner">
-              <p>A systematic treatment round for all dogs on our care census, covering tick removal, deworming, anti-fungal treatment, and skin condition management — carried out seasonally and whenever outbreaks are detected.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   <footer>made with <span class="heart">❤️</span> by pawsitive · ashoka university · 🐾</footer>
