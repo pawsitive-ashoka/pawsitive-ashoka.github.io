@@ -5,13 +5,31 @@ const EMAILJS_TEMPLATE_ID = 'template_zwwhu2y';
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
+document.addEventListener('change', (e) => {
+  if (e.target?.id !== 'cf-topic') return;
+  const customSubjectGrp   = document.getElementById('custom-subject-group');
+  const customSubjectInput = document.getElementById('cf-custom-subject');
+  const isSomethingElse    = e.target.value === 'Something Else';
+  if (customSubjectGrp)   customSubjectGrp.style.display = isSomethingElse ? 'flex' : 'none';
+  if (customSubjectInput) {
+    if (isSomethingElse) {
+      customSubjectInput.setAttribute('required', '');
+    } else {
+      customSubjectInput.removeAttribute('required');
+      customSubjectInput.value = '';
+    }
+  }
+});
+
 async function submitForm(event) {
   event.preventDefault();
 
-  const name    = document.getElementById('cf-name')?.value.trim();
-  const email   = document.getElementById('cf-email')?.value.trim();
-  const topic   = document.getElementById('cf-topic')?.value.trim();
-  const message = document.getElementById('cf-message')?.value.trim();
+  const name          = document.getElementById('cf-name')?.value.trim();
+  const email         = document.getElementById('cf-email')?.value.trim();
+  const rawTopic      = document.getElementById('cf-topic')?.value.trim();
+  const customSubject = document.getElementById('cf-custom-subject')?.value.trim();
+  const topic         = rawTopic === 'Something Else' ? (customSubject || '') : rawTopic;
+  const message       = document.getElementById('cf-message')?.value.trim();
 
   const successEl = document.getElementById('formSuccess');
   const errorEl   = document.getElementById('formError');
@@ -20,8 +38,12 @@ async function submitForm(event) {
   if (errorEl)   errorEl.textContent = '';
   if (successEl) successEl.style.display = 'none';
 
-  if (!name || !email || !topic || !message) {
+  if (!name || !email || !rawTopic || !message) {
     if (errorEl) errorEl.textContent = 'Please fill in all fields.';
+    return;
+  }
+  if (rawTopic === 'Something Else' && !customSubject) {
+    if (errorEl) errorEl.textContent = 'Please enter a custom subject.';
     return;
   }
 
@@ -40,6 +62,10 @@ async function submitForm(event) {
       setTimeout(() => { successEl.style.display = 'none'; }, 5000);
     }
     document.getElementById('contact-form')?.reset();
+    const customSubjectGrp = document.getElementById('custom-subject-group');
+    const customSubjectInput = document.getElementById('cf-custom-subject');
+    if (customSubjectGrp) customSubjectGrp.style.display = 'none';
+    if (customSubjectInput) customSubjectInput.removeAttribute('required');
   } catch (err) {
     console.error('EmailJS error:', err);
     if (errorEl) errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
