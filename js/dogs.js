@@ -86,6 +86,35 @@ function parseLocation(breed) {
   return m ? m[1].trim() : '';
 }
 
+/** Map specific campus locations to general area groups for filtering */
+const LOCATION_GROUP_MAP = {
+  'Gate 1': 'Gate 1',
+  'Gate 1/Gate 2': 'Gate 1',
+  'Gate 2': 'Gate 2',
+  'Gate 2/Antil Dhaba': 'Gate 2',
+  'Gate 2/WUD': 'Gate 2',
+  'Opposite Gate 2': 'Gate 2',
+  'Gate 3': 'Gate 3',
+  'Gate 3 Construction': 'Gate 3',
+  'Around Gate 3': 'Gate 3',
+  'ASG': 'ASG',
+  'Morriko/ASG': 'ASG',
+  'Beyond Morriko/ASG': 'ASG',
+  'Police Station/ASG': 'Police Station',
+  'Tapri': 'Tapri',
+  'Next to Roti Boti': 'Tapri',
+  'Next to WUD': 'WUD',
+  'Near WUD': 'WUD',
+  'Commissioner\'s Office': 'Commissioner\'s Office',
+  'Police Station': 'Police Station',
+  'Shelter': 'Shelter',
+};
+
+function toGeneralLocation(specific) {
+  if (!specific) return '';
+  return LOCATION_GROUP_MAP[specific] || specific;
+}
+
 /** Extract gender from breed string: ♀ → 'female', ♂ → 'male' */
 function parseGender(breed) {
   if (!breed) return '';
@@ -148,7 +177,7 @@ function buildDogCard(meta, body) {
       data-bg-dark="${esc(meta.bgDark)}"
       data-sterilized="${esc(meta.sterilized || '')}"
       data-vaccinated="${esc(meta.vaccinated || '')}"
-      data-location="${esc(parseLocation(meta.breed))}"
+      data-location="${esc(toGeneralLocation(parseLocation(meta.breed)))}"
       data-gender="${esc(parseGender(meta.breed))}"
       data-age-months="${calcAgeMonths(meta.born)}">
     ${photoArea}
@@ -365,16 +394,16 @@ function initDogFilters() {
     <div class="dogs-filter-backdrop" id="dogs-filter-backdrop"></div>
     <aside class="dogs-filter-panel" id="dogs-filter-panel" aria-label="Filter dogs">
       <div class="dogs-filter-header">
-        <span class="dogs-filter-title">🐾 filters</span>
+        <span class="dogs-filter-title">filters</span>
         <button class="dogs-filter-close" id="dogs-filter-close" aria-label="Close filters">✕</button>
       </div>
       <div class="dogs-filter-body">
         <div class="dogs-filter-section">
-          <div class="dogs-filter-label">📍 location</div>
+          <div class="dogs-filter-label">location</div>
           <div class="dogs-filter-chips" id="filter-locations">${locationChips}</div>
         </div>
         <div class="dogs-filter-section">
-          <div class="dogs-filter-label">🚻 gender</div>
+          <div class="dogs-filter-label">gender</div>
           <div class="dogs-filter-toggle-group" id="filter-gender">
             <button class="dogs-filter-toggle active" data-val="all">all</button>
             <button class="dogs-filter-toggle" data-val="female">♀ female</button>
@@ -382,7 +411,7 @@ function initDogFilters() {
           </div>
         </div>
         <div class="dogs-filter-section">
-          <div class="dogs-filter-label">🎂 age</div>
+          <div class="dogs-filter-label">age</div>
           <div class="dogs-age-slider-wrap">
             <div class="dogs-age-track"><div class="dogs-age-fill" id="dogs-age-fill"></div></div>
             <input type="range" id="age-min" class="dogs-age-range" min="${dataMin}" max="${dataMax}" value="${dataMin}" step="1">
@@ -391,17 +420,17 @@ function initDogFilters() {
           <div class="dogs-age-label" id="dogs-age-label">${fmtAge(dataMin)} → ${fmtAge(dataMax)}</div>
         </div>
         <div class="dogs-filter-section">
-          <div class="dogs-filter-label">✅ sterilisation</div>
+          <div class="dogs-filter-label">sterilisation</div>
           <div class="dogs-filter-toggle-group" id="filter-sterilized">
-            <button class="dogs-filter-toggle active" data-val="all">all</button>
+            <button class="dogs-filter-toggle active" data-val="all">all (confirmed &amp; unconfirmed)</button>
             <button class="dogs-filter-toggle" data-val="yes">yes</button>
             <button class="dogs-filter-toggle" data-val="no">not confirmed</button>
           </div>
         </div>
         <div class="dogs-filter-section">
-          <div class="dogs-filter-label">💉 vaccination</div>
+          <div class="dogs-filter-label">vaccination</div>
           <div class="dogs-filter-toggle-group" id="filter-vaccinated">
-            <button class="dogs-filter-toggle active" data-val="all">all</button>
+            <button class="dogs-filter-toggle active" data-val="all">all (confirmed &amp; unconfirmed)</button>
             <button class="dogs-filter-toggle" data-val="yes">yes</button>
             <button class="dogs-filter-toggle" data-val="no">not confirmed</button>
           </div>
