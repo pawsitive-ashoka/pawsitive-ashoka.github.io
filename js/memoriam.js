@@ -140,7 +140,7 @@ function initMemorialModals() {
 
       pressTimer = setTimeout(() => {
         didLongPress = true;
-        card.classList.toggle('lit');
+        card.classList.add('lit');
         if (navigator.vibrate) navigator.vibrate(50);
       }, LONG_PRESS_MS);
     }, { passive: true });
@@ -161,6 +161,8 @@ function initMemorialModals() {
       pressTimer = null;
       if (didLongPress) {
         didLongPress = false;
+        if (activeCard) activeCard.classList.remove('lit');
+        activeCard = null;
         return;
       }
       if (activeCard) openMemorialModal(activeCard);
@@ -170,6 +172,7 @@ function initMemorialModals() {
     grid.addEventListener('touchcancel', () => {
       clearTimeout(pressTimer);
       pressTimer = null;
+      if (activeCard) activeCard.classList.remove('lit');
       didLongPress = false;
       activeCard = null;
     });

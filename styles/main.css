@@ -1014,8 +1014,8 @@ footer .footer-sep {
   .memoriam-header-section { padding: 2.5rem 1.2rem 1.2rem; }
   .memoriam-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: auto;
-    gap: 0.5rem;
+    grid-auto-rows: auto !important;
+    gap: 0.5rem !important;
     padding: 0 1rem 2rem;
     margin: 0.5rem auto;
   }
