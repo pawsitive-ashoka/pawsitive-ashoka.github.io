@@ -106,7 +106,9 @@ function buildDogCard(meta, body) {
       data-image="${esc(meta.image)}"
       data-emoji="${esc(meta.emoji || '🐕')}"
       data-bg-light="${esc(meta.bgLight)}"
-      data-bg-dark="${esc(meta.bgDark)}">
+      data-bg-dark="${esc(meta.bgDark)}"
+      data-sterilized="${esc(meta.sterilized || '')}"
+      data-vaccinated="${esc(meta.vaccinated || '')}">
     ${photoArea}
     <div class="dog-tile-name">${esc(displayName)}</div>
   </div>`;
@@ -226,6 +228,11 @@ function initDogModals() {
       ? `<div class="dog-modal-photo"><img src="${card.dataset.image}" alt="${card.dataset.name}" style="opacity:0;transition:opacity 0.3s" onload="this.style.opacity=1"></div>`
       : `<div class="dog-modal-emoji" style="background:${bg}"><span style="font-size:7rem">${card.dataset.emoji || '🐕'}</span></div>`;
 
+    const statusBadges = [];
+    if (card.dataset.sterilized === 'true') statusBadges.push('<span class="dog-status-badge dog-status-sterilized">✅ sterilized</span>');
+    if (card.dataset.vaccinated === 'true') statusBadges.push('<span class="dog-status-badge dog-status-vaccinated">💉 vaccinated</span>');
+    const statusHtml = statusBadges.length ? `<div class="dog-modal-status">${statusBadges.join('')}</div>` : '';
+
     const overlay = document.createElement('div');
     overlay.className = 'dog-modal-overlay';
     overlay.innerHTML = `
@@ -235,6 +242,7 @@ function initDogModals() {
         <div class="dog-modal-body">
           <div class="dog-modal-name">${card.dataset.name} <span>${card.dataset.nameEmoji || ''}</span></div>
           <div class="dog-modal-breed">${card.dataset.breed || ''}</div>
+          ${statusHtml}
           <p class="dog-modal-desc">${card.dataset.body || ''}</p>
           <div class="dog-modal-tags">${tags}</div>
         </div>

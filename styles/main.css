@@ -253,6 +253,12 @@ nav::after {
 .dog-modal-desc{font-size:0.95rem;color:var(--ink-soft);line-height:1.6;margin-bottom:0.8rem;}
 .dog-modal-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
 .dog-modal-tag{font-size:0.78rem;padding:0.2rem 0.6rem;border-radius:20px;border:1.5px solid var(--border);color:var(--ink-soft);background:var(--bg2);}
+.dog-modal-status{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.8rem;}
+.dog-status-badge{font-size:0.78rem;padding:0.2rem 0.7rem;border-radius:20px;border:1.5px solid;font-weight:600;}
+.dog-status-sterilized{background:#e8f5e9;border-color:#4caf50;color:#2e7d32;}
+.dog-status-vaccinated{background:#e3f2fd;border-color:#2196f3;color:#1565c0;}
+[data-theme=dark] .dog-status-sterilized{background:#1b3a1f;border-color:#4caf50;color:#a5d6a7;}
+[data-theme=dark] .dog-status-vaccinated{background:#0d2a3a;border-color:#2196f3;color:#90caf9;}
 .dog-modal-close{position:absolute;top:0.75rem;right:0.75rem;background:var(--card);border:2px solid var(--border);border-radius:50%;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;line-height:1;z-index:1;transition:background 0.15s;}
 .dog-modal-close:hover{background:var(--bg2);}
 
