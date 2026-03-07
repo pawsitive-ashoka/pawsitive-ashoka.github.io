@@ -4,7 +4,7 @@ nameEmoji: 🌸
 emoji: 🐕
 breed: 📍 Next to WUD · ♀ · 2 months · Brown, Black & White
 born: 2026
-image: public/dogs/images/blossom.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/blossom.jpg
 tags: 🌱 tiny pup, 🌸 tricolour beauty, 🔧 personality in development
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d8b0)
 bgDark: linear-gradient(135deg,#2a1808,#3a2010)

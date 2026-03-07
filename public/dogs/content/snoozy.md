@@ -4,7 +4,7 @@ nameEmoji: 💤
 emoji: 🐕
 breed: 📍 ASG · 8 yrs · White
 born: 2017
-image: public/dogs/images/snoozy.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/snoozy.jpg
 tags: 💤 nap professional, 😮 tongue always out, 🙈 non-confrontational, 😌 minding own business
 bgLight: linear-gradient(135deg,#f0f0e8,#e8e8d8)
 bgDark: linear-gradient(135deg,#28281a,#303020)

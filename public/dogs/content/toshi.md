@@ -4,7 +4,7 @@ nameEmoji: 🌱
 emoji: 🐕
 breed: 📍 Commissioner's Office · ♀ · 2 months · Brown
 born: 2026
-image: public/dogs/images/toshi.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/toshi.jpg
 tags: 🌱 tiny pup, 🐾 Clio's pup, 🔧 personality in development
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
 bgDark: linear-gradient(135deg,#2d1808,#3a2010)

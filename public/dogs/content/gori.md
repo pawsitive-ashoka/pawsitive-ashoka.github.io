@@ -4,7 +4,7 @@ nameEmoji: 🌱
 emoji: 🐕
 breed: 📍 Opposite Gate 2 · ♀ · 2 months · Black
 born: 2026
-image: public/dogs/images/gori.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/gori.jpg
 tags: 🌱 tiny pup, 🐾 runt of the litter, 🔧 personality in development
 bgLight: linear-gradient(135deg,#d8d8d8,#c8c8c8)
 bgDark: linear-gradient(135deg,#181818,#222222)

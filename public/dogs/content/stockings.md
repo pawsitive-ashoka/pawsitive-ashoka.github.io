@@ -4,7 +4,7 @@ nameEmoji: 😴
 emoji: 🐕
 breed: 📍 Gate 1 · ♀ · 9 yrs · Black & White
 born: 2016
-image: public/dogs/images/stockings.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/stockings.jpg
 tags: 😴 professional napper, 🕳️ hole digger, 🚗 road hazard, 💪 resilient
 bgLight: linear-gradient(135deg,#e8e8f5,#d0d0e8)
 bgDark: linear-gradient(135deg,#12120d,#1a1a28)

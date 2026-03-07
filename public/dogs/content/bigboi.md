@@ -4,7 +4,7 @@ nameEmoji: 👴
 emoji: 🐕
 breed: 📍 Police Station · ♂ · 10 yrs · White
 born: 2015
-image: public/dogs/images/bigboi.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/bigboi.jpg
 tags: 👴 old soul, 👁️ cataracts, ⚡ famously fast, 🦁 not to be underestimated
 bgLight: linear-gradient(135deg,#f5f0e8,#ede4d0)
 bgDark: linear-gradient(135deg,#2d2a20,#3d3828)

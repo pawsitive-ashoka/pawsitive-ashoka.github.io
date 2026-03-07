@@ -5,7 +5,7 @@ emoji: 🐕
 breed: 📍 Gate 2/WUD Tapri · ♀ · 2 yrs · White & Brown
 born: 2023
 dates: 2024 – 2026
-image: public/memorial/images/caramel.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/memorial/images/caramel.jpg
 tags: 🍮 gentle & shy, 🤝 tapri regular, 🥚 loves boiled eggs, 🌸 came a long way
 bgLight: linear-gradient(135deg,#e8e8e8,#d0d0d0)
 bgDark: linear-gradient(135deg,#1c1c1c,#262626)

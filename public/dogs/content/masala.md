@@ -4,7 +4,7 @@ nameEmoji: 🌶️
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♀ · 9 yrs · Brown & Black
 born: 2016
-image: public/dogs/images/masala.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/masala.jpg
 tags: 🌶️ expressive, 🔊 communicates loudly, 💪 holds her own, ❤️ deeply fond of humans
 bgLight: linear-gradient(135deg,#f8e0c8,#f0c8a0)
 bgDark: linear-gradient(135deg,#2d1208,#3d1a08)

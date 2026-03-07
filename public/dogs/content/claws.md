@@ -4,7 +4,7 @@ nameEmoji: 🐾
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♀ · 3 yrs · Brown
 born: 2022
-image: public/dogs/images/claws.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/claws.jpg
 tags: 🐾 exhausted mom, 🥚 snack-motivated, 🏃 appears only for food, 💛 quietly spirited
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
 bgDark: linear-gradient(135deg,#281808,#382010)

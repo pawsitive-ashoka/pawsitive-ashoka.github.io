@@ -4,7 +4,7 @@ nameEmoji: 🤝
 emoji: 🐕
 breed: 📍 Next to Roti Boti · ♂ · 6 yrs · White & Black
 born: 2020
-image: public/dogs/images/sid.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/sid.jpg
 tags: 🤝 gentleman paw-giver, 🍪 food obsessed, 🎭 two very different modes
 bgLight: linear-gradient(135deg,#fff8f0,#fff0dc)
 bgDark: linear-gradient(135deg,#2a2208,#3a2c08)

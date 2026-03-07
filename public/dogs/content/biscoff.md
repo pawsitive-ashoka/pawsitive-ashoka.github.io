@@ -4,7 +4,7 @@ nameEmoji: 🍪
 emoji: 🐕
 breed: 📍 Beyond Morriko/ASG · ♂ · 4 yrs · Brown & White
 born: 2022
-image: public/dogs/images/biscoff.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/biscoff.jpg
 tags: 🍪 curious but cautious, 🐾 step forward, hop back, 💛 wants to trust
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d8b0)
 bgDark: linear-gradient(135deg,#2a1808,#3a2010)

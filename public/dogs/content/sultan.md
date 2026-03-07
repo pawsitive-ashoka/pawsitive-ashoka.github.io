@@ -4,7 +4,7 @@ nameEmoji: 🦁
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♂ · 10 yrs · Brown
 born: 2015
-image: public/dogs/images/sultan.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/sultan.jpg
 tags: 🦁 pack king, 🤗 full-body hugs, 🍗 food connoisseur, 👨‍👧‍👦 proud father of 3
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d0a8)
 bgDark: linear-gradient(135deg,#2d1808,#3d2010)

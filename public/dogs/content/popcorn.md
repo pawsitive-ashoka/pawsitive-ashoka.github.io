@@ -4,7 +4,7 @@ nameEmoji: 🍿
 emoji: 🐕
 breed: 📍 Police Station · ♀ · 6 yrs · White
 born: 2019
-image: public/dogs/images/popcorn.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/popcorn.jpg
 tags: 🍿 bouncy & bubbly, 🥰 endlessly affectionate, 🐾 territorial, 😂 easily distracted
 bgLight: linear-gradient(135deg,#fff8e0,#ffecb0)
 bgDark: linear-gradient(135deg,#2d2208,#3d2c0d)

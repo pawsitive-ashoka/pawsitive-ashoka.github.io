@@ -4,7 +4,7 @@ nameEmoji: 🌸
 emoji: 🐕
 breed: 📍 Gate 1 · ♂ · 6 yrs · White
 born: 2019
-image: public/dogs/images/bunty.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/bunty.jpg
 tags: 🌸 shy & sweet, 🕐 slow to trust, 👫 loyal shadow
 bgLight: linear-gradient(135deg,#fff0e8,#ffe4cc)
 bgDark: linear-gradient(135deg,#2d1208,#3d1a0d)

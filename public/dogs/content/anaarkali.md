@@ -4,7 +4,7 @@ nameEmoji: 🌺
 emoji: 🐕
 breed: 📍 Next to Roti Boti · ♀ · 6 yrs · Brown
 born: 2020
-image: public/dogs/images/anaarkali.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/anaarkali.jpg
 tags: 🌺 flowery personality, 🚗 dignified car-barker, 🤝 pack loyalist
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
 bgDark: linear-gradient(135deg,#2d1808,#3a2010)

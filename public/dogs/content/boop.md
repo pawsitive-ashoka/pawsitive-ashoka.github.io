@@ -4,7 +4,7 @@ nameEmoji: 💪
 emoji: 🐕
 breed: 📍 Gate 1 · ♂ · 10 yrs · White
 born: 2015
-image: public/dogs/images/boop.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/boop.jpg
 tags: 💪 macho energy, 👁️ attention seeker, 🛡️ campus guardian, 🥰 big softie
 bgLight: linear-gradient(135deg,#fff8e8,#ffeecc)
 bgDark: linear-gradient(135deg,#2d2208,#3d2c0d)

@@ -4,7 +4,7 @@ nameEmoji: 🍀
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♂ · 9 yrs · Brown
 born: 2016
-image: public/dogs/images/sutta.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/sutta.jpg
 tags: 🍀 golden retriever vibes, 🌿 loves rolling in grass, 🥈 second in command, 🤝 people-loving
 bgLight: linear-gradient(135deg,#f0e8c8,#e8d8a8)
 bgDark: linear-gradient(135deg,#282010,#302818)

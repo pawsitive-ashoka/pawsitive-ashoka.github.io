@@ -4,7 +4,7 @@ nameEmoji: 🌺
 emoji: 🐕
 breed: 📍 Near WUD · ♀ · 2 yrs · Brown & White
 born: 2023
-image: public/dogs/images/bella.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/bella.jpg
 tags: 🌺 gentle sweetheart, 🍪 treat lover, 🐾 new mother, 😤 hates being mistaken for Coco
 bgLight: linear-gradient(135deg,#f8e8d8,#f0d8c0)
 bgDark: linear-gradient(135deg,#2d1808,#3d2010)

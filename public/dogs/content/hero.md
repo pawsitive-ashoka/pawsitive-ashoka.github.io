@@ -4,7 +4,7 @@ nameEmoji: 🏍️
 emoji: 🐕
 breed: 📍 Morriko/ASG · ♂ · 3 months · Black
 born: 2025
-image: public/dogs/images/hero.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/hero.jpg
 tags: 🏍️ named after a Honda, 👂 oversized ears, 🥺 doll-like eyes, 💛 slowly opening up
 bgLight: linear-gradient(135deg,#d8d8d8,#c8c8c8)
 bgDark: linear-gradient(135deg,#181818,#222222)

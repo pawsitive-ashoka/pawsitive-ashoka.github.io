@@ -4,7 +4,7 @@ nameEmoji: 🌼
 emoji: 🐕
 breed: 📍 Next to WUD · ♂ · 2 months · White
 born: 2026
-image: public/dogs/images/buttercup.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/buttercup.jpg
 tags: 🌱 tiny pup, 🌼 fluffy white, 🔧 personality in development
 bgLight: linear-gradient(135deg,#fff8f0,#fff0dc)
 bgDark: linear-gradient(135deg,#2a2208,#3a2c08)

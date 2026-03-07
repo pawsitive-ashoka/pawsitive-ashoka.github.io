@@ -4,7 +4,7 @@ nameEmoji: ⚡
 emoji: 🐕
 breed: 📍 Tapri · ♂ · 9 yrs · Black & White
 born: 2016
-image: public/dogs/images/buzo.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/buzo.jpg
 tags: ⚡ energetic, 🏃 first to act, 👑 pack leader, 🛡️ territorial defender
 bgLight: linear-gradient(135deg,#e8e8f0,#d0d0e0)
 bgDark: linear-gradient(135deg,#10101d,#181828)

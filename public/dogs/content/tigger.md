@@ -4,7 +4,7 @@ nameEmoji: 🦘
 emoji: 🐕
 breed: 📍 Beyond Morriko/ASG · ♂ · 6 yrs · Brown & White
 born: 2020
-image: public/dogs/images/tigger.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/tigger.jpg
 tags: 🦘 always bouncing, ⚡ boundless energy, 🎉 pure enthusiasm, 💛 impossible not to love
 bgLight: linear-gradient(135deg,#f8e8c0,#f0d898)
 bgDark: linear-gradient(135deg,#281800,#3a2200)

@@ -4,7 +4,7 @@ nameEmoji: 🌙
 emoji: 🐕
 breed: 📍 Beyond Morriko/ASG · ♂ · 3 months · Black & White
 born: 2025
-image: public/dogs/images/moon-knight.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/moon-knight.jpg
 tags: 🌙 mysterious name, 🌱 young pup, 🔧 personality in development
 bgLight: linear-gradient(135deg,#e8e8e8,#d8d8d8)
 bgDark: linear-gradient(135deg,#1a1a1a,#282828)

@@ -4,7 +4,7 @@ nameEmoji: 🏹
 emoji: 🐕
 breed: 📍 Gate 3 · ♀ · 1 month · Black & White
 born: 2026
-image: public/dogs/images/artemis.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/artemis.jpg
 tags: 🌱 tiny pup, 🏹 fierce name, 🔧 personality in development
 bgLight: linear-gradient(135deg,#e8e8e8,#d8d8d8)
 bgDark: linear-gradient(135deg,#1a1a1a,#282828)

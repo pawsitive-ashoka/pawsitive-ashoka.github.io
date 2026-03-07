@@ -4,7 +4,7 @@ nameEmoji: �
 emoji: 🐕
 breed: 📍 Shelter · ♂ · ~1 yr · Black
 born: 2024
-image: public/dogs/images/sheru.jpeg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/sheru.jpeg
 tags: 💪 determined spirit, 🐾 wobbly but unstoppable, 🍗 top of the food chain
 bgLight: linear-gradient(135deg,#d8d8d8,#c8c8c8)
 bgDark: linear-gradient(135deg,#181818,#222222)

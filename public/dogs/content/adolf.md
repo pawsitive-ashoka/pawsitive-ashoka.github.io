@@ -4,7 +4,7 @@ nameEmoji: 👑
 emoji: 🐕
 breed: 📍 Next to Roti Boti · ♂ · 6 yrs · Brown, Black & Fluffy
 born: 2020
-image: public/dogs/images/adolf.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/adolf.jpg
 tags: 👑 pack leader, 🐂 bull companion, 🥰 big baby at heart
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
 bgDark: linear-gradient(135deg,#2d1808,#3a2010)

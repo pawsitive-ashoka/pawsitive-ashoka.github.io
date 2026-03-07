@@ -4,7 +4,7 @@ nameEmoji: ✨
 emoji: 🐕
 breed: 📍 Tapri · ♂ · 11 yrs · Brown
 born: 2014
-image: public/dogs/images/toto.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/toto.jpg
 tags: ✨ stylish eyeliner, 👂 asymmetrical ears, 🤗 friendliest around, 😌 calm & easygoing
 bgLight: linear-gradient(135deg,#f8ead8,#f0d8b0)
 bgDark: linear-gradient(135deg,#2d1a08,#3d2410)

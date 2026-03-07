@@ -4,7 +4,7 @@ nameEmoji: 🌊
 emoji: 🐕
 breed: 📍 Gate 3 · ♀ · 2 yrs · Brown & White
 born: 2023
-image: public/dogs/images/coco.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/coco.jpg
 tags: 🌊 protective queen, 🤝 offers paw shakes, 🏃 sprints into hugs, 🐾 Kaddu's mama
 bgLight: linear-gradient(135deg,#f8e0d0,#f0d0b8)
 bgDark: linear-gradient(135deg,#2d1208,#3d1a0d)

@@ -4,7 +4,7 @@ nameEmoji: 🌿
 emoji: 🐕
 breed: 📍 Commissioner's Office · ♀ · 3 yrs · Brown
 born: 2023
-image: public/dogs/images/clio.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/clio.jpg
 tags: 🌿 cautious mother, 🐾 five pups, 💛 slowly trusting
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
 bgDark: linear-gradient(135deg,#2d1808,#3a2010)

@@ -4,7 +4,7 @@ nameEmoji: 😄
 emoji: 🐕
 breed: 📍 ASG · ♂ · 7 yrs · Brown & Black
 born: 2018
-image: public/dogs/images/goofy.jpeg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/goofy.jpeg
 tags: 😄 tail-wagger, 🍴 picky eater, 🫶 loves pets, 💊 vet avoider
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
 bgDark: linear-gradient(135deg,#2d1808,#3a2010)

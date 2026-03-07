@@ -4,7 +4,7 @@ nameEmoji: ✨
 emoji: 🐕
 breed: 📍 Gate 3 · ♂ · 4 yrs · Brown
 born: 2022
-image: public/dogs/images/gatsby.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/gatsby.jpg
 tags: ✨ quiet confidence, 💚 light green eyes, 🧘 calm and composed, 🛡️ peacekeeper
 bgLight: linear-gradient(135deg,#f8e8c0,#f0d898)
 bgDark: linear-gradient(135deg,#281800,#3a2200)

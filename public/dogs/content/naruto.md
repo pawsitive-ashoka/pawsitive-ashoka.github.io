@@ -4,7 +4,7 @@ nameEmoji: 🍜
 emoji: 🐕
 breed: 📍 Gate 2/Antil Dhaba · ♂ · 9 yrs · Black & White
 born: 2016
-image: public/dogs/images/naruto.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/naruto.jpg
 tags: 🍜 bold challenger, 🥰 best friend to humans, 🐾 sprints toward you, 🫃 belly rub addict
 bgLight: linear-gradient(135deg,#e8e8f0,#d0d0e8)
 bgDark: linear-gradient(135deg,#14141d,#1d1d28)

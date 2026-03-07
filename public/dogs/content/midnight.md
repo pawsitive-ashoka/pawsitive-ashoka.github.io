@@ -4,7 +4,7 @@ nameEmoji: 🌙
 emoji: 🐕
 breed: 📍 Tapri · ♂ · 9 yrs · Black & White
 born: 2016
-image: public/dogs/images/midnight.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/midnight.jpg
 tags: 🌙 blends into background, 🕊️ reserved & gentle, 😇 absolute angel, 🐾 slow to trust
 bgLight: linear-gradient(135deg,#d8d8e8,#c0c0d8)
 bgDark: linear-gradient(135deg,#0d0d20,#181828)

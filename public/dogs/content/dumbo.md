@@ -4,7 +4,7 @@ nameEmoji: 🤔
 emoji: 🐕
 breed: 📍 Tapri · ♂ · 9 yrs · Brown
 born: 2016
-image: public/dogs/images/dumbo.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/dumbo.jpg
 tags: 🤔 perpetually confused, 🤗 friendly & affectionate, 🥈 second in command, 💛 loyal
 bgLight: linear-gradient(135deg,#f8e8d0,#f0d8b8)
 bgDark: linear-gradient(135deg,#2d1808,#3d2010)

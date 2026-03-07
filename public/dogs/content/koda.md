@@ -4,7 +4,7 @@ nameEmoji: 🤗
 emoji: 🐕
 breed: 📍 Next to Roti Boti · ♂ · 6 yrs · Black
 born: 2020
-image: public/dogs/images/koda.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/koda.jpg
 tags: 🤗 attention seeker, 👁️ cloudy eye, 💥 unaware of his own size
 bgLight: linear-gradient(135deg,#d8d8d8,#c8c8c8)
 bgDark: linear-gradient(135deg,#181818,#222222)

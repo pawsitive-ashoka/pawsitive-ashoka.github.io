@@ -5,7 +5,7 @@ emoji: 🐕
 breed: 📍 Gate 1 · ♂ · ~12 yrs · Brown & Black
 born: 2013
 dates: 2013 – 2025
-image: public/memorial/images/ladla.jpg
+image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/memorial/images/ladla.jpg
 tags: 👴 gentle old soul, 👑 pack leader, 🕊️ quiet & composed, 💛 known to many
 bgLight: linear-gradient(135deg,#e8e8e8,#d0d0d0)
 bgDark: linear-gradient(135deg,#1c1c1c,#262626)
