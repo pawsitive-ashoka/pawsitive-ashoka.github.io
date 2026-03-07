@@ -340,12 +340,16 @@ function renderMediaGrid() {
     tile.className = 'media-tile media-tile-loading';
     const img = document.createElement('img');
     img.dataset.src = _imgUrl(filename);
+    img.dataset.fallback = '/public/gallery/' + filename;
     img.alt = 'Pawsitive campus photo';
     img.onload = () => {
       img.classList.add('loaded');
       tile.classList.remove('media-tile-loading');
     };
-    img.onerror = () => tile.classList.remove('media-tile-loading');
+    img.onerror = () => {
+      if (img.dataset.fallback) { const fb = img.dataset.fallback; delete img.dataset.fallback; img.src = fb; }
+      else { tile.classList.remove('media-tile-loading'); }
+    };
     const overlay = document.createElement('div');
     overlay.className = 'media-tile-overlay';
     overlay.innerHTML = '<span>🔍</span>';
@@ -377,7 +381,9 @@ function openLightbox(i) {
   _lbImages = null;
   _lbIndex = i;
   const lb = document.getElementById('imgLightbox');
-  document.getElementById('lbImg').src = _imgUrl(mediaImages[_lbIndex]);
+  const lbImg = document.getElementById('lbImg');
+  lbImg.dataset.fallback = '/public/gallery/' + mediaImages[_lbIndex];
+  lbImg.src = _imgUrl(mediaImages[_lbIndex]);
   document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + mediaImages.length;
   lb.classList.add('open');
   lockScroll();
@@ -408,7 +414,12 @@ function lightboxNav(dir) {
   const img = document.getElementById('lbImg');
   img.style.opacity = '0';
   setTimeout(() => {
-    img.src = _lbImages ? _lbImages[_lbIndex] : _imgUrl(mediaImages[_lbIndex]);
+    if (_lbImages) {
+      img.src = _lbImages[_lbIndex];
+    } else {
+      img.dataset.fallback = '/public/gallery/' + mediaImages[_lbIndex];
+      img.src = _imgUrl(mediaImages[_lbIndex]);
+    }
     document.getElementById('lbCounter').textContent = (_lbIndex + 1) + ' / ' + pool.length;
     img.style.opacity = '1';
   }, 150);

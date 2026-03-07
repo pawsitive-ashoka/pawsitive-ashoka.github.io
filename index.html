@@ -12,7 +12,7 @@
 
 <nav>
   <div class="logo" onclick="showPage('home')">
-    <img src="/https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/logo/Paws Logo.jpg" alt="Pawsitive Logo" style="height:32px;vertical-align:middle;margin-right:8px;">
+    <img src="/https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/logo/Paws Logo.jpg" alt="Pawsitive Logo" style="height:32px;vertical-align:middle;margin-right:8px;" onerror="_cldImgError(this)">
     pawsitive
   </div>
   <div class="nav-links" id="nav-links">
@@ -51,7 +51,7 @@
 <div class="img-lightbox" id="imgLightbox" onclick="closeLightbox(event)">
   <button class="lb-nav lb-prev" onclick="event.stopPropagation();lightboxNav(-1)">&#8249;</button>
   <div class="lb-inner" onclick="event.stopPropagation()">
-    <img id="lbImg" src="" alt="Pawsitive photo">
+    <img id="lbImg" src="" alt="Pawsitive photo" onerror="_cldImgError(this)">
     <div class="lb-counter" id="lbCounter"></div>
   </div>
   <button class="lb-nav lb-next" onclick="event.stopPropagation();lightboxNav(1)">&#8250;</button>

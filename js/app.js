@@ -1,5 +1,14 @@
 /* ─── app.js ─── page navigation, page loading, theme ─── */
 
+/* ── Cloudinary image fallback — falls back to local /public/... copy ── */
+function _cldImgError(img) {
+  img.onerror = null; // prevent infinite loop
+  const src = img.src;
+  const m = src.match(/\/public\/.+/);
+  if (m) { img.src = m[0]; return; }
+  if (img.dataset.fallback) { img.src = img.dataset.fallback; delete img.dataset.fallback; }
+}
+
 /* ── Shared scroll-lock utility (used by all modals) ── */
 function lockScroll() {
   document.body.style.overflow = 'hidden';
