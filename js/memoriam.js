@@ -81,7 +81,7 @@ function initMemorialPhotos() {
         applyMemorialOrientation(img);
         img.classList.add('loaded');
       });
-      img.addEventListener('error', () => { img.style.display = 'none'; });
+      img.addEventListener('error', () => { _cldImgError(img); });
     }
   });
 }
@@ -212,7 +212,7 @@ function openMemorialModal(card) {
 
     const photoSection = card.dataset.image
       ? `<div class="dog-modal-photo memorial-modal-photo-wrap">
-           <img src="${card.dataset.image}" alt="${card.dataset.name}" style="opacity:0;transition:opacity 0.3s" onload="this.style.opacity=1">
+           <img src="${card.dataset.image}" alt="${card.dataset.name}" style="opacity:0;transition:opacity 0.3s" onload="this.style.opacity=1" onerror="_cldImgError(this)">
          </div>`
       : `<div class="dog-modal-emoji" style="background:${bg}">
            <span style="font-size:7rem">${card.dataset.emoji || '🐕'}</span>

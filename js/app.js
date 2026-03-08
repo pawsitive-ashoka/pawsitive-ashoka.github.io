@@ -9,6 +9,15 @@ function _cldImgError(img) {
   if (img.dataset.fallback) { img.src = img.dataset.fallback; delete img.dataset.fallback; }
 }
 
+/* ── Favicon fallback — <link rel="icon"> has no onerror, so probe via Image ── */
+(function () {
+  const link = document.querySelector('link[rel="icon"]');
+  if (!link) return;
+  const probe = new Image();
+  probe.onerror = function () { link.href = '/public/logo/Paws Logo.jpg'; };
+  probe.src = link.href;
+}());
+
 /* ── Shared scroll-lock utility (used by all modals) ── */
 function lockScroll() {
   document.body.style.overflow = 'hidden';
