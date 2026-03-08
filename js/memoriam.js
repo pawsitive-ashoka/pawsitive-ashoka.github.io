@@ -15,6 +15,7 @@ function buildMemorialCard(meta, body) {
   const displayName = rawName.replace(nameEmoji, '').trim();
   const passed     = meta.passed   || '';
   const born       = meta.born     || '';
+  const dates      = meta.dates    || '';
 
   const datesBadge = meta.dates
     ? `<div class="memorial-tile-dates">${meta.dates}</div>`
@@ -46,7 +47,8 @@ function buildMemorialCard(meta, body) {
       data-bg-light="${esc(meta.bgLight)}"
       data-bg-dark="${esc(meta.bgDark)}"
       data-born="${esc(born)}"
-      data-passed="${esc(passed)}">
+      data-passed="${esc(passed)}"
+      data-dates="${esc(dates)}">
     <span class="memorial-candle" style="animation-delay:${candleDelay}s" aria-hidden="true">🕯️</span>
     <div class="memorial-card-inner">
       ${photoArea}
@@ -197,10 +199,9 @@ function openMemorialModal(card) {
     const dark = document.documentElement.dataset.theme === 'dark';
     const bg   = dark ? (card.dataset.bgDark || '') : (card.dataset.bgLight || '');
 
-    const born   = card.dataset.born   || '';
-    const passed = card.dataset.passed || '';
-    const datesLine = (born || passed)
-      ? `<div class="memorial-modal-dates">🌱 ${born || '?'} &nbsp;→&nbsp; 🕯️ ${passed || '?'}</div>`
+    const dates = card.dataset.dates || '';
+    const datesLine = dates
+      ? `<div class="memorial-modal-dates">🌱 ${dates} 🕯️</div>`
       : '';
 
     const tags = (card.dataset.tags || '')
