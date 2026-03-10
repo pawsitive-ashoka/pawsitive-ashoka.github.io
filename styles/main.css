@@ -180,7 +180,7 @@ nav::after {
 .page-header p{font-size:1.1rem;color:var(--ink-soft);line-height:1.8;}
 
 /* HOME */
-.hero{min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem 2rem;position:relative;}
+.hero{min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3.2rem 2rem 1.6rem;position:relative;}
 .hero-badge{font-family:'Caveat',cursive;font-size:1rem;color:var(--accent3);background:var(--sketch);border:2px solid var(--accent3);border-radius:20px;padding:0.3rem 1rem;margin-bottom:1.5rem;letter-spacing:1px;display:inline-block;transform:rotate(-1deg);}
 .hero h1{font-family:'Caveat',cursive;font-size:clamp(3.5rem,9vw,7rem);font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:1rem;}
 .hero h1 .accent{color:var(--accent);}
@@ -820,7 +820,7 @@ footer .footer-sep {
   .hamburger { display: flex; }
 
   /* HERO */
-  .hero { min-height: 70vh; padding: 3rem 1.4rem 2rem; }
+  .hero { min-height: 62vh; padding: 2.4rem 1.4rem 1.4rem; }
   .hero h1 { font-size: clamp(2.8rem,14vw,5rem); }
   .hero-tagline { font-size: 1.1rem; }
 
@@ -1094,7 +1094,22 @@ footer .footer-sep {
   .team-members-grid { grid-template-columns: repeat(2, 1fr); }
   .team-tabs-wrap { top: 50px; padding: 0.45rem 0.8rem; }
   .team-tab { font-size: 0.95rem; padding: 0.3rem 0.85rem; }
-  .stats-strip { flex-direction: column; gap: 1rem; }
+  .stats-strip {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    padding: 1rem 0.75rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+  .stat {
+    flex: 0 0 auto;
+    min-width: 118px;
+    scroll-snap-align: start;
+  }
+  .stat-num { font-size: 1.8rem; }
+  .stat-label { font-size: 0.8rem; }
   .social-chips { gap: 0.4rem; }
   .social-chip { font-size: 0.88rem; padding: 0.3rem 0.7rem; }
 
