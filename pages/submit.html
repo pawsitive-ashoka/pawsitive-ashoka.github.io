@@ -1,0 +1,80 @@
+<div class="page-header submit-header">
+  <h1>📸 share your dog</h1>
+  <p>send photos, videos, or artwork and your dog's story for a chance to be featured by the pawsitive team.</p>
+</div>
+
+<div class="submit-inner">
+  <div class="submit-grid">
+    <div class="submit-info-card">
+      <h3>how this works</h3>
+      <ol class="submit-steps">
+        <li>Fill in dog and owner details.</li>
+        <li>Upload images, videos, and artwork files.</li>
+        <li>Our team reviews every entry before featuring.</li>
+      </ol>
+      <p class="submit-note">By submitting, you confirm you have permission to share these files and allow pawsitive to repost selected entries with credit.</p>
+      <div class="submit-guidelines">
+        <h4>quick guidelines</h4>
+        <ul>
+          <li>Supported: JPG, PNG, WEBP, GIF, MP4, MOV, WEBM</li>
+          <li>Max file size: 10 MB each</li>
+          <li>Max total size: 100 MB per submission</li>
+          <li>Multiple files accepted</li>
+        </ul>
+      </div>
+      <p class="upload-hint" style="margin-top:0.9rem;">Team only: <a href="#" onclick="showPage('reviews'); return false;">open review desk</a></p>
+      <div id="submitConfigError" class="submit-config-error" style="display:none;"></div>
+    </div>
+
+    <div class="submit-form-card">
+      <h3>submit for featuring</h3>
+      <form id="dog-submit-form" novalidate>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="sd-dog-name">dog name</label>
+            <input id="sd-dog-name" type="text" placeholder="e.g. Kaddu" required>
+          </div>
+          <div class="form-group">
+            <label for="sd-user-name">your name</label>
+            <input id="sd-user-name" type="text" placeholder="e.g. Aanya" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="sd-email">email</label>
+            <input id="sd-email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="sd-location">city / location</label>
+            <input id="sd-location" type="text" placeholder="e.g. Sonipat" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sd-social">social handle (optional)</label>
+          <input id="sd-social" type="text" placeholder="e.g. @mydogstory">
+        </div>
+
+        <div class="form-group">
+          <label for="sd-story">dog story</label>
+          <textarea id="sd-story" placeholder="Tell us what makes this dog special..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="sd-media">upload media</label>
+          <input id="sd-media" type="file" accept="image/*,video/*" multiple required>
+          <p class="upload-hint">You can upload photos, videos, and artwork files in one submission.</p>
+          <div id="sd-file-list" class="sd-file-list"></div>
+        </div>
+
+        <button id="sd-submit-btn" class="form-submit" type="submit">submit entry → 🐾</button>
+      </form>
+
+      <div id="sd-success" class="form-success"></div>
+      <div id="sd-error" class="form-error"></div>
+    </div>
+  </div>
+</div>
+
+<footer>made with <span class="heart">❤️</span> by pawsitive <span class="footer-sep">·</span> built by <a href="https://github.com/28nitin07" target="_blank" rel="noopener noreferrer" title="Nitin's GitHub">Nitin S</a> <span class="footer-sep">·</span> ashoka university <span class="footer-sep">·</span> 🐾</footer>

@@ -28,7 +28,7 @@ function unlockScroll() {
   setTimeout(() => document.body.classList.remove('scroll-unlocked'), 200);
 }
 
-const PAGES = ['home','about','dogs','memoriam','departments','team','gallery','donate','contact'];
+const PAGES = ['home','about','dogs','submit','reviews','memoriam','departments','team','gallery','donate','contact'];
 const DEPT_SLUGS = ['events','finance','ground','social'];
 const _loaded = {};
 let _currentDept = null;
@@ -159,6 +159,8 @@ async function loadPage(name) {
     }
     
     if (name === 'dogs') loadDogs();
+    if (name === 'submit' && typeof initSubmitPage === 'function') initSubmitPage();
+    if (name === 'reviews' && typeof initReviewsPage === 'function') initReviewsPage();
     if (name === 'memoriam') loadMemorial();
     if (name === 'departments') setupDeptCards();
     if (name === 'gallery') renderMediaGrid();

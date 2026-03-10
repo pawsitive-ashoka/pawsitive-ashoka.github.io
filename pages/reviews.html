@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>🛠️ submissions review desk</h1>
+  <p>team-only panel to review, approve, and reject community media submissions.</p>
+</div>
+
+<div class="reviews-inner">
+  <div class="reviews-auth-card" id="reviews-auth-card">
+    <h3>team login</h3>
+    <form id="reviews-login-form" novalidate>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="rv-email">email</label>
+          <input id="rv-email" type="email" placeholder="team email" required>
+        </div>
+        <div class="form-group">
+          <label for="rv-password">password</label>
+          <input id="rv-password" type="password" placeholder="password" required>
+        </div>
+      </div>
+      <button class="form-submit" id="rv-login-btn" type="submit">log in</button>
+    </form>
+    <div id="rv-auth-error" class="form-error"></div>
+    <div id="rv-auth-success" class="form-success"></div>
+  </div>
+
+  <div class="reviews-board" id="reviews-board" style="display:none;">
+    <div class="reviews-toolbar">
+      <div class="reviews-filters">
+        <button class="chip rv-filter active" data-status="pending" type="button">pending</button>
+        <button class="chip rv-filter" data-status="approved" type="button">approved</button>
+        <button class="chip rv-filter" data-status="rejected" type="button">rejected</button>
+      </div>
+      <div class="reviews-actions">
+        <button class="chip" id="rv-refresh-btn" type="button">refresh</button>
+        <button class="chip" id="rv-logout-btn" type="button">logout</button>
+      </div>
+    </div>
+
+    <div id="rv-list" class="rv-list">
+      <div class="dogs-loading">loading submissions...</div>
+    </div>
+  </div>
+</div>
+
+<footer>made with <span class="heart">❤️</span> by pawsitive <span class="footer-sep">·</span> built by <a href="https://github.com/28nitin07" target="_blank" rel="noopener noreferrer" title="Nitin's GitHub">Nitin S</a> <span class="footer-sep">·</span> ashoka university <span class="footer-sep">·</span> 🐾</footer>
