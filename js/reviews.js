@@ -3,9 +3,13 @@
   const SUPABASE_URL = window.PAWSITIVE_SUPABASE_URL || '';
   const SUPABASE_ANON_KEY = window.PAWSITIVE_SUPABASE_ANON_KEY || '';
   const SUPABASE_TABLE = window.PAWSITIVE_SUPABASE_TABLE || 'submissions';
+  const PAGE_SIZE = 6;
 
   let client = null;
   let currentStatus = 'pending';
+  let currentPage = 1;
+  let searchQuery = '';
+  let totalPages = 1;
 
   function initClient() {
     if (client) return client;
@@ -96,6 +100,10 @@
 
   async function loadSubmissions() {
     const list = document.getElementById('rv-list');
+    const pagination = document.getElementById('rv-pagination');
+    const pageIndicator = document.getElementById('rv-page-indicator');
+    const prevBtn = document.getElementById('rv-prev-btn');
+    const nextBtn = document.getElementById('rv-next-btn');
     if (!list) return;
 
     list.innerHTML = '<div class="dogs-loading">loading submissions...</div>';
@@ -106,23 +114,49 @@
       return;
     }
 
-    const { data, error } = await c
+    const from = (currentPage - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    let query = c
       .from(SUPABASE_TABLE)
-      .select('*')
+      .select('*', { count: 'exact' })
       .eq('status', currentStatus)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (searchQuery) {
+      const q = searchQuery.replace(/[,%]/g, '');
+      query = query.or(`dog_name.ilike.%${q}%,user_name.ilike.%${q}%,user_email.ilike.%${q}%,location.ilike.%${q}%`);
+    }
+
+    const { data, error, count } = await query;
 
     if (error) {
       list.innerHTML = '<div class="dogs-error">Could not load submissions.</div>';
+      if (pagination) pagination.style.display = 'none';
+      return;
+    }
+
+    totalPages = Math.max(1, Math.ceil((count || 0) / PAGE_SIZE));
+    if (currentPage > totalPages) {
+      currentPage = totalPages;
+      await loadSubmissions();
       return;
     }
 
     if (!data || data.length === 0) {
       list.innerHTML = '<div class="dogs-loading">No submissions in this state yet.</div>';
+      if (pagination) pagination.style.display = 'none';
       return;
     }
 
     list.innerHTML = data.map(renderSubmission).join('');
+
+    if (pagination && pageIndicator && prevBtn && nextBtn) {
+      pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+      pageIndicator.textContent = `page ${currentPage} of ${totalPages}`;
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+    }
   }
 
   async function updateStatus(id, status) {
@@ -210,18 +244,21 @@
   function setupFilters() {
     const buttons = document.querySelectorAll('.rv-filter');
     buttons.forEach((btn) => {
+      if (btn.dataset.bound) return;
       btn.addEventListener('click', async () => {
         currentStatus = btn.dataset.status || 'pending';
+        currentPage = 1;
         buttons.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         await loadSubmissions();
       });
+      btn.dataset.bound = '1';
     });
   }
 
   function setupCardActions() {
     const list = document.getElementById('rv-list');
-    if (!list) return;
+    if (!list || list.dataset.bound) return;
 
     list.addEventListener('click', async (event) => {
       const actionBtn = event.target.closest('.rv-action');
@@ -234,6 +271,45 @@
 
       await updateStatus(id, status);
     });
+    list.dataset.bound = '1';
+  }
+
+  function setupSearch() {
+    const input = document.getElementById('rv-search');
+    if (!input || input.dataset.bound) return;
+
+    let timer = null;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(async () => {
+        searchQuery = input.value.trim();
+        currentPage = 1;
+        await loadSubmissions();
+      }, 250);
+    });
+
+    input.dataset.bound = '1';
+  }
+
+  function setupPagination() {
+    const prevBtn = document.getElementById('rv-prev-btn');
+    const nextBtn = document.getElementById('rv-next-btn');
+    if (prevBtn && !prevBtn.dataset.bound) {
+      prevBtn.addEventListener('click', async () => {
+        if (currentPage <= 1) return;
+        currentPage -= 1;
+        await loadSubmissions();
+      });
+      prevBtn.dataset.bound = '1';
+    }
+    if (nextBtn && !nextBtn.dataset.bound) {
+      nextBtn.addEventListener('click', async () => {
+        if (currentPage >= totalPages) return;
+        currentPage += 1;
+        await loadSubmissions();
+      });
+      nextBtn.dataset.bound = '1';
+    }
   }
 
   window.initReviewsPage = async function initReviewsPage() {
@@ -256,7 +332,10 @@
     }
 
     if (refreshBtn && !refreshBtn.dataset.bound) {
-      refreshBtn.addEventListener('click', loadSubmissions);
+      refreshBtn.addEventListener('click', async () => {
+        currentPage = 1;
+        await loadSubmissions();
+      });
       refreshBtn.dataset.bound = '1';
     }
 
@@ -267,6 +346,8 @@
 
     setupFilters();
     setupCardActions();
+    setupSearch();
+    setupPagination();
     await toggleViewBySession();
   };
 })();

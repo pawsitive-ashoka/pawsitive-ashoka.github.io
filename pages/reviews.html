@@ -31,6 +31,7 @@
         <button class="chip rv-filter" data-status="rejected" type="button">rejected</button>
       </div>
       <div class="reviews-actions">
+        <input id="rv-search" class="reviews-search" type="search" placeholder="search dog, owner, email, location">
         <button class="chip" id="rv-refresh-btn" type="button">refresh</button>
         <button class="chip" id="rv-logout-btn" type="button">logout</button>
       </div>
@@ -38,6 +39,12 @@
 
     <div id="rv-list" class="rv-list">
       <div class="dogs-loading">loading submissions...</div>
+    </div>
+
+    <div class="reviews-pagination" id="rv-pagination" style="display:none;">
+      <button class="chip" id="rv-prev-btn" type="button">prev</button>
+      <span id="rv-page-indicator">page 1</span>
+      <button class="chip" id="rv-next-btn" type="button">next</button>
     </div>
   </div>
 </div>
