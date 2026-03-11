@@ -36,6 +36,9 @@ function buildMemorialCard(meta, body) {
   // .memorial-card-inner carries the grayscale filter; the candle is free of it
   // so it can gain colour and glow immediately on hover, before the card reveals.
   return `<div class="dog-card memorial-card"
+      role="button"
+      tabindex="0"
+      aria-label="Open memorial for ${esc(displayName)}"
       data-search="${esc(searchText)}"
       data-name="${esc(displayName)}"
       data-name-emoji="${esc(nameEmoji)}"
@@ -104,6 +107,7 @@ function initMemorialModals() {
   if (!grid) return;
 
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  let lastTouchOpenAt = 0;
   const LONG_PRESS_MS = 500;
   const MOVE_THRESHOLD = 10; // px — cancel if finger moves too far
 
@@ -167,7 +171,10 @@ function initMemorialModals() {
         activeCard = null;
         return;
       }
-      if (activeCard) openMemorialModal(activeCard);
+      if (activeCard) {
+        openMemorialModal(activeCard);
+        lastTouchOpenAt = Date.now();
+      }
       activeCard = null;
     });
 
@@ -187,9 +194,19 @@ function initMemorialModals() {
 
   /* ── Desktop: click opens modal (hover handles candle/colour via CSS) ── */
   grid.addEventListener('click', e => {
-    if (isTouch) return;
+    // Ignore synthetic click events that follow a touch tap.
+    if (Date.now() - lastTouchOpenAt < 700) return;
     const card = e.target.closest('.dog-card');
     if (!card) return;
+    openMemorialModal(card);
+  });
+
+  // Keyboard support for focused cards.
+  grid.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('.dog-card');
+    if (!card) return;
+    e.preventDefault();
     openMemorialModal(card);
   });
 }
