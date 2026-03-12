@@ -146,8 +146,8 @@ nav::after {
   transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden;
 }
 .card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent);border-radius:2px 2px 0 0; }
-.card:nth-child(2)::before{background:var(--accent2);}
-.card:nth-child(3)::before{background:var(--accent3);}
+.what-we-do-cards > .card:nth-child(3n+2)::before{background:var(--accent2);}
+.what-we-do-cards > .card:nth-child(3n)::before{background:var(--accent3);}
 .card:hover { transform:translateY(-4px) rotate(0.5deg);box-shadow:8px 8px 0 var(--sketch); }
 .card-icon{font-size:2.5rem;margin-bottom:0.8rem;display:block;}
 .card h3{font-family:'Caveat',cursive;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;}
