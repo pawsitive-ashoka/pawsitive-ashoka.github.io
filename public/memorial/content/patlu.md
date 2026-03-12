@@ -4,6 +4,7 @@ nameEmoji: 🌸
 emoji: 🐕
 breed: 📍 Next to Roti Boti · ♀ · 2 months · Brown
 born: 2026
+dates: January 2026 – March 2026
 image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/patlu.jpg
 tags: 🌱 tiny pup, 🌸 Roti Boti baby, 🤍 remembered with love
 bgLight: linear-gradient(135deg,#f0e0c8,#e8d0a8)
