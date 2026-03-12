@@ -737,10 +737,13 @@ footer {
   border-top: 2px solid var(--border);
   color: var(--ink-soft);
   font-family: 'Caveat', cursive;
-  font-size: 1.15rem;
   position: relative;
   margin-top: auto;
   letter-spacing: 0.02em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
 }
 footer::before {
   content: '';
@@ -750,6 +753,21 @@ footer::before {
   background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), var(--accent3), transparent);
   opacity: 0.55;
   border-radius: 2px;
+}
+footer .footer-main {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
+footer .footer-credit {
+  font-size: 0.95rem;
+  opacity: 0.55;
+  font-weight: 400;
+}
+footer .footer-glow {
+  font-weight: 700;
+  opacity: 1;
 }
 footer .heart {
   color: var(--accent);
@@ -1065,7 +1083,9 @@ footer .footer-sep {
   }
 
   /* FOOTER */
-  footer { padding: 1.5rem 1rem; font-size: 1rem; }
+  footer { padding: 1.5rem 1rem; }
+  footer .footer-main { font-size: 1.1rem; }
+  footer .footer-credit { font-size: 0.88rem; }
 }
 
 /* INTERMEDIATE — tighter gaps for small tablets / large phones */
@@ -1218,7 +1238,9 @@ footer .footer-sep {
   .lb-next { right: 0.2rem; }
 
   /* FOOTER */
-  footer { font-size: 0.92rem; padding: 1.2rem 0.8rem; }
+  footer { padding: 1.2rem 0.8rem; }
+  footer .footer-main { font-size: 1rem; }
+  footer .footer-credit { font-size: 0.82rem; }
   footer .footer-sep { margin: 0 0.2em; }
 }
 
