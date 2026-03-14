@@ -217,6 +217,7 @@ function initTeamPopup() {
     const popupCard = overlay.querySelector('.team-popup-card');
     const avatarEl = popupCard.querySelector('.team-popup-avatar');
     const stripEl = popupCard.querySelector('.team-popup-img-strip');
+    let activeImageIndex = 0;
 
     function setMain(src) {
       avatarEl.innerHTML = `<img class="team-popup-avatar-img" src="${esc(src)}" alt="${esc(name)}"
@@ -224,15 +225,26 @@ function initTeamPopup() {
     }
 
     if (images.length) {
+      activeImageIndex = 0;
       setMain(images[0]);
+      avatarEl.classList.add('team-popup-avatar--zoomable');
+      avatarEl.title = 'Click to enlarge';
+      avatarEl.onclick = () => {
+        if (typeof openDeptLightbox === 'function') {
+          openDeptLightbox(images, activeImageIndex);
+        }
+      };
     } else {
       avatarEl.innerHTML = `<span class="team-popup-emoji">🐾</span>`;
+      avatarEl.classList.remove('team-popup-avatar--zoomable');
+      avatarEl.title = '';
+      avatarEl.onclick = null;
     }
 
     if (images.length > 1) {
       stripEl.classList.add('has-thumbs');
       stripEl.innerHTML = images.map((src, i) =>
-        `<button class="popup-thumb${i === 0 ? ' active' : ''}" data-src="${esc(src)}">
+        `<button class="popup-thumb${i === 0 ? ' active' : ''}" data-src="${esc(src)}" data-idx="${i}">
           <img src="${esc(src)}" alt="" loading="lazy">
         </button>`
       ).join('');
@@ -240,6 +252,7 @@ function initTeamPopup() {
         btn.addEventListener('click', () => {
           stripEl.querySelectorAll('.popup-thumb').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+          activeImageIndex = Number(btn.dataset.idx || 0);
           setMain(btn.dataset.src);
         });
       });
