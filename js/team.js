@@ -72,11 +72,12 @@ function renderLeadershipCinema(sections, container) {
     const bio = member.body || 'Bio coming soon...';
     const hasImg = imageExists(m);
     const activeClass = idx === 0 ? ' active' : '';
+    const images = [m.image, m.image2, m.image3, m.image4].filter(x => x && x.trim());
     cardsHtml += `<div class="cinema-card${activeClass}" data-idx="${idx}"
       data-name="${esc(m.name)}" data-role="${esc(m.role)}"
       data-batch="${esc(m.batch)}" data-bio="${esc(bio)}"
       data-spirit-dog="${esc(m.spirit_dog || '')}"
-      data-image="${esc(m.image)}" data-section-label="${esc(member.sectionLabel)}">
+      data-images="${esc(images.join('|'))}" data-section-label="${esc(member.sectionLabel)}">
       ${cinemaAvatarHtml(m, idx, hasImg)}
       <div class="cinema-info">
         <h3 class="cinema-name">${esc(m.name)}</h3>
@@ -110,10 +111,11 @@ function renderCoreGrid(members, container) {
     const coreBio = member.body ? member.body.trim() : '';
     const coreSDog = m.spirit_dog || '';
     const hasPopup = coreBio || coreSDog;
+    const coreImages = [m.image, m.image2, m.image3, m.image4].filter(x => x && x.trim());
     html += `<div class="core-grid-item${hasPopup ? ' core-grid-item--has-popup' : ''}" style="--i:${idx}"
       data-name="${esc(m.name)}" data-role="${esc(m.department || 'Core Team')}"
       data-batch="${esc(m.batch || '')}" data-bio="${esc(coreBio)}"
-      data-spirit-dog="${esc(coreSDog)}" data-image="${esc(m.image || '')}">
+      data-spirit-dog="${esc(coreSDog)}" data-images="${esc(coreImages.join('|'))}">
       ${coreAvatarHtml(m, idx, hasImg)}
       <span class="core-name">${esc(m.name)}</span>
       ${coreSDog ? `<span class="core-spirit-dog">🐾 ${esc(coreSDog)}</span>` : ''}
@@ -211,16 +213,41 @@ function initTeamPopup() {
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 
-  function openPopup(name, role, batch, bio, image, spiritDog) {
+  function openPopup(name, role, batch, bio, images, spiritDog) {
     const popupCard = overlay.querySelector('.team-popup-card');
     const avatarEl = popupCard.querySelector('.team-popup-avatar');
-    const imgPath = image && image.trim();
-    if (imgPath) {
-      avatarEl.innerHTML = `<img class="team-popup-avatar-img" src="${esc(imgPath)}" alt="${esc(name)}"
+    const stripEl = popupCard.querySelector('.team-popup-img-strip');
+
+    function setMain(src) {
+      avatarEl.innerHTML = `<img class="team-popup-avatar-img" src="${esc(src)}" alt="${esc(name)}"
         onerror="this.remove();this.parentNode.innerHTML='<span class=\\'team-popup-emoji\\'>🐾</span>'">`;
+    }
+
+    if (images.length) {
+      setMain(images[0]);
     } else {
       avatarEl.innerHTML = `<span class="team-popup-emoji">🐾</span>`;
     }
+
+    if (images.length > 1) {
+      stripEl.classList.add('has-thumbs');
+      stripEl.innerHTML = images.map((src, i) =>
+        `<button class="popup-thumb${i === 0 ? ' active' : ''}" data-src="${esc(src)}">
+          <img src="${esc(src)}" alt="" loading="lazy">
+        </button>`
+      ).join('');
+      stripEl.querySelectorAll('.popup-thumb').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stripEl.querySelectorAll('.popup-thumb').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          setMain(btn.dataset.src);
+        });
+      });
+    } else {
+      stripEl.classList.remove('has-thumbs');
+      stripEl.innerHTML = '';
+    }
+
     popupCard.querySelector('.team-popup-name').textContent = name;
     popupCard.querySelector('.team-popup-role').textContent = role;
     popupCard.querySelector('.team-popup-batch').textContent = batch;
@@ -235,7 +262,7 @@ function initTeamPopup() {
       const card = e.target.closest('.cinema-card');
       if (!card) return;
       openPopup(card.dataset.name, card.dataset.role, card.dataset.batch,
-        card.dataset.bio, card.dataset.image, card.dataset.spiritDog || '');
+        card.dataset.bio, (card.dataset.images || '').split('|').filter(Boolean), card.dataset.spiritDog || '');
     });
   }
 
@@ -245,7 +272,7 @@ function initTeamPopup() {
       const item = e.target.closest('.core-grid-item--has-popup');
       if (!item) return;
       openPopup(item.dataset.name, item.dataset.role, item.dataset.batch,
-        item.dataset.bio, item.dataset.image, item.dataset.spiritDog || '');
+        item.dataset.bio, (item.dataset.images || '').split('|').filter(Boolean), item.dataset.spiritDog || '');
     });
   }
 }
