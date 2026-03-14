@@ -251,8 +251,37 @@ function initTeamPopup() {
     popupCard.querySelector('.team-popup-name').textContent = name;
     popupCard.querySelector('.team-popup-role').textContent = role;
     popupCard.querySelector('.team-popup-batch').textContent = batch;
-    popupCard.querySelector('.team-popup-spirit-dog').textContent = spiritDog ? '🐾 ' + spiritDog : '';
-    popupCard.querySelector('.team-popup-bio').textContent = bio;
+      const sdEl = popupCard.querySelector('.team-popup-spirit-dog');
+      sdEl.innerHTML = '';
+      if (spiritDog) {
+        const lbl = document.createElement('span');
+        lbl.className = 'team-popup-spirit-dog-label';
+        lbl.textContent = 'spirit dog: ';
+        const a = document.createElement('a');
+        a.className = 'team-popup-spirit-dog-link';
+        a.textContent = spiritDog;
+        a.href = '#';
+        const searchTerm = spiritDog.split('/')[0].trim();
+        a.addEventListener('click', async e => {
+          e.preventDefault();
+          closePopup();
+          await showPage('dogs');
+          function trySearch() {
+            const input = document.getElementById('dogs-search');
+            const grid = document.getElementById('dogs-grid');
+            if (input && grid && grid.querySelector('.dog-card')) {
+              input.value = searchTerm;
+              input.dispatchEvent(new Event('input'));
+            } else {
+              setTimeout(trySearch, 80);
+            }
+          }
+          setTimeout(trySearch, 0);
+        });
+        sdEl.appendChild(lbl);
+        sdEl.appendChild(a);
+      }
+      popupCard.querySelector('.team-popup-bio').textContent = bio;
     overlay.classList.add('active');
   }
 
