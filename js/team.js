@@ -152,6 +152,9 @@ function initLeaderCarousel() {
     dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
     const sectionLabel = cards[currentIdx].dataset.sectionLabel;
     if (label && sectionLabel) label.textContent = sectionLabel;
+    if (typeof window.__syncTeamPopupFromLeaderCard === 'function') {
+      window.__syncTeamPopupFromLeaderCard(cards[currentIdx]);
+    }
     resetProgress();
   }
 
@@ -207,13 +210,19 @@ function initLeaderCarousel() {
 function initTeamPopup() {
   const overlay = document.getElementById('team-popup-overlay');
   if (!overlay) return;
+  const prevBtn = overlay.querySelector('.team-popup-nav-prev');
+  const nextBtn = overlay.querySelector('.team-popup-nav-next');
 
-  const closePopup = () => overlay.classList.remove('active');
+  const closePopup = () => {
+    overlay.classList.remove('active');
+    overlay.dataset.popupSource = '';
+    overlay.dataset.currentName = '';
+  };
   overlay.querySelector('.team-popup-close').addEventListener('click', closePopup);
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 
-  function openPopup(name, role, batch, bio, images, spiritDog) {
+  function openPopup(name, role, batch, bio, images, spiritDog, source = '') {
     const popupCard = overlay.querySelector('.team-popup-card');
     const avatarEl = popupCard.querySelector('.team-popup-avatar');
     const stripEl = popupCard.querySelector('.team-popup-img-strip');
@@ -320,7 +329,75 @@ function initTeamPopup() {
         });
       }
       popupCard.querySelector('.team-popup-bio').textContent = bio;
+    overlay.dataset.popupSource = source;
+    overlay.dataset.currentName = name;
     overlay.classList.add('active');
+
+    if (prevBtn) prevBtn.disabled = false;
+    if (nextBtn) nextBtn.disabled = false;
+  }
+
+  function openPopupFromCard(card, source = 'leadership') {
+    if (!card) return;
+    openPopup(
+      card.dataset.name,
+      card.dataset.role,
+      card.dataset.batch,
+      card.dataset.bio,
+      (card.dataset.images || '').split('|').filter(Boolean),
+      card.dataset.spiritDog || '',
+      source
+    );
+  }
+
+  // Used by the leadership carousel so an open leadership popup tracks auto/manual slide changes.
+  window.__syncTeamPopupFromLeaderCard = card => {
+    if (!overlay.classList.contains('active')) return;
+    if (overlay.dataset.popupSource !== 'leadership') return;
+    openPopupFromCard(card, 'leadership');
+  };
+
+  function stepCorePopup(dir) {
+    const coreItems = [...document.querySelectorAll('[data-section="core"] .core-grid-item--has-popup')];
+    if (!coreItems.length) return;
+    const currentName = (overlay.dataset.currentName || '').trim();
+    let idx = coreItems.findIndex(item => (item.dataset.name || '').trim() === currentName);
+    if (idx < 0) idx = 0;
+    const nextIdx = (idx + dir + coreItems.length) % coreItems.length;
+    const item = coreItems[nextIdx];
+    openPopup(
+      item.dataset.name,
+      item.dataset.role,
+      item.dataset.batch,
+      item.dataset.bio,
+      (item.dataset.images || '').split('|').filter(Boolean),
+      item.dataset.spiritDog || '',
+      'core'
+    );
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (!overlay.classList.contains('active')) return;
+      if (overlay.dataset.popupSource === 'leadership') {
+        const arrow = document.querySelector('.cinema-carousel .cinema-nav-arrow[data-dir="prev"]');
+        if (arrow) arrow.click();
+      } else if (overlay.dataset.popupSource === 'core') {
+        stepCorePopup(-1);
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (!overlay.classList.contains('active')) return;
+      if (overlay.dataset.popupSource === 'leadership') {
+        const arrow = document.querySelector('.cinema-carousel .cinema-nav-arrow[data-dir="next"]');
+        if (arrow) arrow.click();
+      } else if (overlay.dataset.popupSource === 'core') {
+        stepCorePopup(1);
+      }
+    });
   }
 
   const leadershipSection = document.querySelector('[data-section="leadership"]');
@@ -328,8 +405,7 @@ function initTeamPopup() {
     leadershipSection.addEventListener('click', e => {
       const card = e.target.closest('.cinema-card');
       if (!card) return;
-      openPopup(card.dataset.name, card.dataset.role, card.dataset.batch,
-        card.dataset.bio, (card.dataset.images || '').split('|').filter(Boolean), card.dataset.spiritDog || '');
+      openPopupFromCard(card, 'leadership');
     });
   }
 
@@ -338,8 +414,15 @@ function initTeamPopup() {
     coreSection.addEventListener('click', e => {
       const item = e.target.closest('.core-grid-item--has-popup');
       if (!item) return;
-      openPopup(item.dataset.name, item.dataset.role, item.dataset.batch,
-        item.dataset.bio, (item.dataset.images || '').split('|').filter(Boolean), item.dataset.spiritDog || '');
+      openPopup(
+        item.dataset.name,
+        item.dataset.role,
+        item.dataset.batch,
+        item.dataset.bio,
+        (item.dataset.images || '').split('|').filter(Boolean),
+        item.dataset.spiritDog || '',
+        'core'
+      );
     });
   }
 }

@@ -547,8 +547,12 @@ nav::after {
 /* ── POPUP MODAL ── */
 .team-popup-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;padding:1rem;}
 .team-popup-overlay.active{opacity:1;pointer-events:auto;}
-.team-popup-card{background:var(--card);border:2.5px solid var(--border);border-radius:24px;padding:2rem;max-width:720px;width:95%;max-height:90vh;display:flex;flex-direction:row;gap:2rem;align-items:flex-start;box-shadow:8px 8px 0 var(--sketch);position:relative;transform:scale(0.92);transition:transform 0.25s;overflow:hidden;}
+.team-popup-card{background:var(--card);border:2.5px solid var(--border);border-radius:24px;padding:2rem;flex:1;min-width:0;max-height:90vh;display:flex;flex-direction:row;gap:2rem;align-items:flex-start;box-shadow:8px 8px 0 var(--sketch);position:relative;transform:scale(0.92);transition:transform 0.25s;overflow:hidden;}
 .team-popup-overlay.active .team-popup-card{transform:scale(1);}
+.team-popup-frame{display:flex;flex-direction:row;align-items:center;gap:0.9rem;max-width:800px;width:95%;}
+.team-popup-nav{flex-shrink:0;width:2.6rem;height:2.6rem;border-radius:50%;border:2px solid var(--border);background:var(--bg2);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.7rem;line-height:1;cursor:pointer;box-shadow:2px 2px 0 var(--sketch);transition:background 0.15s,color 0.15s,border-color 0.15s;z-index:2;}
+.team-popup-nav:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.team-popup-nav[disabled]{opacity:0.45;cursor:not-allowed;}
 .team-popup-close{position:absolute;top:0.8rem;right:1rem;background:none;border:none;font-size:1.6rem;color:var(--ink-soft);cursor:pointer;line-height:1;padding:0.2rem;transition:color 0.15s;z-index:2;}
 .team-popup-close:hover{color:var(--accent);}
 .team-popup-media{flex-shrink:0;width:240px;display:flex;flex-direction:column;align-items:center;gap:0.8rem;}
@@ -574,6 +578,8 @@ nav::after {
 .team-popup-bio{font-size:0.92rem;color:var(--ink-soft);line-height:1.7;margin:0;}
 @media(max-width:620px){
   .team-popup-card{flex-direction:column;padding:1.4rem 1.2rem 1.2rem;gap:1.2rem;overflow-y:auto;max-height:90vh;}
+  .team-popup-frame{gap:0.5rem;width:100%;padding:0 0.25rem;}
+  .team-popup-nav{width:2.1rem;height:2.1rem;font-size:1.4rem;flex-shrink:0;}
   .team-popup-media{width:100%;max-width:200px;margin:0 auto;}
   .team-popup-avatar{aspect-ratio:1/1;}
   .team-popup-content{max-height:none;overflow-y:visible;padding-top:0;padding-right:0;}

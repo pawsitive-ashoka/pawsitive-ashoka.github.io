@@ -51,19 +51,23 @@
 
 <!-- ===== POPUP MODAL (populated by js/team.js) ===== -->
 <div class="team-popup-overlay" id="team-popup-overlay">
-  <div class="team-popup-card">
-    <button class="team-popup-close" aria-label="Close">&times;</button>
-    <div class="team-popup-media">
-      <div class="team-popup-avatar"></div>
-      <div class="team-popup-img-strip"></div>
+  <div class="team-popup-frame">
+    <button class="team-popup-nav team-popup-nav-prev" aria-label="Previous">&#8249;</button>
+    <div class="team-popup-card">
+      <button class="team-popup-close" aria-label="Close">&times;</button>
+      <div class="team-popup-media">
+        <div class="team-popup-avatar"></div>
+        <div class="team-popup-img-strip"></div>
+      </div>
+      <div class="team-popup-content">
+        <h3 class="team-popup-name"></h3>
+        <span class="team-popup-role"></span>
+        <span class="team-popup-batch"></span>
+        <span class="team-popup-spirit-dog"></span>
+        <p class="team-popup-bio"></p>
+      </div>
     </div>
-    <div class="team-popup-content">
-      <h3 class="team-popup-name"></h3>
-      <span class="team-popup-role"></span>
-      <span class="team-popup-batch"></span>
-      <span class="team-popup-spirit-dog"></span>
-      <p class="team-popup-bio"></p>
-    </div>
+    <button class="team-popup-nav team-popup-nav-next" aria-label="Next">&#8250;</button>
   </div>
 </div>
 
