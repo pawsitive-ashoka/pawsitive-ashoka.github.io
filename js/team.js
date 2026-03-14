@@ -72,14 +72,17 @@ function renderLeadershipCinema(sections, container) {
     const bio = member.body || 'Bio coming soon...';
     const hasImg = imageExists(m);
     const activeClass = idx === 0 ? ' active' : '';
+    const images = [m.image, m.image2, m.image3, m.image4].filter(x => x && x.trim());
     cardsHtml += `<div class="cinema-card${activeClass}" data-idx="${idx}"
       data-name="${esc(m.name)}" data-role="${esc(m.role)}"
       data-batch="${esc(m.batch)}" data-bio="${esc(bio)}"
-      data-image="${esc(m.image)}" data-section-label="${esc(member.sectionLabel)}">
+      data-spirit-dog="${esc(m.spirit_dog || '')}"
+      data-images="${esc(images.join('|'))}" data-section-label="${esc(member.sectionLabel)}">
       ${cinemaAvatarHtml(m, idx, hasImg)}
       <div class="cinema-info">
         <h3 class="cinema-name">${esc(m.name)}</h3>
         <span class="cinema-role">${esc(m.role)}</span>
+        ${m.spirit_dog ? `<span class="cinema-spirit-dog">🐾 ${esc(m.spirit_dog)}</span>` : ''}
       </div>
     </div>`;
     dotsHtml += `<button class="cinema-dot${idx === 0 ? ' active' : ''}" data-idx="${idx}" aria-label="Go to ${esc(m.name)}"></button>`;
@@ -105,9 +108,17 @@ function renderCoreGrid(members, container) {
   members.forEach((member, idx) => {
     const m = member.meta;
     const hasImg = imageExists(m);
-    html += `<div class="core-grid-item" style="--i:${idx}">
+    const coreBio = member.body ? member.body.trim() : '';
+    const coreSDog = m.spirit_dog || '';
+    const hasPopup = coreBio || coreSDog;
+    const coreImages = [m.image, m.image2, m.image3, m.image4].filter(x => x && x.trim());
+    html += `<div class="core-grid-item${hasPopup ? ' core-grid-item--has-popup' : ''}" style="--i:${idx}"
+      data-name="${esc(m.name)}" data-role=""
+      data-batch="${esc(m.batch || '')}" data-bio="${esc(coreBio)}"
+      data-spirit-dog="${esc(coreSDog)}" data-images="${esc(coreImages.join('|'))}">
       ${coreAvatarHtml(m, idx, hasImg)}
       <span class="core-name">${esc(m.name)}</span>
+      ${coreSDog ? `<span class="core-spirit-dog">🐾 ${esc(coreSDog)}</span>` : ''}
     </div>`;
   });
   container.innerHTML = `<div class="core-grid">${html}</div>`;
@@ -141,6 +152,9 @@ function initLeaderCarousel() {
     dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
     const sectionLabel = cards[currentIdx].dataset.sectionLabel;
     if (label && sectionLabel) label.textContent = sectionLabel;
+    if (typeof window.__syncTeamPopupFromLeaderCard === 'function') {
+      window.__syncTeamPopupFromLeaderCard(cards[currentIdx]);
+    }
     resetProgress();
   }
 
@@ -196,43 +210,221 @@ function initLeaderCarousel() {
 function initTeamPopup() {
   const overlay = document.getElementById('team-popup-overlay');
   if (!overlay) return;
+  const prevBtn = overlay.querySelector('.team-popup-nav-prev');
+  const nextBtn = overlay.querySelector('.team-popup-nav-next');
 
-  const closePopup = () => overlay.classList.remove('active');
+  const closePopup = () => {
+    overlay.classList.remove('active');
+    overlay.dataset.popupSource = '';
+    overlay.dataset.currentName = '';
+  };
   overlay.querySelector('.team-popup-close').addEventListener('click', closePopup);
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 
-  const leadershipSection = document.querySelector('[data-section="leadership"]');
-  if (!leadershipSection) return;
-
-  leadershipSection.addEventListener('click', e => {
-    const card = e.target.closest('.cinema-card');
-    if (!card) return;
-
-    const name = card.dataset.name;
-    const role = card.dataset.role;
-    const batch = card.dataset.batch;
-    const bio = card.dataset.bio;
-    const image = card.dataset.image;
-
+  function openPopup(name, role, batch, bio, images, spiritDog, source = '') {
     const popupCard = overlay.querySelector('.team-popup-card');
     const avatarEl = popupCard.querySelector('.team-popup-avatar');
-    const imgPath = image && image.trim();
+    const stripEl = popupCard.querySelector('.team-popup-img-strip');
+    let activeImageIndex = 0;
 
-    if (imgPath) {
-      avatarEl.innerHTML = `<img class="team-popup-avatar-img" src="${esc(imgPath)}" alt="${esc(name)}"
+    function setMain(src) {
+      avatarEl.innerHTML = `<img class="team-popup-avatar-img" src="${esc(src)}" alt="${esc(name)}"
         onerror="this.remove();this.parentNode.innerHTML='<span class=\\'team-popup-emoji\\'>🐾</span>'">`;
+    }
+
+    if (images.length) {
+      activeImageIndex = 0;
+      setMain(images[0]);
+      avatarEl.classList.add('team-popup-avatar--zoomable');
+      avatarEl.title = 'Click to enlarge';
+      avatarEl.onclick = () => {
+        if (typeof openDeptLightbox === 'function') {
+          openDeptLightbox(images, activeImageIndex);
+        }
+      };
     } else {
       avatarEl.innerHTML = `<span class="team-popup-emoji">🐾</span>`;
+      avatarEl.classList.remove('team-popup-avatar--zoomable');
+      avatarEl.title = '';
+      avatarEl.onclick = null;
+    }
+
+    if (images.length > 1) {
+      stripEl.classList.add('has-thumbs');
+      stripEl.innerHTML = images.map((src, i) =>
+        `<button class="popup-thumb${i === 0 ? ' active' : ''}" data-src="${esc(src)}" data-idx="${i}">
+          <img src="${esc(src)}" alt="" loading="lazy">
+        </button>`
+      ).join('');
+      stripEl.querySelectorAll('.popup-thumb').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stripEl.querySelectorAll('.popup-thumb').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeImageIndex = Number(btn.dataset.idx || 0);
+          setMain(btn.dataset.src);
+        });
+      });
+    } else {
+      stripEl.classList.remove('has-thumbs');
+      stripEl.innerHTML = '';
     }
 
     popupCard.querySelector('.team-popup-name').textContent = name;
     popupCard.querySelector('.team-popup-role').textContent = role;
     popupCard.querySelector('.team-popup-batch').textContent = batch;
-    popupCard.querySelector('.team-popup-bio').textContent = bio;
+      const sdEl = popupCard.querySelector('.team-popup-spirit-dog');
+      sdEl.innerHTML = '';
+      if (spiritDog) {
+        const lbl = document.createElement('span');
+        lbl.className = 'team-popup-spirit-dog-label';
+        lbl.textContent = 'spirit dog: ';
+        sdEl.appendChild(lbl);
 
+        const dogNames = spiritDog
+          .split('/')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        dogNames.forEach((dogName, idx) => {
+          const a = document.createElement('a');
+          a.className = 'team-popup-spirit-dog-link';
+          a.textContent = dogName;
+          a.href = '#';
+          a.addEventListener('click', async e => {
+            e.preventDefault();
+            closePopup();
+            await showPage('dogs');
+
+            // Wait until dog cards are rendered, then open the matched dog card directly.
+            function tryOpenDog() {
+              const input = document.getElementById('dogs-search');
+              const grid = document.getElementById('dogs-grid');
+              if (input && grid && grid.querySelector('.dog-card')) {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+
+                const cards = [...grid.querySelectorAll('.dog-card')];
+                const target = dogName.trim().toLowerCase();
+                const exact = cards.find(c => (c.dataset.name || '').trim().toLowerCase() === target);
+                const starts = cards.find(c => (c.dataset.name || '').trim().toLowerCase().startsWith(target));
+                const partial = cards.find(c => (c.dataset.name || '').trim().toLowerCase().includes(target));
+                const match = exact || starts || partial;
+                if (match) {
+                  match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  setTimeout(() => match.click(), 120);
+                }
+              } else {
+                setTimeout(tryOpenDog, 80);
+              }
+            }
+
+            setTimeout(tryOpenDog, 0);
+          });
+
+          sdEl.appendChild(a);
+          if (idx < dogNames.length - 1) {
+            sdEl.appendChild(document.createTextNode(' / '));
+          }
+        });
+      }
+      popupCard.querySelector('.team-popup-bio').textContent = bio;
+    overlay.dataset.popupSource = source;
+    overlay.dataset.currentName = name;
     overlay.classList.add('active');
-  });
+
+    if (prevBtn) prevBtn.disabled = false;
+    if (nextBtn) nextBtn.disabled = false;
+  }
+
+  function openPopupFromCard(card, source = 'leadership') {
+    if (!card) return;
+    openPopup(
+      card.dataset.name,
+      card.dataset.role,
+      card.dataset.batch,
+      card.dataset.bio,
+      (card.dataset.images || '').split('|').filter(Boolean),
+      card.dataset.spiritDog || '',
+      source
+    );
+  }
+
+  // Used by the leadership carousel so an open leadership popup tracks auto/manual slide changes.
+  window.__syncTeamPopupFromLeaderCard = card => {
+    if (!overlay.classList.contains('active')) return;
+    if (overlay.dataset.popupSource !== 'leadership') return;
+    openPopupFromCard(card, 'leadership');
+  };
+
+  function stepCorePopup(dir) {
+    const coreItems = [...document.querySelectorAll('[data-section="core"] .core-grid-item--has-popup')];
+    if (!coreItems.length) return;
+    const currentName = (overlay.dataset.currentName || '').trim();
+    let idx = coreItems.findIndex(item => (item.dataset.name || '').trim() === currentName);
+    if (idx < 0) idx = 0;
+    const nextIdx = (idx + dir + coreItems.length) % coreItems.length;
+    const item = coreItems[nextIdx];
+    openPopup(
+      item.dataset.name,
+      item.dataset.role,
+      item.dataset.batch,
+      item.dataset.bio,
+      (item.dataset.images || '').split('|').filter(Boolean),
+      item.dataset.spiritDog || '',
+      'core'
+    );
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (!overlay.classList.contains('active')) return;
+      if (overlay.dataset.popupSource === 'leadership') {
+        const arrow = document.querySelector('.cinema-carousel .cinema-nav-arrow[data-dir="prev"]');
+        if (arrow) arrow.click();
+      } else if (overlay.dataset.popupSource === 'core') {
+        stepCorePopup(-1);
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (!overlay.classList.contains('active')) return;
+      if (overlay.dataset.popupSource === 'leadership') {
+        const arrow = document.querySelector('.cinema-carousel .cinema-nav-arrow[data-dir="next"]');
+        if (arrow) arrow.click();
+      } else if (overlay.dataset.popupSource === 'core') {
+        stepCorePopup(1);
+      }
+    });
+  }
+
+  const leadershipSection = document.querySelector('[data-section="leadership"]');
+  if (leadershipSection) {
+    leadershipSection.addEventListener('click', e => {
+      const card = e.target.closest('.cinema-card');
+      if (!card) return;
+      openPopupFromCard(card, 'leadership');
+    });
+  }
+
+  const coreSection = document.querySelector('[data-section="core"]');
+  if (coreSection) {
+    coreSection.addEventListener('click', e => {
+      const item = e.target.closest('.core-grid-item--has-popup');
+      if (!item) return;
+      openPopup(
+        item.dataset.name,
+        item.dataset.role,
+        item.dataset.batch,
+        item.dataset.bio,
+        (item.dataset.images || '').split('|').filter(Boolean),
+        item.dataset.spiritDog || '',
+        'core'
+      );
+    });
+  }
 }
 
 /* ── Main loader ── */
@@ -295,3 +487,21 @@ async function loadTeam() {
       ⚠️ couldn't load team data. try refreshing.</div>`;
   }
 }
+
+function enableTouchGestures(carousel) {
+  let startX;
+  carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+  carousel.addEventListener('touchmove', (e) => {
+    if (!startX) return;
+    const diffX = startX - e.touches[0].clientX;
+    if (Math.abs(diffX) > 50) {
+      const dir = diffX > 0 ? 'next' : 'prev';
+      carousel.querySelector(`.cinema-nav-arrow[data-dir="${dir}"]`).click();
+      startX = null;
+    }
+  });
+}
+
+document.querySelectorAll('.cinema-carousel').forEach(enableTouchGestures);

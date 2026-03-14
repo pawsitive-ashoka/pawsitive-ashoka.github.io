@@ -3,3 +3,7 @@ Pawsitive 2025-26 _ Dog Population Census - Sheet1.csv
 Pawsitive 2025-26 _ Dog Population Census - Current Census.csv
 /Department Write-Ups
 *.env
+_copy_census_images.py
+_copy_extra_images.py
+# Ignore macOS system files
+.DS_Store

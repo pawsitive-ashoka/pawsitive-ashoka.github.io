@@ -1,3 +1,29 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .team-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .team-tab {
+      flex: 1 1 auto;
+      margin: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .team-photo-wrap img {
+      max-width: 100%;
+      height: auto;
+    }
+    .team-desc-block {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
 <div class="page-header">
   <h1>🌟 meet the dawgs</h1>
   <p>the humans behind every feeding round, every event, every late-night vet run</p>
@@ -51,13 +77,23 @@
 
 <!-- ===== POPUP MODAL (populated by js/team.js) ===== -->
 <div class="team-popup-overlay" id="team-popup-overlay">
-  <div class="team-popup-card">
-    <button class="team-popup-close" aria-label="Close">&times;</button>
-    <div class="team-popup-avatar"></div>
-    <h3 class="team-popup-name"></h3>
-    <span class="team-popup-role"></span>
-    <span class="team-popup-batch"></span>
-    <p class="team-popup-bio"></p>
+  <div class="team-popup-frame">
+    <button class="team-popup-nav team-popup-nav-prev" aria-label="Previous">&#8249;</button>
+    <div class="team-popup-card">
+      <button class="team-popup-close" aria-label="Close">&times;</button>
+      <div class="team-popup-media">
+        <div class="team-popup-avatar"></div>
+        <div class="team-popup-img-strip"></div>
+      </div>
+      <div class="team-popup-content">
+        <h3 class="team-popup-name"></h3>
+        <span class="team-popup-role"></span>
+        <span class="team-popup-batch"></span>
+        <span class="team-popup-spirit-dog"></span>
+        <p class="team-popup-bio"></p>
+      </div>
+    </div>
+    <button class="team-popup-nav team-popup-nav-next" aria-label="Next">&#8250;</button>
   </div>
 </div>
 
