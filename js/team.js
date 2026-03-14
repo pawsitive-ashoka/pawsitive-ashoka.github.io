@@ -102,6 +102,10 @@ function renderLeadershipCinema(sections, container) {
     </div>`;
 }
 
+  function hasCorePopupData(member) {
+    return Boolean((member.body || '').trim() || (member.meta.spirit_dog || '').trim());
+  }
+
 /* ── Core Grid ── */
 function renderCoreGrid(members, container) {
   let html = '';
@@ -110,7 +114,7 @@ function renderCoreGrid(members, container) {
     const hasImg = imageExists(m);
     const coreBio = member.body ? member.body.trim() : '';
     const coreSDog = m.spirit_dog || '';
-    const hasPopup = coreBio || coreSDog;
+      const hasPopup = hasCorePopupData(member);
     const coreImages = [m.image, m.image2, m.image3, m.image4].filter(x => x && x.trim());
     html += `<div class="core-grid-item${hasPopup ? ' core-grid-item--has-popup' : ''}" style="--i:${idx}"
       data-name="${esc(m.name)}" data-role=""
@@ -461,21 +465,22 @@ async function loadTeam() {
     // Fetch core
     const coreManifest = await fetch('public/team/core/manifest.json' + bust).then(r => r.json());
     const coreResults = await Promise.allSettled(
-      coreManifest.members.map(async f => {
+      coreManifest.members.map(async (f, index) => {
         const res = await fetch('public/team/core/content/' + f + bust);
         if (!res.ok) throw new Error(res.status);
-        return parseTeamMd(await res.text());
+        return { index, member: parseTeamMd(await res.text()) };
       })
     );
     const coreMembers = coreResults
       .filter(r => r.status === 'fulfilled')
       .map(r => r.value)
       .sort((a, b) => {
-        const aHasImg = imageExists(a.meta) ? 1 : 0;
-        const bHasImg = imageExists(b.meta) ? 1 : 0;
-        if (aHasImg !== bHasImg) return bHasImg - aHasImg;
-        return (Number(a.meta.order) || 999) - (Number(b.meta.order) || 999);
-      });
+        const aHasPopup = hasCorePopupData(a.member) ? 1 : 0;
+        const bHasPopup = hasCorePopupData(b.member) ? 1 : 0;
+        if (aHasPopup !== bHasPopup) return bHasPopup - aHasPopup;
+        return a.index - b.index;
+      })
+      .map(entry => entry.member);
     renderCoreGrid(coreMembers, coreContainer);
 
     // Fetch members
