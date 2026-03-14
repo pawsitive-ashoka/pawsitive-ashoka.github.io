@@ -27,7 +27,7 @@
     </button>
     <button class="team-tab" data-tab="core"
       onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
-      ✨ Core Team
+      ✨ Core
     </button>
     <button class="team-tab" data-tab="members"
       onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
@@ -42,7 +42,7 @@
 </div>
 
 <div class="team-section cinema-stage" data-section="core" id="team-core" style="display:none;">
-  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading core team...</div>
+  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading...</div>
 </div>
 
 <div class="team-section cinema-stage" data-section="members" id="team-members" style="display:none;">

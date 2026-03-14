@@ -113,7 +113,7 @@ function renderCoreGrid(members, container) {
     const hasPopup = coreBio || coreSDog;
     const coreImages = [m.image, m.image2, m.image3, m.image4].filter(x => x && x.trim());
     html += `<div class="core-grid-item${hasPopup ? ' core-grid-item--has-popup' : ''}" style="--i:${idx}"
-      data-name="${esc(m.name)}" data-role="${esc(m.department || 'Core Team')}"
+      data-name="${esc(m.name)}" data-role=""
       data-batch="${esc(m.batch || '')}" data-bio="${esc(coreBio)}"
       data-spirit-dog="${esc(coreSDog)}" data-images="${esc(coreImages.join('|'))}">
       ${coreAvatarHtml(m, idx, hasImg)}
