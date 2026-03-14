@@ -75,11 +75,13 @@ function renderLeadershipCinema(sections, container) {
     cardsHtml += `<div class="cinema-card${activeClass}" data-idx="${idx}"
       data-name="${esc(m.name)}" data-role="${esc(m.role)}"
       data-batch="${esc(m.batch)}" data-bio="${esc(bio)}"
+      data-spirit-dog="${esc(m.spirit_dog || '')}"
       data-image="${esc(m.image)}" data-section-label="${esc(member.sectionLabel)}">
       ${cinemaAvatarHtml(m, idx, hasImg)}
       <div class="cinema-info">
         <h3 class="cinema-name">${esc(m.name)}</h3>
         <span class="cinema-role">${esc(m.role)}</span>
+        ${m.spirit_dog ? `<span class="cinema-spirit-dog">🐾 ${esc(m.spirit_dog)}</span>` : ''}
       </div>
     </div>`;
     dotsHtml += `<button class="cinema-dot${idx === 0 ? ' active' : ''}" data-idx="${idx}" aria-label="Go to ${esc(m.name)}"></button>`;
@@ -105,9 +107,16 @@ function renderCoreGrid(members, container) {
   members.forEach((member, idx) => {
     const m = member.meta;
     const hasImg = imageExists(m);
-    html += `<div class="core-grid-item" style="--i:${idx}">
+    const coreBio = member.body ? member.body.trim() : '';
+    const coreSDog = m.spirit_dog || '';
+    const hasPopup = coreBio || coreSDog;
+    html += `<div class="core-grid-item${hasPopup ? ' core-grid-item--has-popup' : ''}" style="--i:${idx}"
+      data-name="${esc(m.name)}" data-role="${esc(m.department || 'Core Team')}"
+      data-batch="${esc(m.batch || '')}" data-bio="${esc(coreBio)}"
+      data-spirit-dog="${esc(coreSDog)}" data-image="${esc(m.image || '')}">
       ${coreAvatarHtml(m, idx, hasImg)}
       <span class="core-name">${esc(m.name)}</span>
+      ${coreSDog ? `<span class="core-spirit-dog">🐾 ${esc(coreSDog)}</span>` : ''}
     </div>`;
   });
   container.innerHTML = `<div class="core-grid">${html}</div>`;
@@ -202,37 +211,43 @@ function initTeamPopup() {
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 
-  const leadershipSection = document.querySelector('[data-section="leadership"]');
-  if (!leadershipSection) return;
-
-  leadershipSection.addEventListener('click', e => {
-    const card = e.target.closest('.cinema-card');
-    if (!card) return;
-
-    const name = card.dataset.name;
-    const role = card.dataset.role;
-    const batch = card.dataset.batch;
-    const bio = card.dataset.bio;
-    const image = card.dataset.image;
-
+  function openPopup(name, role, batch, bio, image, spiritDog) {
     const popupCard = overlay.querySelector('.team-popup-card');
     const avatarEl = popupCard.querySelector('.team-popup-avatar');
     const imgPath = image && image.trim();
-
     if (imgPath) {
       avatarEl.innerHTML = `<img class="team-popup-avatar-img" src="${esc(imgPath)}" alt="${esc(name)}"
         onerror="this.remove();this.parentNode.innerHTML='<span class=\\'team-popup-emoji\\'>🐾</span>'">`;
     } else {
       avatarEl.innerHTML = `<span class="team-popup-emoji">🐾</span>`;
     }
-
     popupCard.querySelector('.team-popup-name').textContent = name;
     popupCard.querySelector('.team-popup-role').textContent = role;
     popupCard.querySelector('.team-popup-batch').textContent = batch;
+    popupCard.querySelector('.team-popup-spirit-dog').textContent = spiritDog ? '🐾 ' + spiritDog : '';
     popupCard.querySelector('.team-popup-bio').textContent = bio;
-
     overlay.classList.add('active');
-  });
+  }
+
+  const leadershipSection = document.querySelector('[data-section="leadership"]');
+  if (leadershipSection) {
+    leadershipSection.addEventListener('click', e => {
+      const card = e.target.closest('.cinema-card');
+      if (!card) return;
+      openPopup(card.dataset.name, card.dataset.role, card.dataset.batch,
+        card.dataset.bio, card.dataset.image, card.dataset.spiritDog || '');
+    });
+  }
+
+  const coreSection = document.querySelector('[data-section="core"]');
+  if (coreSection) {
+    coreSection.addEventListener('click', e => {
+      const item = e.target.closest('.core-grid-item--has-popup');
+      if (!item) return;
+      openPopup(item.dataset.name, item.dataset.role, item.dataset.batch,
+        item.dataset.bio, item.dataset.image, item.dataset.spiritDog || '');
+    });
+  }
 }
 
 /* ── Main loader ── */
