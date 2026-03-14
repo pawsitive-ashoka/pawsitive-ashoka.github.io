@@ -487,3 +487,21 @@ async function loadTeam() {
       ⚠️ couldn't load team data. try refreshing.</div>`;
   }
 }
+
+function enableTouchGestures(carousel) {
+  let startX;
+  carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+  carousel.addEventListener('touchmove', (e) => {
+    if (!startX) return;
+    const diffX = startX - e.touches[0].clientX;
+    if (Math.abs(diffX) > 50) {
+      const dir = diffX > 0 ? 'next' : 'prev';
+      carousel.querySelector(`.cinema-nav-arrow[data-dir="${dir}"]`).click();
+      startX = null;
+    }
+  });
+}
+
+document.querySelectorAll('.cinema-carousel').forEach(enableTouchGestures);

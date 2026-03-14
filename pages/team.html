@@ -1,3 +1,29 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .team-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .team-tab {
+      flex: 1 1 auto;
+      margin: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .team-photo-wrap img {
+      max-width: 100%;
+      height: auto;
+    }
+    .team-desc-block {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
 <div class="page-header">
   <h1>🌟 meet the dawgs</h1>
   <p>the humans behind every feeding round, every event, every late-night vet run</p>
@@ -27,7 +53,7 @@
     </button>
     <button class="team-tab" data-tab="core"
       onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
-      ✨ Core
+      ✨ Core Team
     </button>
     <button class="team-tab" data-tab="members"
       onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
@@ -42,7 +68,7 @@
 </div>
 
 <div class="team-section cinema-stage" data-section="core" id="team-core" style="display:none;">
-  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading...</div>
+  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading core team...</div>
 </div>
 
 <div class="team-section cinema-stage" data-section="members" id="team-members" style="display:none;">
