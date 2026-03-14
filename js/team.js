@@ -257,29 +257,54 @@ function initTeamPopup() {
         const lbl = document.createElement('span');
         lbl.className = 'team-popup-spirit-dog-label';
         lbl.textContent = 'spirit dog: ';
-        const a = document.createElement('a');
-        a.className = 'team-popup-spirit-dog-link';
-        a.textContent = spiritDog;
-        a.href = '#';
-        const searchTerm = spiritDog.split('/')[0].trim();
-        a.addEventListener('click', async e => {
-          e.preventDefault();
-          closePopup();
-          await showPage('dogs');
-          function trySearch() {
-            const input = document.getElementById('dogs-search');
-            const grid = document.getElementById('dogs-grid');
-            if (input && grid && grid.querySelector('.dog-card')) {
-              input.value = searchTerm;
-              input.dispatchEvent(new Event('input'));
-            } else {
-              setTimeout(trySearch, 80);
-            }
-          }
-          setTimeout(trySearch, 0);
-        });
         sdEl.appendChild(lbl);
-        sdEl.appendChild(a);
+
+        const dogNames = spiritDog
+          .split('/')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        dogNames.forEach((dogName, idx) => {
+          const a = document.createElement('a');
+          a.className = 'team-popup-spirit-dog-link';
+          a.textContent = dogName;
+          a.href = '#';
+          a.addEventListener('click', async e => {
+            e.preventDefault();
+            closePopup();
+            await showPage('dogs');
+
+            // Wait until dog cards are rendered, then open the matched dog card directly.
+            function tryOpenDog() {
+              const input = document.getElementById('dogs-search');
+              const grid = document.getElementById('dogs-grid');
+              if (input && grid && grid.querySelector('.dog-card')) {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+
+                const cards = [...grid.querySelectorAll('.dog-card')];
+                const target = dogName.trim().toLowerCase();
+                const exact = cards.find(c => (c.dataset.name || '').trim().toLowerCase() === target);
+                const starts = cards.find(c => (c.dataset.name || '').trim().toLowerCase().startsWith(target));
+                const partial = cards.find(c => (c.dataset.name || '').trim().toLowerCase().includes(target));
+                const match = exact || starts || partial;
+                if (match) {
+                  match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  setTimeout(() => match.click(), 120);
+                }
+              } else {
+                setTimeout(tryOpenDog, 80);
+              }
+            }
+
+            setTimeout(tryOpenDog, 0);
+          });
+
+          sdEl.appendChild(a);
+          if (idx < dogNames.length - 1) {
+            sdEl.appendChild(document.createTextNode(' / '));
+          }
+        });
       }
       popupCard.querySelector('.team-popup-bio').textContent = bio;
     overlay.classList.add('active');
