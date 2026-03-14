@@ -467,7 +467,15 @@ async function loadTeam() {
         return parseTeamMd(await res.text());
       })
     );
-    const coreMembers = coreResults.filter(r => r.status === 'fulfilled').map(r => r.value);
+    const coreMembers = coreResults
+      .filter(r => r.status === 'fulfilled')
+      .map(r => r.value)
+      .sort((a, b) => {
+        const aHasImg = imageExists(a.meta) ? 1 : 0;
+        const bHasImg = imageExists(b.meta) ? 1 : 0;
+        if (aHasImg !== bHasImg) return bHasImg - aHasImg;
+        return (Number(a.meta.order) || 999) - (Number(b.meta.order) || 999);
+      });
     renderCoreGrid(coreMembers, coreContainer);
 
     // Fetch members

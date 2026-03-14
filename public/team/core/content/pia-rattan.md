@@ -3,7 +3,7 @@ name: Pia Rattan
 batch: Core
 department: Core Team
 spirit_dog: Toshi/Goofy
-image: 
+image: public/team/core/images/pia-rattan.jpg
 order: 21
 ---
 Hi, I'm Pia Rattan.

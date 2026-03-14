@@ -1,9 +1,12 @@
 ---
-name: Ojal Jayakeerthi Rao
+name: Ojal Rao
 batch: Core
 department: Core Team
 spirit_dog: Dumbo
-image: public/team/core/images/ojal-jayakeerthi-rao.jpg
+image: public/team/core/images/ojal-rao.jpg
+image2: public/team/core/images/ojal-rao-2.jpg
+image3: public/team/core/images/ojal-rao-3.jpg
+image4: public/team/core/images/ojal-rao-4.jpg
 order: 10
 ---
 I seemed to have misunderstood the prompt, and instead of writing a brief description of myself, I accidentally penned a haiku for my spirit dog, Dumbo:
