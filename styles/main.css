@@ -700,6 +700,7 @@ nav::after {
 .donate-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
 .donate-card{background:var(--card);border:2.5px solid var(--border);border-radius:20px;box-shadow:6px 6px 0 var(--sketch);overflow:hidden;transition:transform 0.2s;}
 .donate-card:hover{transform:rotate(0.3deg);}
+.donate-grid .donate-card:only-child{grid-column:1 / -1;justify-self:center;width:100%;max-width:720px;}
 .donate-card-head{padding:1.5rem 1.8rem 1.2rem;border-bottom:2px dashed var(--border);}
 .donate-card:nth-child(1) .donate-card-head{background:linear-gradient(135deg,#fff3d8,#ffe8a8);}
 .donate-card:nth-child(2) .donate-card-head{background:linear-gradient(135deg,#d8edf8,#c0d8f0);}
