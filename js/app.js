@@ -138,7 +138,10 @@ async function loadPage(name) {
                        window.location.hostname.includes('localhost');
   
   // Skip cache check in development mode
-  if (!isDevelopment && _loaded[name]) return;
+  if (!isDevelopment && _loaded[name]) {
+    if (name === 'memoriam') loadMemorial();
+    return;
+  }
   
   const container = document.getElementById('page-' + name);
   if (!container) return;

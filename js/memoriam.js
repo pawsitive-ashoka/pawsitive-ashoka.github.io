@@ -5,6 +5,9 @@ function randBetween(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+/** Row unit must match grid-auto-rows in CSS (px) */
+const MEMORIAL_GRID_ROW_UNIT = 4;
+
 /** Build a memorial tile card for a single dog */
 function buildMemorialCard(meta, body) {
   // Do NOT recalculate age — memorial dogs show the age at time of passing,
@@ -26,7 +29,7 @@ function buildMemorialCard(meta, body) {
 
   const photoArea = meta.image
     ? `<div class="dog-tile-photo">
-         <img src="${meta.image}" alt="${esc(rawName)}" class="dog-photo memorial-photo" loading="lazy">
+         <img src="${meta.image}" alt="${esc(rawName)}" class="dog-photo memorial-photo" loading="lazy" onerror="_cldImgError(this)">
        </div>`
     : `<div class="dog-tile-emoji" style="background:${meta.bgLight || ''}">
          <span class="dog-emoji-big">${meta.emoji || '🐕'}</span>
@@ -93,18 +96,20 @@ function initMemorialPhotos() {
 
 /** Watch grid for width changes and recalculate spans */
 function initMemorialMasonryResize() {
-  const grid = document.getElementById('memoriam-grid');
-  if (!grid || !window.ResizeObserver) return;
+  const grids = Array.from(document.querySelectorAll('#memoriam-grid, #memoriam-grid-asawarpur'));
+  if (grids.length === 0 || !window.ResizeObserver) return;
   const ro = new ResizeObserver(() => {
-    grid.querySelectorAll('.dog-card').forEach(setCardSpan);
+    grids.forEach(grid => {
+      grid.querySelectorAll('.dog-card').forEach(setCardSpan);
+    });
   });
-  ro.observe(grid);
+  grids.forEach(grid => ro.observe(grid));
 }
 
 /** Open a full-colour memorial modal when a card is clicked */
 function initMemorialModals() {
-  const grid = document.getElementById('memoriam-grid');
-  if (!grid) return;
+  const grids = Array.from(document.querySelectorAll('#memoriam-grid, #memoriam-grid-asawarpur'));
+  if (grids.length === 0) return;
 
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   let lastTouchOpenAt = 0;
@@ -135,79 +140,89 @@ function initMemorialModals() {
       });
     }
 
-    grid.addEventListener('touchstart', e => {
-      const card = e.target.closest('.dog-card');
-      if (!card) return;
-      activeCard = card;
-      didLongPress = false;
-      const touch = e.touches[0];
-      startX = touch.clientX;
-      startY = touch.clientY;
+    grids.forEach(grid => {
+      if (grid.dataset.modalBound === '1') return;
+      grid.dataset.modalBound = '1';
 
-      pressTimer = setTimeout(() => {
-        didLongPress = true;
-        card.classList.add('lit');
-        if (navigator.vibrate) navigator.vibrate(50);
-      }, LONG_PRESS_MS);
-    }, { passive: true });
+      grid.addEventListener('touchstart', e => {
+        const card = e.target.closest('.dog-card');
+        if (!card) return;
+        activeCard = card;
+        didLongPress = false;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
 
-    grid.addEventListener('touchmove', e => {
-      if (!pressTimer) return;
-      const touch = e.touches[0];
-      const dx = Math.abs(touch.clientX - startX);
-      const dy = Math.abs(touch.clientY - startY);
-      if (dx > MOVE_THRESHOLD || dy > MOVE_THRESHOLD) {
+        pressTimer = setTimeout(() => {
+          didLongPress = true;
+          card.classList.add('lit');
+          if (navigator.vibrate) navigator.vibrate(50);
+        }, LONG_PRESS_MS);
+      }, { passive: true });
+
+      grid.addEventListener('touchmove', e => {
+        if (!pressTimer) return;
+        const touch = e.touches[0];
+        const dx = Math.abs(touch.clientX - startX);
+        const dy = Math.abs(touch.clientY - startY);
+        if (dx > MOVE_THRESHOLD || dy > MOVE_THRESHOLD) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+      }, { passive: true });
+
+      grid.addEventListener('touchend', () => {
         clearTimeout(pressTimer);
         pressTimer = null;
-      }
-    }, { passive: true });
-
-    grid.addEventListener('touchend', e => {
-      clearTimeout(pressTimer);
-      pressTimer = null;
-      if (didLongPress) {
-        didLongPress = false;
-        if (activeCard) activeCard.classList.remove('lit');
+        if (didLongPress) {
+          didLongPress = false;
+          if (activeCard) activeCard.classList.remove('lit');
+          activeCard = null;
+          return;
+        }
+        if (activeCard) {
+          openMemorialModal(activeCard);
+          lastTouchOpenAt = Date.now();
+        }
         activeCard = null;
-        return;
-      }
-      if (activeCard) {
-        openMemorialModal(activeCard);
-        lastTouchOpenAt = Date.now();
-      }
-      activeCard = null;
-    });
+      });
 
-    grid.addEventListener('touchcancel', () => {
-      clearTimeout(pressTimer);
-      pressTimer = null;
-      if (activeCard) activeCard.classList.remove('lit');
-      didLongPress = false;
-      activeCard = null;
-    });
+      grid.addEventListener('touchcancel', () => {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+        if (activeCard) activeCard.classList.remove('lit');
+        didLongPress = false;
+        activeCard = null;
+      });
 
-    // Suppress native context menu on long press within the grid
-    grid.addEventListener('contextmenu', e => {
-      if (e.target.closest('.dog-card')) e.preventDefault();
+      // Suppress native context menu on long press within the grid
+      grid.addEventListener('contextmenu', e => {
+        if (e.target.closest('.dog-card')) e.preventDefault();
+      });
     });
   }
 
   /* ── Desktop: click opens modal (hover handles candle/colour via CSS) ── */
-  grid.addEventListener('click', e => {
-    // Ignore synthetic click events that follow a touch tap.
-    if (Date.now() - lastTouchOpenAt < 700) return;
-    const card = e.target.closest('.dog-card');
-    if (!card) return;
-    openMemorialModal(card);
-  });
+  grids.forEach(grid => {
+    if (grid.dataset.modalBound === '1') return;
+    grid.dataset.modalBound = '1';
 
-  // Keyboard support for focused cards.
-  grid.addEventListener('keydown', e => {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    const card = e.target.closest('.dog-card');
-    if (!card) return;
-    e.preventDefault();
-    openMemorialModal(card);
+    grid.addEventListener('click', e => {
+      // Ignore synthetic click events that follow a touch tap.
+      if (Date.now() - lastTouchOpenAt < 700) return;
+      const card = e.target.closest('.dog-card');
+      if (!card) return;
+      openMemorialModal(card);
+    });
+
+    // Keyboard support for focused cards.
+    grid.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const card = e.target.closest('.dog-card');
+      if (!card) return;
+      e.preventDefault();
+      openMemorialModal(card);
+    });
   });
 }
 
@@ -266,33 +281,105 @@ function openMemorialModal(card) {
 /** Main entry: fetch manifest, load all memorial dogs, render to grid */
 async function loadMemorial() {
   const grid = document.getElementById('memoriam-grid');
+  let asawarpurGrid = document.getElementById('memoriam-grid-asawarpur');
+  let asawarpurSection = document.getElementById('memoriam-asawarpur-section');
   if (!grid) return;
 
+  // Handle cached/older memoriam HTML by creating subsection nodes on the fly.
+  if (!asawarpurSection || !asawarpurGrid) {
+    const wrapper = grid.closest('.memoriam-page-wrap');
+    if (wrapper) {
+      if (!asawarpurSection) {
+        asawarpurSection = document.createElement('div');
+        asawarpurSection.id = 'memoriam-asawarpur-section';
+        asawarpurSection.className = 'memoriam-subsection-block';
+        asawarpurSection.style.display = 'none';
+        asawarpurSection.innerHTML = `
+          <h2 class="memoriam-subsection-title">Asawarpur Puppies</h2>
+          <p class="memoriam-subsection-note">As an animal welfare club that operates within a limited jurisdiction, we are often called upon to assist with emergencies in neighboring areas. It was under such circumstances that we were asked to help with the burial of these puppies. Because of this, we never had the chance to truly know them. Our members have tried to recreate their likeness through illustrations drawn from memory, in the hope of keeping their memory alive. All of them were named posthumously.</p>
+        `;
+        wrapper.appendChild(asawarpurSection);
+      }
+      if (!asawarpurGrid) {
+        asawarpurGrid = document.createElement('div');
+        asawarpurGrid.id = 'memoriam-grid-asawarpur';
+        asawarpurGrid.className = 'memoriam-grid';
+        asawarpurGrid.style.display = 'none';
+        wrapper.appendChild(asawarpurGrid);
+      }
+    }
+  }
+
   grid.innerHTML = '<div class="dogs-loading">🕯️ loading…</div>';
+  if (asawarpurGrid) asawarpurGrid.innerHTML = '<div class="dogs-loading">🕯️ loading…</div>';
 
   try {
-    const manifestRes = await fetch('public/memorial/manifest.json');
+    const bust = `?v=${Date.now()}`;
+    const manifestRes = await fetch('public/memorial/manifest.json' + bust);
     if (!manifestRes.ok) throw new Error('memorial manifest not found');
     const { dogs: files } = await manifestRes.json();
 
     const results = await Promise.allSettled(
       files.map(async filename => {
-        const res = await fetch('public/memorial/content/' + filename);
+        const res = await fetch('public/memorial/content/' + filename + bust);
         if (!res.ok) throw new Error('Could not load ' + filename);
-        return parseDogMd(await res.text());
+        return { filename, parsed: parseDogMd(await res.text()) };
       })
     );
 
-    const cards = results
+    const entries = results
       .filter(r => r.status === 'fulfilled')
-      .map(r => buildMemorialCard(r.value.meta, r.value.body));
+      .map(r => r.value);
 
-    if (cards.length === 0) {
+    const asawarpurPuppyFiles = new Set([
+      'chocolate.md',
+      'moon.md',
+      'iris.md',
+      'gypsy.md',
+      'chikku.md'
+    ]);
+
+    const regularEntries = entries.filter(entry => !asawarpurPuppyFiles.has(entry.filename));
+    const asawarpurEntries = entries.filter(entry => asawarpurPuppyFiles.has(entry.filename));
+
+    const regularCards = regularEntries.map(entry =>
+      buildMemorialCard(entry.parsed.meta, entry.parsed.body)
+    );
+
+    const asawarpurCards = asawarpurEntries.map(entry =>
+      buildMemorialCard(entry.parsed.meta, entry.parsed.body)
+    );
+
+    if (regularCards.length === 0 && asawarpurCards.length === 0) {
       grid.innerHTML = '<div class="dogs-loading" style="opacity:0.6">no entries yet 🕯️</div>';
+      if (asawarpurGrid) {
+        asawarpurGrid.style.display = 'none';
+      }
+      if (asawarpurSection) {
+        asawarpurSection.style.display = 'none';
+      }
       return;
     }
 
-    grid.innerHTML = cards.join('');
+    grid.innerHTML = regularCards.length > 0
+      ? regularCards.join('')
+      : '<div class="dogs-loading" style="opacity:0.6">no entries yet 🕯️</div>';
+
+    if (asawarpurGrid) {
+      if (asawarpurCards.length > 0) {
+        asawarpurGrid.innerHTML = asawarpurCards.join('');
+        asawarpurGrid.style.display = '';
+        if (asawarpurSection) asawarpurSection.style.display = '';
+      } else {
+        asawarpurGrid.style.display = 'none';
+        if (asawarpurSection) asawarpurSection.style.display = 'none';
+      }
+    } else {
+      // Fallback for older cached HTML: append Asawarpur cards in main grid
+      if (asawarpurCards.length > 0) {
+        grid.innerHTML = [grid.innerHTML, ...asawarpurCards].join('');
+      }
+    }
     initMemorialPhotos();
     initMemorialModals();
     initMemorialMasonryResize();
@@ -301,6 +388,9 @@ async function loadMemorial() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         grid.querySelectorAll('.dog-card').forEach(setCardSpan);
+        if (asawarpurGrid) {
+          asawarpurGrid.querySelectorAll('.dog-card').forEach(setCardSpan);
+        }
       });
     });
 
