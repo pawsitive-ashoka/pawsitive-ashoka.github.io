@@ -26,7 +26,7 @@ function buildMemorialCard(meta, body) {
 
   const photoArea = meta.image
     ? `<div class="dog-tile-photo">
-         <img src="${meta.image}" alt="${esc(rawName)}" class="dog-photo memorial-photo" loading="lazy">
+         <img src="${meta.image}" alt="${esc(rawName)}" class="dog-photo memorial-photo" loading="lazy" onerror="_cldImgError(this)">
        </div>`
     : `<div class="dog-tile-emoji" style="background:${meta.bgLight || ''}">
          <span class="dog-emoji-big">${meta.emoji || '🐕'}</span>
