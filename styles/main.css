@@ -1338,6 +1338,33 @@ footer .footer-sep {
   overflow-x: clip;
 }
 
+.memoriam-subsection-block {
+  max-width: 1200px;
+  margin: 1.2rem auto 0.8rem;
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+  filter: grayscale(1) contrast(0.92);
+}
+
+.memoriam-subsection-title {
+  margin: 0.7rem 0 0.4rem;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-align: center;
+}
+
+.memoriam-subsection-note {
+  margin: 0 auto;
+  max-width: 760px;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
 /* ── Memorial card — no filter here; candle lives at this level ── */
 .memorial-card {
   position: relative;
@@ -1448,6 +1475,13 @@ footer .footer-sep {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
     padding: 0.5rem 0.75rem 2rem;
+  }
+  .memoriam-subsection-block {
+    padding: 0.4rem 0.75rem;
+    margin: 1rem auto 0.6rem;
+  }
+  .memoriam-subsection-note {
+    font-size: 0.9rem;
   }
   .memoriam-header-section { padding: 3rem 1.2rem 1.2rem; }
 }
