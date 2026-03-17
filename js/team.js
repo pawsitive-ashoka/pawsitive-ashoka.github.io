@@ -156,9 +156,6 @@ function initLeaderCarousel() {
     dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
     const sectionLabel = cards[currentIdx].dataset.sectionLabel;
     if (label && sectionLabel) label.textContent = sectionLabel;
-    if (typeof window.__syncTeamPopupFromLeaderCard === 'function') {
-      window.__syncTeamPopupFromLeaderCard(cards[currentIdx]);
-    }
     resetProgress();
   }
 
@@ -353,13 +350,6 @@ function initTeamPopup() {
       source
     );
   }
-
-  // Used by the leadership carousel so an open leadership popup tracks auto/manual slide changes.
-  window.__syncTeamPopupFromLeaderCard = card => {
-    if (!overlay.classList.contains('active')) return;
-    if (overlay.dataset.popupSource !== 'leadership') return;
-    openPopupFromCard(card, 'leadership');
-  };
 
   function stepCorePopup(dir) {
     const coreItems = [...document.querySelectorAll('[data-section="core"] .core-grid-item--has-popup')];
