@@ -1,0 +1,14 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# THIS FILE IS NOT USED AT RUNTIME.
+#
+# The active CMS configuration lives in admin/cms-config.js.
+# That file is loaded by admin/index.html via CMS_MANUAL_INIT and handles:
+#   • Environment detection  (localhost → local_backend, else GitHub PKCE)
+#   • Full collection schemas with image upload, sorting, and filtering
+#   • Live preview templates for all four content types
+#
+# This file is kept only as a human-readable reference. If you update
+# cms-config.js, you do NOT need to update this file.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# See admin/cms-config.js for the full configuration.

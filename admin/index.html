@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Pawsitive CMS</title>
+  </head>
+  <body>
+    <!--
+      CMS_MANUAL_INIT must be set BEFORE the Decap CMS bundle loads,
+      otherwise the CMS auto-initialises from config.yml and ignores cms-config.js.
+    -->
+    <!-- Cloudinary media library must load before Decap CMS -->
+    <script src="https://media-library.cloudinary.com/global/all.js"></script>
+    <script>window.CMS_MANUAL_INIT = true;</script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script src="cms-config.js"></script>
+  </body>
+</html>

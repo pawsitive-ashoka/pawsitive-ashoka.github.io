@@ -1,0 +1,78 @@
+{
+  "num": "VERTICAL 02",
+  "icon": "💼",
+  "heroClass": "dept-detail-hero--02",
+  "title": "Finance & Outreach",
+  "tagline": "The backbone of sustainability.",
+  "what": "This team manages all incoming finances, including donations and event revenue, while maintaining accurate records to ensure funds are readily available for medical care, food, and emergency needs. They oversee timely reimbursements for student expenses and lead outreach to companies, NGOs, and aligned organisations to secure funding, resources, and collaborative opportunities for the club.",
+  "resp": [
+    "Managing all incoming finances — donations, event revenue, grants — with transparent and accurate record-keeping",
+    "Ensuring funds are available for medical care, food & emergency needs at all times",
+    "Processing timely reimbursements for all club expenses across verticals",
+    "Outreach to companies, NGOs & aligned organisations for funding, resources & long-term collaborations",
+    "Drafting funding proposals and maintaining relationships with existing sponsors and donors",
+    "Producing termly financial summaries to keep the club accountable and transparent"
+  ],
+  "entries": [
+    {
+      "title": "Fundraiser for Stockings",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/1.png",
+      "preview": "Stockings, a ten-year-old black female dog residing near Gate 1, was involved in a vehicular accident in September 2025 that resulted in a compound fracture to her previously injured left hind leg.",
+      "content": "Stockings, a ten-year-old black female dog residing near Gate 1, was involved in a vehicular accident in September 2025 that resulted in a compound fracture to her previously injured left hind leg.\n\nPawsitive mobilized support from Ashokan alumni, faculty members, and students to fund her surgical treatment at Max Petz Veterinary Clinic, East of Kailash, New Delhi. Following the procedure, Stockings underwent a two-week rehabilitation period at a local shelter.",
+      "amountRaised": "Rs. 40,000/-",
+      "photos": [
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/1.png",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/2.png",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/3.jpg"
+      ]
+    },
+    {
+      "title": "Fundraiser for Ice Cream and Dobby",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/4.png",
+      "preview": "Earlier this year, Ice Cream, a seven-year-old white-and-black male dog, sought refuge near Gate 1. He was suffering from a severe case of mange, which required weekly veterinary visits and a consistent medication regimen over a three-month period.",
+      "content": "Earlier this year, Ice Cream, a seven-year-old white-and-black male dog, sought refuge near Gate 1. He was suffering from a severe case of mange, which required weekly veterinary visits and a consistent medication regimen including *Formulexin 600, Biotine & Taurine,* and *Ivermectin* over a three-month period.\n\nDobby, a one-year-old brown female dog residing near Gate 2, was also experiencing similar dermatological issues, though her condition required less extensive treatment.",
+      "amountRaised": "Rs. 50,000/-",
+      "photos": [
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/4.png",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/5.png",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/6.png",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/7.png"
+      ]
+    },
+    {
+      "title": "Fundraiser for Sterilization",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/8.jpg",
+      "preview": "In February 2026, five male campus dogs — Barfi, Bunty, Caramel, Cookie, and Kaddu — were sent for neutering. The process involved pre-operative blood tests, surgery, post-operative rehabilitation, and transportation.",
+      "content": "In February 2026, five male campus dogs — Barfi, Bunty, Caramel, Cookie, and Kaddu — were sent for neutering.\n\nThe sterilization process involved several components, including pre-operative blood tests to ensure general health, the surgical procedure itself, post-operative rehabilitation, and transportation for pick-up and drop-off.",
+      "amountRaised": "Rs. 16,000/-",
+      "photos": [
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/8.jpg",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/9.jpg",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/10.jpg"
+      ]
+    },
+    {
+      "title": "Fundraiser for Vaccination",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/11.jpg",
+      "preview": "In December 2025, five female campus dogs — Bella, Claws, Clio, Coco, and Firefox — gave birth to a total of twenty puppies, each requiring a series of seven vaccinations.",
+      "content": "In December 2025, five female campus dogs — Bella, Claws, Clio, Coco, and Firefox — gave birth to a total of twenty puppies.\n\nEach puppy requires a series of seven vaccinations, including three doses of the *nine-in-one vaccine*, two doses of the *anti-rabies vaccine*, and two doses of the *Canine Coronavirus (CCV) vaccine*. The nine-in-one vaccine provides protection against several diseases, including Canine Adenovirus (CAV) Type 1 and 2, Canine Distemper Virus (CDV), parvovirus, and other related infections.",
+      "amountRaised": "Rs. 11,000/-",
+      "photos": [
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/11.jpg",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/12.jpg",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/13.jpg",
+        "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/departments/finance/14.jpg"
+      ]
+    },
+    {
+      "title": "Funding from the Department of Environmental Studies, Ashoka University",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/logo/Paws Logo.jpg",
+      "preview": "Recognizing the financial demands of caring for the campus dog population, Professor Mitul Baruah, Head of the Department of Environmental Studies at Ashoka University, met with the Pawsitive leadership to discuss the club's funding constraints.",
+      "content": "Recognizing the financial demands of caring for the campus dog population, Professor Mitul Baruah, Head of the Department of Environmental Studies at Ashoka University, met with the Pawsitive leadership to discuss the club's funding constraints.\n\nFollowing this discussion, the Department provided financial assistance from its miscellaneous funds to support Pawsitive's animal welfare efforts.",
+      "amountRaised": "Rs. 10,000/-",
+      "photos": []
+    }
+  ],
+  "who": "You're financially literate and organised. You care deeply about how resources are allocated and you hold yourself to a high standard of accuracy. You're also personable and comfortable reaching out to organisations cold — you believe in the cause enough to pitch it convincingly to strangers.",
+  "donateText": "Every rupee donated goes directly towards the animals — vet bills, food, medication, and emergency care. Our Finance & Outreach team ensures complete transparency in how every contribution is used. No amount is too small, and every donation keeps a dog fed, healthy, and loved."
+}

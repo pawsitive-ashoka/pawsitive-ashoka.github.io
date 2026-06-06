@@ -1,0 +1,52 @@
+{
+  "num": "VERTICAL 04",
+  "icon": "📱",
+  "heroClass": "dept-detail-hero--04",
+  "title": "Social Media & Marketing",
+  "tagline": "The voice of Pawsitive. Online, always.",
+  "what": "This team manages the club's social media presence across all platforms by curating and posting content such as artwork, articles, text posts, and commentary on relevant issues. They lead digital campaigns, ensure consistent documentation and coverage of club initiatives, and maintain an active online presence year-round. The team also manages the club's LinkedIn page to build a credible and professional public profile for external organisations and collaborators.",
+  "resp": [
+    "Curating & posting content across all platforms — artwork, articles, reels, and commentary on relevant issues",
+    "Leading digital campaigns tied to events, awareness days, and adoption drives",
+    "Ensuring consistent documentation of all club initiatives year-round — photos, captions, stories",
+    "Managing the club's Instagram, LinkedIn, and any other active platforms with a coherent voice",
+    "Building a credible professional presence on LinkedIn for external collaborators and prospective sponsors",
+    "Analysing reach and engagement data to continuously improve content strategy"
+  ],
+  "entries": [
+    {
+      "title": "Dog Spotlights",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/logo/Paws Logo.jpg",
+      "preview": "Regular features on the campus dogs — their names, personalities, and stories — building a following that genuinely cares.",
+      "content": "Regular features on the campus dogs — their names, personalities, and stories — building a following that genuinely cares.",
+      "amountRaised": "",
+      "photos": []
+    },
+    {
+      "title": "Animal Welfare Writing",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/logo/Paws Logo.jpg",
+      "preview": "Long-form posts and articles on stray animal rights, anti-cruelty laws, and responsible coexistence with campus animals.",
+      "content": "Long-form posts and articles on stray animal rights, anti-cruelty laws, and responsible coexistence with campus animals.",
+      "amountRaised": "",
+      "photos": []
+    },
+    {
+      "title": "Campaign Launches",
+      "thumbnail": "https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/logo/Paws Logo.jpg",
+      "preview": "Digital-first campaigns driving online and offline action — from adoption sign-ups to donations to volunteer recruitment.",
+      "content": "Digital-first campaigns driving online and offline action — from adoption sign-ups to donations to volunteer recruitment.",
+      "amountRaised": "",
+      "photos": []
+    }
+  ],
+  "who": "You have a strong visual and written sense. You're opinionated about aesthetics and you default to quality. You understand how social media actually works — not just vanity metrics, but what drives real engagement and community. You're consistent and you don't let the content calendar slip.",
+  "connectText": "Reach us, follow our journey, or collaborate — we're always happy to hear from you.",
+  "socialLinks": {
+    "email": "pawsitive@ashoka.edu.in",
+    "instagram": "https://www.instagram.com/teampawsitiveashoka",
+    "instagramHandle": "@teampawsitiveashoka",
+    "instagramStatus": "currently deactivated — will be back soon 🐾",
+    "linkedin": "https://www.linkedin.com/company/pawsitiveashoka/",
+    "linkedinHandle": "linkedin.com/company/pawsitiveashoka"
+  }
+}
