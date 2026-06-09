@@ -10,7 +10,7 @@ permissions:
   pages: write
   id-token: write
 
-# Only allow one deployment at a time; cancel in-progress if a new push arrives
+# Only one deployment at a time — cancel in-progress if a new push arrives
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -25,15 +25,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Rebuild manifests at deploy time — no commit needed
+      # ── Rebuild manifests ──────────────────────────────────────────────
+      # Generates dogs/memorial/team manifests at deploy time — not committed.
       - name: Rebuild manifests
         run: node .github/scripts/rebuild-manifests.js
 
-      # Download local fallback copies of all Cloudinary images
-      # Non-fatal: if Cloudinary is unreachable, the site still works via CDN URLs
+      # ── Sync Cloudinary fallbacks ──────────────────────────────────────
+      # Downloads local copies of Cloudinary images so the site has fallbacks.
+      # Hard timeout of 4 minutes. Non-fatal: missing fallbacks are acceptable
+      # because Cloudinary is the primary image source.
       - name: Sync Cloudinary images to local fallback
         run: node .github/scripts/sync-images.js
+        timeout-minutes: 4
+        continue-on-error: true
 
+      # ── Inject runtime credentials ─────────────────────────────────────
+      # Tokens are stored in GitHub → Settings → Secrets and variables →
+      # Actions → Variables (non-secret) and Secrets (sensitive).
+      # None of these values are committed to the repository.
+      - name: Inject environment variables
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY:         ${{ secrets.SUPABASE_ANON_KEY }}
+          CLOUDINARY_CLOUD_NAME:     ${{ vars.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY:        ${{ vars.CLOUDINARY_API_KEY }}
+          CLOUDINARY_UPLOAD_PRESET:  ${{ vars.CLOUDINARY_UPLOAD_PRESET }}
+        run: |
+          sed -i "s|__SUPABASE_URL__|${SUPABASE_URL}|g"                     admin/index.html
+          sed -i "s|__SUPABASE_ANON_KEY__|${SUPABASE_ANON_KEY}|g"           admin/index.html
+          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"   admin/cms-config.js
+          sed -i "s|__CLOUDINARY_API_KEY__|${CLOUDINARY_API_KEY}|g"         admin/cms-config.js
+          sed -i "s|__CLOUDINARY_UPLOAD_PRESET__|${CLOUDINARY_UPLOAD_PRESET}|g" admin/cms-config.js
+
+      # ── Deploy to GitHub Pages ─────────────────────────────────────────
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
 

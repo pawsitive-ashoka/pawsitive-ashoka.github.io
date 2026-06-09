@@ -1,0 +1,6 @@
+{
+  "_note": "Add authorised Google email addresses here. Only these addresses can sign in to the CMS via Google OAuth. Also set the ALLOWED_EMAILS secret in your Supabase Edge Function to the same list (as a JSON array string). Removing an email here AND from that secret revokes access immediately.",
+  "emails": [
+    "team.rizzvision@gmail.com"
+  ]
+}

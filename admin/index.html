@@ -8,13 +8,45 @@
   </head>
   <body>
     <!--
-      CMS_MANUAL_INIT must be set BEFORE the Decap CMS bundle loads,
-      otherwise the CMS auto-initialises from config.yml and ignores cms-config.js.
+      Load order:
+        1. Supabase JS client
+        2. Cloudinary media library
+        3. CMS_MANUAL_INIT flag
+        4. Decap CMS bundle
+        5. Custom backend (cms-backend.js)
+        6. CMS config + collections (cms-config.js)
     -->
-    <!-- Cloudinary media library must load before Decap CMS -->
+
+    <!-- 1. Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+    <script>
+      /* ── Supabase + proxy config ───────────────────────────────────────
+         Replace these two values after creating your Supabase project.
+         Both are safe to commit — they are public client-side keys.
+      ── */
+      const SUPABASE_URL      = '__SUPABASE_URL__';
+      const SUPABASE_ANON_KEY = '__SUPABASE_ANON_KEY__';
+
+      // Edge Function URL — update after deploying to Supabase
+      window._cmsProxyUrl = SUPABASE_URL + '/functions/v1/cms-proxy';
+
+      // Make the Supabase client available to cms-backend.js
+      window._supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      window.CMS_MANUAL_INIT = true;
+    </script>
+
+    <!-- 2. Cloudinary media library -->
     <script src="https://media-library.cloudinary.com/global/all.js"></script>
-    <script>window.CMS_MANUAL_INIT = true;</script>
+
+    <!-- 3–4. Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <!-- 5. Custom Supabase backend -->
+    <script src="cms-backend.js"></script>
+
+    <!-- 6. Collections config -->
     <script src="cms-config.js"></script>
   </body>
 </html>

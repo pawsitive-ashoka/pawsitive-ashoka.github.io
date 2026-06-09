@@ -1,17 +1,17 @@
 /**
  * Pawsitive CMS — runtime configuration & preview templates
  *
- * Environment detection (replaces env.local / env.production files):
+ * Environment detection:
  *   localhost / 127.0.0.1  → local_backend: true  (talks to `npx decap-server`)
- *   everything else         → GitHub backend via PKCE OAuth
+ *   everything else         → Supabase Google OAuth via cms-backend.js
+ *
+ * Credentials are injected at deploy time from GitHub Actions variables.
+ * No secrets are committed to the repo.
  *
  * To run locally:
  *   Terminal 1:  npx decap-server
  *   Terminal 2:  python3 -m http.server 8765
  *   Browser:     http://localhost:8765/admin/
- *
- * Before going live, replace YOUR_OAUTH_APP_CLIENT_ID with the Client ID
- * from your GitHub OAuth App (Settings → Developer settings → OAuth Apps).
  */
 
 (function () {
@@ -285,13 +285,9 @@
     /* Environment — auto-detected, no manual editing needed */
     local_backend: IS_LOCAL,
 
-    backend: {
-      name:      'github',
-      repo:      'pawsitive-ashoka/pawsitive-ashoka.github.io',
-      branch:    'main',
-      auth_type: 'pkce',
-      app_id:    'Ov23lim9odzHFhLEkQqW',
-    },
+    backend: IS_LOCAL
+      ? { name: 'proxy', proxy_url: 'http://localhost:8081/api/v1' }
+      : { name: 'supabase-proxy', branch: 'main' },
 
     /* Default media folder (gallery uploads — local fallback) */
     media_folder:  'public/gallery',
@@ -312,9 +308,9 @@
     media_library: {
       name: 'cloudinary',
       config: {
-        cloud_name:     'duij1lw6u',
-        api_key:        '593284316227223',
-        upload_preset:  'pawsitive_cms',
+        cloud_name:     '__CLOUDINARY_CLOUD_NAME__',
+        api_key:        '__CLOUDINARY_API_KEY__',
+        upload_preset:  '__CLOUDINARY_UPLOAD_PRESET__',
       },
     },
 
@@ -662,6 +658,11 @@
 
     ], // end collections
   }; // end config
+
+  /* ─── Register custom backend ────────────────────────────────────────── */
+  if (!IS_LOCAL) {
+    CMS.registerBackend('supabase-proxy', window.SupabaseProxyBackend);
+  }
 
   /* ─── Register preview templates ─────────────────────────────────────── */
   CMS.registerPreviewTemplate('dogs',       DogPreview);

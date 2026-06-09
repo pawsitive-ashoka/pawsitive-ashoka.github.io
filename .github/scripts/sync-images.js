@@ -9,14 +9,12 @@
  * This mirrors the logic in app.js _cldImgError():
  *   Cloudinary URL contains /public/...  → local path is /public/...
  *
- * Run locally:    node .github/scripts/sync-images.js
- * Run in CI:      already wired into .github/workflows/deploy.yml
+ * Run locally:  node .github/scripts/sync-images.js
+ * Run in CI:    wired into .github/workflows/deploy.yml
  */
 
-const fs    = require('fs');
-const path  = require('path');
-const https = require('https');
-const http  = require('http');
+const fs   = require('fs');
+const path = require('path');
 
 /* ── Config ──────────────────────────────────────────────────────────── */
 
@@ -34,6 +32,8 @@ const JSON_FILES = [
   'public/departments/ground.json',
   'public/departments/social.json',
 ];
+
+const DOWNLOAD_TIMEOUT_MS = 30_000;   // 30 s per file — stalls won't hang CI
 
 /* ── Regex helpers ───────────────────────────────────────────────────── */
 
@@ -64,38 +64,24 @@ function rawUrl(url) {
 
 /* ── Download ─────────────────────────────────────────────────────────── */
 
-function download(url, dest) {
-  return new Promise((resolve, reject) => {
+/**
+ * Download a single URL to dest with a hard timeout.
+ * Uses the global fetch available in Node 18+.
+ */
+async function download(url, dest) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const buf = await res.arrayBuffer();
     fs.mkdirSync(path.dirname(dest), { recursive: true });
-    const tmp  = dest + '.tmp';
-    const file = fs.createWriteStream(tmp);
-    const get  = (u) => {
-      const client = u.startsWith('https') ? https : http;
-      client.get(u, (res) => {
-        if (res.statusCode === 301 || res.statusCode === 302) {
-          file.destroy();
-          return get(res.headers.location);
-        }
-        if (res.statusCode !== 200) {
-          file.destroy();
-          fs.existsSync(tmp) && fs.unlinkSync(tmp);
-          return reject(new Error(`HTTP ${res.statusCode}`));
-        }
-        res.pipe(file);
-        file.on('finish', () => {
-          file.close(() => {
-            fs.renameSync(tmp, dest);
-            resolve();
-          });
-        });
-      }).on('error', (err) => {
-        file.destroy();
-        fs.existsSync(tmp) && fs.unlinkSync(tmp);
-        reject(err);
-      });
-    };
-    get(url);
-  });
+    fs.writeFileSync(dest, Buffer.from(buf));
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /* ── Main ─────────────────────────────────────────────────────────────── */
@@ -130,7 +116,7 @@ async function main() {
 
   for (const url of seen) {
     const dest = localPath(url);
-    if (!dest) continue;                      // no /public/ path in URL — skip
+    if (!dest) continue;                       // no /public/ path in URL — skip
     if (fs.existsSync(dest)) { skipped++; continue; } // already have it locally
 
     const src = rawUrl(url);
@@ -145,14 +131,14 @@ async function main() {
     }
   }
 
-  console.log(`\n─────────────────────────────────────`);
-  console.log(`Downloaded : ${downloaded}`);
+  console.log('\n─────────────────────────────────────');
+  console.log(`Downloaded      : ${downloaded}`);
   console.log(`Already existed : ${skipped}`);
-  console.log(`Failed     : ${failed}`);
+  console.log(`Failed          : ${failed}`);
 
   if (failed > 0) {
     console.warn('\nSome images could not be downloaded — site will use Cloudinary URLs directly.');
-    // Don't exit(1) — a missing fallback is non-fatal; Cloudinary is the primary source.
+    // Non-fatal: Cloudinary is the primary source; missing fallbacks are acceptable.
   }
 }
 
