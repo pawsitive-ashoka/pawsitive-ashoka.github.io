@@ -90,7 +90,11 @@ function AuthComponent({ onLogin }) {
 /* ── Backend class ───────────────────────────────────────────────────── */
 class SupabaseProxyBackend {
   constructor(config) {
-    this.branch = config.getIn(['backend', 'branch']) || 'main';
+    // config may be an Immutable Map (production) or plain object (some init paths)
+    const branch = typeof config?.getIn === 'function'
+      ? config.getIn(['backend', 'branch'])
+      : config?.backend?.branch;
+    this.branch = branch || 'main';
     this.token  = null;
     this.email  = null;
     this._treeCache = null;

@@ -282,8 +282,9 @@
   /* ─── Full CMS config ─────────────────────────────────────────────────── */
   const config = {
 
-    /* Environment — auto-detected, no manual editing needed */
-    local_backend: IS_LOCAL,
+    // Never pass local_backend: false — omit it entirely when not local.
+    // Decap CMS's schema validator rejects an explicit false value.
+    ...(IS_LOCAL && { local_backend: true }),
 
     backend: IS_LOCAL
       ? { name: 'proxy', proxy_url: 'http://localhost:8081/api/v1' }
