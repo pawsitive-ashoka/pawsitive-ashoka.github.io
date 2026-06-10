@@ -12,6 +12,8 @@ _copy_extra_images.py
 # Node
 node_modules/
 npm-debug.log*
+# Supabase CLI local state
+supabase/.temp/
 # Generated at deploy time — not committed
 public/dogs/manifest.json
 public/memorial/manifest.json
