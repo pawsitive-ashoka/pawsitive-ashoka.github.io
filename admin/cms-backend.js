@@ -19,7 +19,16 @@ const RAW_BASE  = `https://raw.githubusercontent.com/${REPO}/main`;
 
 /* ── Auth component (React UI) ──────────────────────────────────────── */
 function AuthComponent({ onLogin }) {
-  const h = React;
+  // Decap CMS bundles React internally — resolve it at call time, not load time,
+  // so it's guaranteed to be present when Decap actually renders this component.
+  const React = window.React
+    || (window.DecapCmsApp && window.DecapCmsApp.React)
+    || (window.CMS && window.CMS.React);
+
+  if (!React) {
+    console.error('[Pawsitive CMS] React not found — cannot render auth UI');
+    return null;
+  }
 
   React.useEffect(() => {
     // Handle OAuth redirect callback
