@@ -127,17 +127,20 @@ class SupabaseProxyBackend {
   }
 
   /* ── CMS interface — content ──────────────────────────────────────────── */
-  async entriesByFolder(collection, extension) {
-    const folder = this._col(collection, 'folder');
-    const _raw = collection?.toJS ? collection.toJS() : collection;
-    console.log('[CMS] collection raw:', JSON.stringify(_raw).slice(0, 400));
-    console.log('[CMS] entriesByFolder', { folder, extension, token: !!this.token });
-    const tree = await this._getTree();
-    console.log('[CMS] tree size:', tree.length, '| sample:', tree.slice(0,3).map(f=>f.path));
-    const paths = tree
+
+  // Decap CMS 3.x passes the folder path as a plain string to entriesByFolder.
+  // Older versions passed a collection object — _colFolder handles both.
+  _colFolder(collectionOrFolder) {
+    if (typeof collectionOrFolder === 'string') return collectionOrFolder;
+    return this._col(collectionOrFolder, 'folder');
+  }
+
+  async entriesByFolder(collectionOrFolder, extension) {
+    const folder = this._colFolder(collectionOrFolder);
+    const tree   = await this._getTree();
+    const paths  = tree
       .filter(f => f.type === 'blob' && f.path.startsWith(folder + '/') && f.path.endsWith(extension))
       .map(f => f.path);
-    console.log('[CMS] matched paths:', paths.length, paths.slice(0,3));
 
     return Promise.all(paths.map(async path => {
       const { text, sha } = await this._readFile(path);
@@ -145,16 +148,17 @@ class SupabaseProxyBackend {
     }));
   }
 
-  async allEntriesByFolder(collection, extension) {
-    return this.entriesByFolder(collection, extension);
+  async allEntriesByFolder(collectionOrFolder, extension) {
+    return this.entriesByFolder(collectionOrFolder, extension);
   }
 
   async entriesByFiles(collection) {
-    const files = this._col(collection, 'files');
-    const arr   = typeof files?.toArray === 'function' ? files.toArray() : (files || []);
+    // Decap 3.x may pass an array of file configs directly, or a collection object
+    const raw  = Array.isArray(collection) ? collection : this._col(collection, 'files');
+    const arr  = typeof raw?.toArray === 'function' ? raw.toArray() : (raw || []);
     return Promise.all(
       arr.map(async f => {
-        const path = typeof f?.get === 'function' ? f.get('file') : f?.file;
+        const path = typeof f?.get === 'function' ? f.get('file') : (f?.file ?? f);
         const { text, sha } = await this._readFile(path);
         return { file: { path, id: sha }, data: text };
       })
@@ -178,9 +182,10 @@ class SupabaseProxyBackend {
   }
 
   async deleteEntry(collection, slug) {
-    const ext  = this._col(collection, 'extension') || 'md';
-    const path = `${this._col(collection, 'folder')}/${slug}.${ext}`;
-    const data = await this._proxy('GET', 'file', { path });
+    const folder = this._colFolder(collection);
+    const ext    = this._col(collection, 'extension') || 'md';
+    const path   = `${folder}/${slug}.${ext}`;
+    const data   = await this._proxy('GET', 'file', { path });
     await this._deleteFile(path, data.sha, `delete: ${path} via CMS`);
   }
 
