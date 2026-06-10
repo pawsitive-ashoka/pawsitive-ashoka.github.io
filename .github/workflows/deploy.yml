@@ -35,8 +35,7 @@ jobs:
 
       # ── Generate runtime config ────────────────────────────────────────
       # Writes admin/config.js and js/site-config.js — never committed.
-      # Uses a build timestamp as a cache-buster in index.html so the
-      # browser always fetches the new config.js after each deploy.
+      # Also stamps a build timestamp in admin/index.html for cache-busting.
       - name: Generate runtime config
         env:
           SUPABASE_URL:              ${{ vars.SUPABASE_URL }}
@@ -44,33 +43,7 @@ jobs:
           CLOUDINARY_CLOUD_NAME:     ${{ vars.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_API_KEY:        ${{ vars.CLOUDINARY_API_KEY }}
           CLOUDINARY_UPLOAD_PRESET:  ${{ vars.CLOUDINARY_UPLOAD_PRESET }}
-        run: |
-          [ -n "${SUPABASE_URL}" ]      || { echo "ERROR: SUPABASE_URL is empty";      exit 1; }
-          [ -n "${SUPABASE_ANON_KEY}" ] || { echo "ERROR: SUPABASE_ANON_KEY is empty"; exit 1; }
-
-          BUILD_TS=$(date +%s)
-
-          # Write admin/config.js — credentials for the CMS admin panel
-          cat > admin/config.js << ENDOFCONFIG
-          window.__PAWSITIVE_CONFIG__ = {
-            supabaseUrl:             "${SUPABASE_URL}",
-            supabaseAnonKey:         "${SUPABASE_ANON_KEY}",
-            cloudinaryCloudName:     "${CLOUDINARY_CLOUD_NAME}",
-            cloudinaryApiKey:        "${CLOUDINARY_API_KEY}",
-            cloudinaryUploadPreset:  "${CLOUDINARY_UPLOAD_PRESET}",
-          };
-          ENDOFCONFIG
-
-          # Write js/site-config.js — public config for the main site (gallery etc.)
-          cat > js/site-config.js << ENDOFSITECONFIG
-          window.__PAWSITIVE_CONFIG__ = window.__PAWSITIVE_CONFIG__ || {};
-          window.__PAWSITIVE_CONFIG__.cloudinaryCloudName = "${CLOUDINARY_CLOUD_NAME}";
-          ENDOFSITECONFIG
-
-          # Stamp the cache-buster in index.html
-          sed -i "s|__BUILD_TS__|${BUILD_TS}|g" admin/index.html
-
-          echo "Generated admin/config.js and js/site-config.js (build ${BUILD_TS})"
+        run: node .github/scripts/generate-config.js
 
       # ── Deploy to GitHub Pages ─────────────────────────────────────────
       - name: Setup GitHub Pages
