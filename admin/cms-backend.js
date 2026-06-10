@@ -118,9 +118,17 @@ class SupabaseProxyBackend {
     return this._proxy('DELETE', 'file', { path }, { sha, message });
   }
 
+  // Decap CMS 3.x passes collections as plain objects; older versions use
+  // Immutable.js Maps. This helper handles both transparently.
+  _col(collection, key) {
+    return typeof collection?.get === 'function'
+      ? collection.get(key)
+      : collection?.[key];
+  }
+
   /* ── CMS interface — content ──────────────────────────────────────────── */
   async entriesByFolder(collection, extension) {
-    const folder = collection.get('folder');
+    const folder = this._col(collection, 'folder');
     const tree   = await this._getTree();
     const paths  = tree
       .filter(f => f.type === 'blob' && f.path.startsWith(folder + '/') && f.path.endsWith(extension))
@@ -137,9 +145,11 @@ class SupabaseProxyBackend {
   }
 
   async entriesByFiles(collection) {
+    const files = this._col(collection, 'files');
+    const arr   = typeof files?.toArray === 'function' ? files.toArray() : (files || []);
     return Promise.all(
-      collection.get('files').toArray().map(async f => {
-        const path = f.get('file');
+      arr.map(async f => {
+        const path = typeof f?.get === 'function' ? f.get('file') : f?.file;
         const { text, sha } = await this._readFile(path);
         return { file: { path, id: sha }, data: text };
       })
@@ -163,8 +173,8 @@ class SupabaseProxyBackend {
   }
 
   async deleteEntry(collection, slug) {
-    const ext  = collection.get('extension') || 'md';
-    const path = `${collection.get('folder')}/${slug}.${ext}`;
+    const ext  = this._col(collection, 'extension') || 'md';
+    const path = `${this._col(collection, 'folder')}/${slug}.${ext}`;
     const data = await this._proxy('GET', 'file', { path });
     await this._deleteFile(path, data.sha, `delete: ${path} via CMS`);
   }
