@@ -51,12 +51,23 @@ jobs:
           CLOUDINARY_API_KEY:        ${{ vars.CLOUDINARY_API_KEY }}
           CLOUDINARY_UPLOAD_PRESET:  ${{ vars.CLOUDINARY_UPLOAD_PRESET }}
         run: |
-          sed -i "s|__SUPABASE_URL__|${SUPABASE_URL}|g"                     admin/index.html
-          sed -i "s|__SUPABASE_ANON_KEY__|${SUPABASE_ANON_KEY}|g"           admin/index.html
-          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"   admin/cms-config.js
-          sed -i "s|__CLOUDINARY_API_KEY__|${CLOUDINARY_API_KEY}|g"         admin/cms-config.js
+          # Fail fast if required variables are missing
+          echo "SUPABASE_URL length:          ${#SUPABASE_URL}"
+          echo "SUPABASE_ANON_KEY length:     ${#SUPABASE_ANON_KEY}"
+          echo "CLOUDINARY_CLOUD_NAME length: ${#CLOUDINARY_CLOUD_NAME}"
+          [ -n "${SUPABASE_URL}" ]      || { echo "ERROR: SUPABASE_URL is empty"; exit 1; }
+          [ -n "${SUPABASE_ANON_KEY}" ] || { echo "ERROR: SUPABASE_ANON_KEY is empty"; exit 1; }
+
+          sed -i "s|__SUPABASE_URL__|${SUPABASE_URL}|g"                         admin/index.html
+          sed -i "s|__SUPABASE_ANON_KEY__|${SUPABASE_ANON_KEY}|g"               admin/index.html
+          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"       admin/cms-config.js
+          sed -i "s|__CLOUDINARY_API_KEY__|${CLOUDINARY_API_KEY}|g"             admin/cms-config.js
           sed -i "s|__CLOUDINARY_UPLOAD_PRESET__|${CLOUDINARY_UPLOAD_PRESET}|g" admin/cms-config.js
-          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"   js/gallery.js
+          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"       js/gallery.js
+
+          # Verify the placeholders were actually replaced
+          grep -q '__SUPABASE_URL__' admin/index.html    && { echo "ERROR: SUPABASE_URL placeholder not replaced"; exit 1; } || echo "SUPABASE_URL injected OK"
+          grep -q '__SUPABASE_ANON_KEY__' admin/index.html && { echo "ERROR: SUPABASE_ANON_KEY placeholder not replaced"; exit 1; } || echo "SUPABASE_ANON_KEY injected OK"
 
       # ── Deploy to GitHub Pages ─────────────────────────────────────────
       - name: Setup GitHub Pages
