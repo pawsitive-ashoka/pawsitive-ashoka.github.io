@@ -129,6 +129,8 @@ class SupabaseProxyBackend {
   /* ── CMS interface — content ──────────────────────────────────────────── */
   async entriesByFolder(collection, extension) {
     const folder = this._col(collection, 'folder');
+    const _raw = collection?.toJS ? collection.toJS() : collection;
+    console.log('[CMS] collection raw:', JSON.stringify(_raw).slice(0, 400));
     console.log('[CMS] entriesByFolder', { folder, extension, token: !!this.token });
     const tree = await this._getTree();
     console.log('[CMS] tree size:', tree.length, '| sample:', tree.slice(0,3).map(f=>f.path));
