@@ -165,9 +165,14 @@ class SupabaseProxyBackend {
     );
   }
 
-  async getEntry(_collection, _slug, path) {
-    const { text, sha } = await this._readFile(path);
-    return { file: { path, id: sha }, data: text };
+  async getEntry(collection, slug, path) {
+    // Decap CMS 3.x calls getEntry(collection, slug) — no path argument.
+    // Construct it from the folder string + slug + extension.
+    const folder = this._colFolder(collection);
+    const ext    = (typeof collection === 'object' && this._col(collection, 'extension')) || 'md';
+    const resolved = (path || `${folder}/${slug}.${ext}`).replace(/^\//, '');
+    const { text, sha } = await this._readFile(resolved);
+    return { file: { path: resolved, id: sha }, data: text };
   }
 
   async persistEntry(entry, mediaFiles, options) {
