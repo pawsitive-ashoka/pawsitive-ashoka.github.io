@@ -21,13 +21,9 @@
   const IS_LOCAL = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
   /* ─── React ─────────────────────────────────────────────────────────── */
-  // Decap CMS v3 bundles React internally. Grab it from the global it exposes,
-  // falling back to window.React if it happens to be there.
-  const React = window.React || (window.DecapCmsApp && window.DecapCmsApp.React);
-  if (!React) {
-    console.error('[Pawsitive CMS] React not found on window — previews disabled.');
-  }
-  const h = React ? React.createElement : () => null;
+  // Decap CMS v3 bundles React via Module Federation — it is NOT on window.React.
+  // window.CMS.h is the createElement alias Decap exposes for preview templates.
+  const h = (window.CMS && window.CMS.h) ? window.CMS.h : () => null;
 
   /* ─── Preview styles ─────────────────────────────────────────────────── */
   CMS.registerPreviewStyle(
@@ -282,8 +278,10 @@
   /* ─── Full CMS config ─────────────────────────────────────────────────── */
   const config = {
 
+    // Tell Decap not to fetch config.yml — we deleted it and pass config directly.
+    load_config_file: false,
+
     // Never pass local_backend: false — omit it entirely when not local.
-    // Decap CMS's schema validator rejects an explicit false value.
     ...(IS_LOCAL && { local_backend: true }),
 
     backend: IS_LOCAL

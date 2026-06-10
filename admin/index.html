@@ -7,46 +7,100 @@
     <title>Pawsitive CMS</title>
   </head>
   <body>
-    <!--
-      Load order:
-        1. Supabase JS client
-        2. Cloudinary media library
-        3. CMS_MANUAL_INIT flag
-        4. Decap CMS bundle
-        5. Custom backend (cms-backend.js)
-        6. CMS config + collections (cms-config.js)
-    -->
+    <div id="auth-root"></div>
 
     <!-- 1. Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
     <script>
-      /* ── Supabase + proxy config ───────────────────────────────────────
-         Replace these two values after creating your Supabase project.
-         Both are safe to commit — they are public client-side keys.
-      ── */
+      /* ── Credentials — injected at deploy time, never committed ── */
       const SUPABASE_URL      = '__SUPABASE_URL__';
       const SUPABASE_ANON_KEY = '__SUPABASE_ANON_KEY__';
 
-      // Edge Function URL — update after deploying to Supabase
-      window._cmsProxyUrl = SUPABASE_URL + '/functions/v1/cms-proxy';
-
-      // Make the Supabase client available to cms-backend.js
+      window._cmsProxyUrl    = SUPABASE_URL + '/functions/v1/cms-proxy';
       window._supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      window.CMS_MANUAL_INIT = true;
+      /* ── Login screen — pure HTML, no React dependency ── */
+      function showLoginScreen() {
+        document.getElementById('auth-root').innerHTML = `
+          <div style="
+            min-height:100vh; display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            background:#1a1208; color:#f0e8d8;
+            font-family:'Caveat',cursive; text-align:center; padding:2rem;
+          ">
+            <div style="font-size:3.5rem; margin-bottom:0.5rem">🐾</div>
+            <h1 style="font-size:2.2rem; margin:0 0 0.4rem">Pawsitive CMS</h1>
+            <p style="opacity:.65; margin:0 0 2rem; font-size:1.05rem">
+              Sign in with your authorised university Google account
+            </p>
+            <button id="signin-btn" style="
+              background:#e8d0a8; color:#2a1f14; border:none;
+              border-radius:999px; padding:.65rem 2.2rem;
+              font-size:1.1rem; font-family:inherit;
+              cursor:pointer; font-weight:600;
+            ">Sign in with Google</button>
+            <p id="signin-error" style="
+              margin-top:1.5rem; color:#f87171;
+              font-size:0.95rem; display:none;
+            "></p>
+          </div>`;
+
+        document.getElementById('signin-btn').addEventListener('click', () => {
+          window._supabaseClient.auth.signInWithOAuth({
+            provider: 'google',
+            options: { redirectTo: window.location.origin + '/admin/' },
+          });
+        });
+      }
+
+      /* ── Load CMS scripts sequentially after auth is confirmed ── */
+      function loadCMS() {
+        document.getElementById('auth-root').innerHTML = '';
+        window.CMS_MANUAL_INIT = true;
+
+        const scripts = [
+          'https://media-library.cloudinary.com/global/all.js',
+          'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js',
+          'cms-backend.js',
+          'cms-config.js',
+        ];
+
+        scripts.reduce((chain, src) =>
+          chain.then(() => new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Failed to load: ' + src));
+            document.head.appendChild(s);
+          })),
+          Promise.resolve()
+        ).catch(err => {
+          console.error('[Pawsitive CMS] Script load failed:', err);
+        });
+      }
+
+      /* ── Boot: check session, then show login or load CMS ── */
+      (async function boot() {
+        const { data: { session } } = await window._supabaseClient.auth.getSession();
+
+        if (session) {
+          window._supabaseSession = session;
+          loadCMS();
+          return;
+        }
+
+        showLoginScreen();
+
+        // Catch OAuth redirect callback
+        window._supabaseClient.auth.onAuthStateChange((_event, newSession) => {
+          if (newSession && !window._cmsLoaded) {
+            window._cmsLoaded = true;
+            window._supabaseSession = newSession;
+            loadCMS();
+          }
+        });
+      })();
     </script>
-
-    <!-- 2. Cloudinary media library -->
-    <script src="https://media-library.cloudinary.com/global/all.js"></script>
-
-    <!-- 3–4. Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
-    <!-- 5. Custom Supabase backend -->
-    <script src="cms-backend.js"></script>
-
-    <!-- 6. Collections config -->
-    <script src="cms-config.js"></script>
   </body>
 </html>
