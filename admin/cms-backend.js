@@ -103,7 +103,7 @@ class SupabaseProxyBackend {
   _clearTreeCache() { this._treeCache = null; }
 
   async _readFile(path) {
-    const data = await this._proxy('GET', 'file', { path });
+    const data = await this._proxy('GET', 'file', { path: path.replace(/^\//, '') });
     const text = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
     return { text, sha: data.sha };
   }
