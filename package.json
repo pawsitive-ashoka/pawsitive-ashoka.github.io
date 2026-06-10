@@ -1,0 +1,7 @@
+{
+  "name": "pawsitive",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/serve.js"
+  }
+}
