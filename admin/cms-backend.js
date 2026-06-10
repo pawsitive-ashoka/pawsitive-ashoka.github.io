@@ -24,10 +24,21 @@ class SupabaseProxyBackend {
 
   /* ── Auth ─────────────────────────────────────────────────────────────── */
 
-  // Never called — auth happens before CMS loads.
-  // Decap CMS requires this method to exist but won't invoke it
-  // if restoreUser() returns a valid user.
-  authComponent() { return null; }
+  // Decap CMS requires this to be a function component, not null.
+  // In practice restoreUser() always returns a session (set by index.html before
+  // CMS loads), so this component is never rendered. But if it is, it calls
+  // onLogin with the stored session or redirects back to the login screen.
+  authComponent() {
+    return function SupabaseAuth({ onLogin }) {
+      const session = window._supabaseSession;
+      if (session) {
+        setTimeout(() => onLogin({ token: session.access_token, email: session.user.email }), 0);
+      } else {
+        setTimeout(() => { window.location.href = window.location.pathname; }, 100);
+      }
+      return null;
+    };
+  }
 
   async restoreUser() {
     // Use the session stored by index.html before CMS was loaded.
