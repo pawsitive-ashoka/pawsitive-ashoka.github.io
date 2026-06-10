@@ -1,7 +1,7 @@
 /* ─── gallery.js ─── media grid & lightbox ─── */
 
-/* ── CDN base — injected at deploy time from CLOUDINARY_CLOUD_NAME secret ── */
-const _CLD = 'https://res.cloudinary.com/__CLOUDINARY_CLOUD_NAME__';
+/* ── CDN base — read from config.js (generated at deploy/dev time) ── */
+const _CLD = 'https://res.cloudinary.com/' + ((window.__PAWSITIVE_CONFIG__ || {}).cloudinaryCloudName || '__CLOUDINARY_CLOUD_NAME__');
 function _imgUrl(filename) {
   return _CLD + '/image/upload/q_auto,f_auto/gallery/' + filename.replace(/\.[^.]+$/, '');
 }

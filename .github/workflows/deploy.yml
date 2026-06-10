@@ -4,13 +4,11 @@ on:
   push:
     branches: [main]
 
-# Required for GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Only one deployment at a time — cancel in-progress if a new push arrives
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -26,24 +24,20 @@ jobs:
       - uses: actions/checkout@v4
 
       # ── Rebuild manifests ──────────────────────────────────────────────
-      # Generates dogs/memorial/team manifests at deploy time — not committed.
       - name: Rebuild manifests
         run: node .github/scripts/rebuild-manifests.js
 
       # ── Sync Cloudinary fallbacks ──────────────────────────────────────
-      # Downloads local copies of Cloudinary images so the site has fallbacks.
-      # Hard timeout of 4 minutes. Non-fatal: missing fallbacks are acceptable
-      # because Cloudinary is the primary image source.
       - name: Sync Cloudinary images to local fallback
         run: node .github/scripts/sync-images.js
         timeout-minutes: 4
         continue-on-error: true
 
-      # ── Inject runtime credentials ─────────────────────────────────────
-      # Tokens are stored in GitHub → Settings → Secrets and variables →
-      # Actions → Variables (non-secret) and Secrets (sensitive).
-      # None of these values are committed to the repository.
-      - name: Inject environment variables
+      # ── Generate runtime config ────────────────────────────────────────
+      # Writes admin/config.js and js/site-config.js — never committed.
+      # Uses a build timestamp as a cache-buster in index.html so the
+      # browser always fetches the new config.js after each deploy.
+      - name: Generate runtime config
         env:
           SUPABASE_URL:              ${{ vars.SUPABASE_URL }}
           SUPABASE_ANON_KEY:         ${{ secrets.SUPABASE_ANON_KEY }}
@@ -51,23 +45,32 @@ jobs:
           CLOUDINARY_API_KEY:        ${{ vars.CLOUDINARY_API_KEY }}
           CLOUDINARY_UPLOAD_PRESET:  ${{ vars.CLOUDINARY_UPLOAD_PRESET }}
         run: |
-          # Fail fast if required variables are missing
-          echo "SUPABASE_URL length:          ${#SUPABASE_URL}"
-          echo "SUPABASE_ANON_KEY length:     ${#SUPABASE_ANON_KEY}"
-          echo "CLOUDINARY_CLOUD_NAME length: ${#CLOUDINARY_CLOUD_NAME}"
-          [ -n "${SUPABASE_URL}" ]      || { echo "ERROR: SUPABASE_URL is empty"; exit 1; }
+          [ -n "${SUPABASE_URL}" ]      || { echo "ERROR: SUPABASE_URL is empty";      exit 1; }
           [ -n "${SUPABASE_ANON_KEY}" ] || { echo "ERROR: SUPABASE_ANON_KEY is empty"; exit 1; }
 
-          sed -i "s|__SUPABASE_URL__|${SUPABASE_URL}|g"                         admin/index.html
-          sed -i "s|__SUPABASE_ANON_KEY__|${SUPABASE_ANON_KEY}|g"               admin/index.html
-          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"       admin/cms-config.js
-          sed -i "s|__CLOUDINARY_API_KEY__|${CLOUDINARY_API_KEY}|g"             admin/cms-config.js
-          sed -i "s|__CLOUDINARY_UPLOAD_PRESET__|${CLOUDINARY_UPLOAD_PRESET}|g" admin/cms-config.js
-          sed -i "s|__CLOUDINARY_CLOUD_NAME__|${CLOUDINARY_CLOUD_NAME}|g"       js/gallery.js
+          BUILD_TS=$(date +%s)
 
-          # Verify the placeholders were actually replaced
-          grep -q '__SUPABASE_URL__' admin/index.html    && { echo "ERROR: SUPABASE_URL placeholder not replaced"; exit 1; } || echo "SUPABASE_URL injected OK"
-          grep -q '__SUPABASE_ANON_KEY__' admin/index.html && { echo "ERROR: SUPABASE_ANON_KEY placeholder not replaced"; exit 1; } || echo "SUPABASE_ANON_KEY injected OK"
+          # Write admin/config.js — credentials for the CMS admin panel
+          cat > admin/config.js << ENDOFCONFIG
+          window.__PAWSITIVE_CONFIG__ = {
+            supabaseUrl:             "${SUPABASE_URL}",
+            supabaseAnonKey:         "${SUPABASE_ANON_KEY}",
+            cloudinaryCloudName:     "${CLOUDINARY_CLOUD_NAME}",
+            cloudinaryApiKey:        "${CLOUDINARY_API_KEY}",
+            cloudinaryUploadPreset:  "${CLOUDINARY_UPLOAD_PRESET}",
+          };
+          ENDOFCONFIG
+
+          # Write js/site-config.js — public config for the main site (gallery etc.)
+          cat > js/site-config.js << ENDOFSITECONFIG
+          window.__PAWSITIVE_CONFIG__ = window.__PAWSITIVE_CONFIG__ || {};
+          window.__PAWSITIVE_CONFIG__.cloudinaryCloudName = "${CLOUDINARY_CLOUD_NAME}";
+          ENDOFSITECONFIG
+
+          # Stamp the cache-buster in index.html
+          sed -i "s|__BUILD_TS__|${BUILD_TS}|g" admin/index.html
+
+          echo "Generated admin/config.js and js/site-config.js (build ${BUILD_TS})"
 
       # ── Deploy to GitHub Pages ─────────────────────────────────────────
       - name: Setup GitHub Pages

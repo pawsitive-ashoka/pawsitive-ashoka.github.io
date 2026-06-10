@@ -307,9 +307,9 @@
     media_library: {
       name: 'cloudinary',
       config: {
-        cloud_name:     '__CLOUDINARY_CLOUD_NAME__',
-        api_key:        '__CLOUDINARY_API_KEY__',
-        upload_preset:  '__CLOUDINARY_UPLOAD_PRESET__',
+        cloud_name:    (window.__PAWSITIVE_CONFIG__ || {}).cloudinaryCloudName   || '',
+        api_key:       (window.__PAWSITIVE_CONFIG__ || {}).cloudinaryApiKey      || '',
+        upload_preset: (window.__PAWSITIVE_CONFIG__ || {}).cloudinaryUploadPreset || '',
       },
     },
 

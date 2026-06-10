@@ -15,7 +15,9 @@ node_modules/
 npm-debug.log*
 # Supabase CLI local state
 supabase/.temp/
-# Generated at deploy time — not committed
+# Generated at deploy/dev time — not committed
+admin/config.js
+js/site-config.js
 public/dogs/manifest.json
 public/memorial/manifest.json
 public/team/core/manifest.json

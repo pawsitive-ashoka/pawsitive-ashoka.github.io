@@ -1,22 +1,23 @@
 #!/usr/bin/env node
 /**
- * Local dev server — mirrors the GitHub Actions inject step.
- * Reads .env.local, replaces __TOKEN__ placeholders in-memory, serves the site.
+ * Local dev server — mirrors the GitHub Actions generate-config step.
+ * Reads .env.local, writes admin/config.js + js/site-config.js, serves the site.
  *
  * Usage: node scripts/serve.js [port]
+ *        npm run dev
  */
 
-const http  = require('http');
-const fs    = require('fs');
-const path  = require('path');
-const PORT  = parseInt(process.argv[2]) || 4321;
-const ROOT  = path.resolve(__dirname, '..');
+const http = require('http');
+const fs   = require('fs');
+const path = require('path');
+const PORT = parseInt(process.argv[2]) || 4321;
+const ROOT = path.resolve(__dirname, '..');
 
 /* ── Load .env.local ──────────────────────────────────────────────────── */
 const envPath = path.join(ROOT, '.env.local');
 if (!fs.existsSync(envPath)) {
   console.error('\n  ERROR: .env.local not found.');
-  console.error('  Copy .env.local.example and fill in your values:\n');
+  console.error('  Copy the example file and fill in your values:\n');
   console.error('    cp .env.local.example .env.local\n');
   process.exit(1);
 }
@@ -37,25 +38,28 @@ if (missing.length) {
   process.exit(1);
 }
 
-/* ── Token replacement map (same as deploy.yml) ─────────────────────── */
-const replacements = {
-  '__SUPABASE_URL__':             env.SUPABASE_URL      || '',
-  '__SUPABASE_ANON_KEY__':        env.SUPABASE_ANON_KEY || '',
-  '__CLOUDINARY_CLOUD_NAME__':    env.CLOUDINARY_CLOUD_NAME   || '',
-  '__CLOUDINARY_API_KEY__':       env.CLOUDINARY_API_KEY      || '',
-  '__CLOUDINARY_UPLOAD_PRESET__': env.CLOUDINARY_UPLOAD_PRESET || '',
+/* ── Write config files (same as deploy workflow) ─────────────────────── */
+const adminConfig = `window.__PAWSITIVE_CONFIG__ = {
+  supabaseUrl:             "${env.SUPABASE_URL}",
+  supabaseAnonKey:         "${env.SUPABASE_ANON_KEY}",
+  cloudinaryCloudName:     "${env.CLOUDINARY_CLOUD_NAME    || ''}",
+  cloudinaryApiKey:        "${env.CLOUDINARY_API_KEY       || ''}",
+  cloudinaryUploadPreset:  "${env.CLOUDINARY_UPLOAD_PRESET || ''}",
 };
+`;
 
-function inject(text) {
-  return Object.entries(replacements).reduce(
-    (s, [token, value]) => s.replaceAll(token, value),
-    text
-  );
-}
+const siteConfig = `window.__PAWSITIVE_CONFIG__ = window.__PAWSITIVE_CONFIG__ || {};
+window.__PAWSITIVE_CONFIG__.cloudinaryCloudName = "${env.CLOUDINARY_CLOUD_NAME || ''}";
+`;
+
+fs.writeFileSync(path.join(ROOT, 'admin', 'config.js'), adminConfig);
+fs.writeFileSync(path.join(ROOT, 'js', 'site-config.js'), siteConfig);
+console.log('  ✓ admin/config.js written');
+console.log('  ✓ js/site-config.js written');
 
 /* ── MIME types ──────────────────────────────────────────────────────── */
 const MIME = {
-  '.html': 'text/html',
+  '.html': 'text/html; charset=utf-8',
   '.js':   'application/javascript',
   '.css':  'text/css',
   '.json': 'application/json',
@@ -71,8 +75,6 @@ const MIME = {
   '.ttf':  'font/ttf',
 };
 
-const INJECT_EXTS = new Set(['.html', '.js']);
-
 /* ── Server ──────────────────────────────────────────────────────────── */
 const server = http.createServer((req, res) => {
   let urlPath = req.url.split('?')[0];
@@ -81,29 +83,32 @@ const server = http.createServer((req, res) => {
   const filePath = path.join(ROOT, urlPath);
   const ext      = path.extname(filePath).toLowerCase();
 
-  // Prevent path traversal
   if (!filePath.startsWith(ROOT)) {
     res.writeHead(403); res.end('Forbidden'); return;
   }
 
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+    // index.html handles client-side routing
+    if (!ext) {
+      const idx = path.join(ROOT, 'index.html');
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(fs.readFileSync(idx));
+      return;
+    }
     res.writeHead(404); res.end('Not found: ' + urlPath); return;
   }
 
   const mime = MIME[ext] || 'application/octet-stream';
+  const headers = { 'Content-Type': mime };
+  // Never cache HTML or JS locally
+  if (ext === '.html' || ext === '.js') headers['Cache-Control'] = 'no-store';
 
-  if (INJECT_EXTS.has(ext)) {
-    const text = inject(fs.readFileSync(filePath, 'utf8'));
-    res.writeHead(200, { 'Content-Type': mime, 'Cache-Control': 'no-store' });
-    res.end(text);
-  } else {
-    res.writeHead(200, { 'Content-Type': mime });
-    fs.createReadStream(filePath).pipe(res);
-  }
+  res.writeHead(200, headers);
+  fs.createReadStream(filePath).pipe(res);
 });
 
 server.listen(PORT, () => {
-  console.log(`\n  Pawsitive dev server running`);
+  console.log(`\n  Pawsitive dev server`);
   console.log(`  http://localhost:${PORT}/`);
   console.log(`  http://localhost:${PORT}/admin/\n`);
 });
