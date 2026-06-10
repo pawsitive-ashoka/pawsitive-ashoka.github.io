@@ -129,10 +129,13 @@ class SupabaseProxyBackend {
   /* ── CMS interface — content ──────────────────────────────────────────── */
   async entriesByFolder(collection, extension) {
     const folder = this._col(collection, 'folder');
-    const tree   = await this._getTree();
-    const paths  = tree
+    console.log('[CMS] entriesByFolder', { folder, extension, token: !!this.token });
+    const tree = await this._getTree();
+    console.log('[CMS] tree size:', tree.length, '| sample:', tree.slice(0,3).map(f=>f.path));
+    const paths = tree
       .filter(f => f.type === 'blob' && f.path.startsWith(folder + '/') && f.path.endsWith(extension))
       .map(f => f.path);
+    console.log('[CMS] matched paths:', paths.length, paths.slice(0,3));
 
     return Promise.all(paths.map(async path => {
       const { text, sha } = await this._readFile(path);
