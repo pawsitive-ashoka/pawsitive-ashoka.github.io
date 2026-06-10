@@ -2,12 +2,13 @@
  * cms-proxy — Supabase Edge Function
  *
  * Acts as a git-gateway replacement. Verifies the caller's Supabase JWT,
- * checks their email against the ALLOWED_EMAILS env var, then proxies
- * GitHub API calls using a stored PAT.
+ * checks their email against admin/allowed-users.json (read from GitHub at
+ * cold start), then proxies GitHub API calls using a stored PAT.
  *
  * Required secrets (set via `supabase secrets set` or the dashboard):
  *   GITHUB_TOKEN     — a GitHub PAT with repo:contents read+write scope
- *   ALLOWED_EMAILS   — JSON array of allowed email strings, e.g. '["a@b.com"]'
+ *
+ * To add/remove CMS users: edit admin/allowed-users.json and push — no CLI needed.
  *
  * These are injected automatically by Supabase:
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
@@ -17,10 +18,9 @@ import { serve }         from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient }  from 'https://esm.sh/@supabase/supabase-js@2.39.0';
 
 /* ── Config ────────────────────────────────────────────────────────── */
-const GITHUB_TOKEN       = Deno.env.get('GITHUB_TOKEN')!;
-const SUPABASE_URL       = Deno.env.get('SUPABASE_URL')!;
-const SUPABASE_SVC_KEY   = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const ALLOWED_EMAILS: string[] = JSON.parse(Deno.env.get('ALLOWED_EMAILS') || '[]');
+const GITHUB_TOKEN     = Deno.env.get('GITHUB_TOKEN')!;
+const SUPABASE_URL     = Deno.env.get('SUPABASE_URL')!;
+const SUPABASE_SVC_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 const REPO    = 'pawsitive-ashoka/pawsitive-ashoka.github.io';
 const BRANCH  = 'main';
@@ -32,6 +32,34 @@ const CORS = {
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
 };
 
+/* ── Allowed emails — read from admin/allowed-users.json at cold start ─ */
+async function loadAllowedEmails(): Promise<string[]> {
+  try {
+    const res = await fetch(
+      `${GH_BASE}/repos/${REPO}/contents/admin/allowed-users.json?ref=${BRANCH}`,
+      {
+        headers: {
+          Authorization: `token ${GITHUB_TOKEN}`,
+          Accept:        'application/vnd.github.v3.raw',
+          'User-Agent':  'Pawsitive-CMS',
+        },
+      }
+    );
+    if (!res.ok) {
+      console.error(`[cms-proxy] Failed to load allowed-users.json: HTTP ${res.status}`);
+      return [];
+    }
+    const data = await res.json();
+    return Array.isArray(data.emails) ? data.emails : [];
+  } catch (err) {
+    console.error('[cms-proxy] Error loading allowed-users.json:', err);
+    return [];
+  }
+}
+
+const allowedEmails = await loadAllowedEmails();
+console.log(`[cms-proxy] Loaded ${allowedEmails.length} allowed email(s)`);
+
 /* ── Auth ──────────────────────────────────────────────────────────── */
 async function getAuthorisedUser(req: Request): Promise<string | null> {
   const header = req.headers.get('Authorization');
@@ -40,7 +68,7 @@ async function getAuthorisedUser(req: Request): Promise<string | null> {
   const admin = createClient(SUPABASE_URL, SUPABASE_SVC_KEY);
   const { data: { user }, error } = await admin.auth.getUser(token);
   if (error || !user?.email) return null;
-  if (!ALLOWED_EMAILS.includes(user.email)) return null;
+  if (!allowedEmails.includes(user.email)) return null;
   return user.email;
 }
 

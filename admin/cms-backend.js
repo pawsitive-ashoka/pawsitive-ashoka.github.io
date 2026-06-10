@@ -177,6 +177,22 @@ class SupabaseProxyBackend {
 
   async persistEntry(entry, mediaFiles, options) {
     const { path, raw, slug } = entry;
+
+    // When memorial: true is set, move the entry to the memorial collection.
+    if (/^memorial:\s*true\s*$/m.test(raw)) {
+      const memorialRaw  = raw.replace(/^memorial:[^\n]*\n?/m, '').replace(/^dates:[^\n]*\n?/m, '');
+      const memorialPath = `public/memorial/content/${slug}.md`;
+      let memorialSha;
+      try { memorialSha = (await this._proxy('GET', 'file', { path: memorialPath })).sha; } catch (_) {}
+      await this._writeFile(memorialPath, memorialRaw, memorialSha, `move to memorial: ${slug} via CMS`);
+      try {
+        const existing = await this._proxy('GET', 'file', { path });
+        await this._deleteFile(path, existing.sha, `move to memorial: ${slug} via CMS`);
+      } catch (_) {}
+      this._clearTreeCache();
+      return { collection: 'memorial', slug };
+    }
+
     let sha;
     try { sha = (await this._proxy('GET', 'file', { path })).sha; } catch (_) {}
     await this._writeFile(path, raw, sha, `${options.newEntry ? 'create' : 'update'}: ${path} via CMS`);

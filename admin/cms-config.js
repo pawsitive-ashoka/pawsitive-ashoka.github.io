@@ -381,6 +381,11 @@
           { label: 'Display Order', name: 'order', widget: 'number', value_type: 'int', default: 999,
             hint: 'Lower = appears earlier. 999 adds the dog to the end of the list.' },
 
+          { label: 'Move to In Memoriam', name: 'memorial', widget: 'boolean', default: false, required: false,
+            hint: 'Check this and save to move the dog to the In Memoriam page. Fill in Memorial Dates below first.' },
+          { label: 'Memorial Dates', name: 'dates', widget: 'string', required: false,
+            hint: 'e.g. July 2024 – October 2025 — shown on the In Memoriam card' },
+
           { label: 'Bio', name: 'body', widget: 'markdown' },
         ],
       },
