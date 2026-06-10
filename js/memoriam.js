@@ -1,12 +1,10 @@
 /* ─── memoriam.js ─── load & render memorial dog cards ─── */
+/* Shared utilities (parseFrontmatter, esc, setCardSpan) are defined in app.js. */
 
 /** Random float between min and max */
 function randBetween(min, max) {
   return Math.random() * (max - min) + min;
 }
-
-/** Row unit must match grid-auto-rows in CSS (px) */
-const MEMORIAL_GRID_ROW_UNIT = 4;
 
 /** Build a memorial tile card for a single dog */
 function buildMemorialCard(meta, body) {
@@ -323,7 +321,7 @@ async function loadMemorial() {
       files.map(async filename => {
         const res = await fetch('public/memorial/content/' + filename + bust);
         if (!res.ok) throw new Error('Could not load ' + filename);
-        return { filename, parsed: parseDogMd(await res.text()) };
+        return { filename, parsed: parseFrontmatter(await res.text()) };
       })
     );
 

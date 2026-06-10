@@ -1,9 +1,0 @@
-[build]
-  command = "node .github/scripts/rebuild-manifests.js"
-  publish = "."
-
-# SPA fallback — all unknown paths serve index.html
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200

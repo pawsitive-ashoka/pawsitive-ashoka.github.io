@@ -1,4 +1,41 @@
-/* ─── app.js ─── page navigation, page loading, theme ─── */
+/* ─── app.js ─── shared utilities + page navigation, page loading, theme ─── */
+
+/* ── Shared: frontmatter parser (used by dogs.js, team.js, memoriam.js) ── */
+function parseFrontmatter(raw) {
+  const lines = raw.trim().split('\n');
+  const meta = {};
+  let i = 0;
+  if (lines[0] && lines[0].trim() === '---') i++;
+  while (i < lines.length && lines[i].trim() !== '---') {
+    const colon = lines[i].indexOf(':');
+    if (colon !== -1) {
+      meta[lines[i].slice(0, colon).trim()] = lines[i].slice(colon + 1).trim();
+    }
+    i++;
+  }
+  const body = lines.slice(i + 1).join('\n').trim();
+  return { meta, body };
+}
+
+/* ── Shared: HTML attribute escaper ── */
+function esc(s) {
+  return (s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, ' ');
+}
+
+/* ── Shared: masonry card span (used by dogs.js and memoriam.js) ── */
+const CARD_GRID_ROW_UNIT = 4;
+function setCardSpan(card) {
+  const h = card.getBoundingClientRect().height;
+  if (!h) return;
+  const style = getComputedStyle(card);
+  const vMargin = parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+  card.style.gridRowEnd = `span ${Math.ceil((h + vMargin) / CARD_GRID_ROW_UNIT)}`;
+}
 
 /* ── Cloudinary image fallback — falls back to local /public/... copy ── */
 function _cldImgError(img) {

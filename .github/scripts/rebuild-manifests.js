@@ -104,9 +104,23 @@ function rebuildLeadership() {
   console.log(`  leadership: ${sections.flatMap(s => s.members).length} entries`);
 }
 
+// ── Gallery ──────────────────────────────────────────────────────────────────
+function rebuildGallery() {
+  const dir = 'public/gallery';
+  if (!fs.existsSync(dir)) return;
+  const IMAGE_EXT = /\.(jpg|jpeg|png|gif|webp)$/i;
+  const VIDEO_EXT = /\.(mp4|mov|webm)$/i;
+  const files = fs.readdirSync(dir).filter(f => !f.startsWith('.') && !f.endsWith('.json'));
+  const images = files.filter(f => IMAGE_EXT.test(f)).sort();
+  const videos = files.filter(f => VIDEO_EXT.test(f)).sort();
+  write('public/gallery/manifest.json', { images, videos });
+  console.log(`  gallery: ${images.length} images, ${videos.length} videos`);
+}
+
 console.log('Rebuilding manifests…');
 rebuildDogs();
 rebuildMemorial();
 rebuildCore();
 rebuildLeadership();
+rebuildGallery();
 console.log('Done.');

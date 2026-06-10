@@ -1,62 +1,12 @@
 /* ─── dogs.js ─── load & render dog cards from public/dogs/*.md ─── */
-
-/** Row unit must match grid-auto-rows in CSS (px) */
-const GRID_ROW_UNIT = 4;
-
-/** Set a card's grid-row-end span to match its actual rendered height + margins */
-function setCardSpan(card) {
-  // Measure BEFORE writing — clearing gridRowEnd first causes a reflow that
-  // collapses the card to its minimum height, corrupting the measurement.
-  const h = card.getBoundingClientRect().height;
-  if (!h) return;
-  const style = getComputedStyle(card);
-  const vMargin = parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-  const span = Math.ceil((h + vMargin) / GRID_ROW_UNIT);
-  card.style.gridRowEnd = `span ${span}`;
-}
-
-/**
- * Parse simple YAML-style frontmatter from a markdown string.
- * Returns { meta, body } where meta is an object of key: value pairs
- * and body is the text below the closing --- delimiter.
- *
- * Frontmatter format:
- *   ---
- *   key: value
- *   tags: tag1, tag2, tag3
- *   ---
- *   Description text here.
- */
-function parseDogMd(raw) {
-  const lines = raw.trim().split('\n');
-  const meta = {};
-  let i = 0;
-
-  // strip opening ---
-  if (lines[0].trim() === '---') i++;
-
-  while (i < lines.length && lines[i].trim() !== '---') {
-    const colonIdx = lines[i].indexOf(':');
-    if (colonIdx !== -1) {
-      const key = lines[i].slice(0, colonIdx).trim();
-      const val = lines[i].slice(colonIdx + 1).trim();
-      meta[key] = val;
-    }
-    i++;
-  }
-  i++; // skip closing ---
-  const body = lines.slice(i).join('\n').trim();
-  return { meta, body };
-}
+/* Shared utilities (parseFrontmatter, esc, setCardSpan, CARD_GRID_ROW_UNIT)
+   are defined in app.js which loads first. */
 
 /** Pick a background gradient for the card illustration area */
 function getIllustrationBg(meta) {
   const dark = document.documentElement.dataset.theme === 'dark';
   return dark ? (meta.bgDark || '') : (meta.bgLight || '');
 }
-
-/** Escape a string for use in an HTML attribute value */
-function esc(s) { return (s || '').replace(/"/g, '&quot;').replace(/\n/g, ' '); }
 
 /**
  * Calculate a dog's age from a birth year (YYYY).
@@ -189,8 +139,7 @@ function buildDogCard(meta, body) {
 async function fetchDog(filename) {
   const res = await fetch('public/dogs/content/' + filename);
   if (!res.ok) throw new Error('Could not load ' + filename);
-  const text = await res.text();
-  return parseDogMd(text);
+  return parseFrontmatter(await res.text());
 }
 
 /** Apply the image's natural aspect-ratio to its container, then recalc masonry span */

@@ -1,7 +1,7 @@
 /* ─── gallery.js ─── media grid & lightbox ─── */
 
-/* ── CDN bases ── */
-const _CLD = 'https://res.cloudinary.com/duij1lw6u';
+/* ── CDN base — injected at deploy time from CLOUDINARY_CLOUD_NAME secret ── */
+const _CLD = 'https://res.cloudinary.com/__CLOUDINARY_CLOUD_NAME__';
 function _imgUrl(filename) {
   return _CLD + '/image/upload/q_auto,f_auto/gallery/' + filename.replace(/\.[^.]+$/, '');
 }
@@ -9,42 +9,16 @@ function _vidUrl(filename) {
   return _CLD + '/video/upload/q_auto,f_auto/gallery/' + filename.replace(/\.[^.]+$/, '');
 }
 
-/* ── Media manifest — all files from public/gallery/ ── */
-const mediaImages = [
+/* ── Media lists — populated from public/gallery/manifest.json at render time ── */
+let mediaImages = [];
+let mediaVideos = [];
+
+/* ── NOTE: gallery images/videos are now listed in public/gallery/manifest.json
+   Generated automatically at deploy time by .github/scripts/rebuild-manifests.js.
+   To add a photo: drop it in public/gallery/ and push — no JS edits needed.
+
+  Previously hardcoded as [
   "00b03838-f9cd-47c0-8b46-a443b4de541c.JPG",
-  "01fa392d-aff3-4564-94da-2256455f765a.JPG",
-  "0214520d-572e-4245-9a4f-2a5d6313d293.JPG",
-  "03566528-17ba-4d52-b495-99bda1b56bc4.JPG",
-  "069a60a9-97a6-472f-8d25-b092726a7396.JPG",
-  "0708dd1d-337d-4015-9c0f-035fea840510.JPG",
-  "08b4f9e1-9ee8-4e4f-8bf1-1b0d666c1823.JPG",
-  "0b712d98-39f1-463c-9b72-261f9728e99f.JPG",
-  "0c36c5d0-d23d-4320-8b5b-174201d76e83.jpg",
-  "0e38a9ee-ec3b-43ca-b446-129178fca87a.JPG",
-  "13fdf740-1103-4d82-9cc8-946b2126fd29.JPG",
-  "143dcb05-7a32-43e4-ae5d-c9b928190d43.JPG",
-  "15626c08-f20f-498e-9d35-48443e398812.JPG",
-  "16313937-ab72-4ea8-b725-8e61ba308a65.JPG",
-  "17a3cbc7-1da2-4e17-917b-c7611123dd1d.JPG",
-  "17d98bc6-d777-4763-a6b3-64309850f9b5.JPG",
-  "17e7280b-2d59-4869-8e2a-062b2b645a4d.jpg",
-  "18736011-5be0-4324-828d-a197a1c0d035.JPG",
-  "1903ae70-dc41-4dfb-8488-470d47550fdc.JPG",
-  "1933758c-e050-4ee1-9eb4-222cbe7b4a0a.JPG",
-  "19b25de6-7b24-4d48-ba0f-c0be8f763204.JPG",
-  "1a8f3c17-4a2c-4664-af79-abbb7674820e.JPG",
-  "1e582e7b-129a-481d-97a2-a9eaa33d2a37.JPG",
-  "22059e15-5225-4959-979c-e33e096a0ec4.JPG",
-  "2470384d-94d9-4a6b-bbfe-e1c0bfe94ffd.JPG",
-  "29ebc985-0571-4907-bec8-34207fd2b6ed.jpg",
-  "2b4162ec-6be1-4bf7-b9df-1b87f0b94c15.JPG",
-  "2e2bece5-64e2-4e14-96c4-be934b577293.jpg",
-  "2e4f714e-73ad-4111-a75b-e5379c39ffa5.JPG",
-  "2fc75f29-0a0d-48a2-b627-b4b67ba21229.JPG",
-  "32daa6a1-1f40-4a9f-a854-174743d7d9b0.JPG",
-  "3389355e-cbce-407b-a444-3dd47c183aa6.JPG",
-  "339f7b1f-b681-4956-9865-d3a4cd194713.jpg",
-  "33f61ffa-627f-41ee-9f76-2536cee87ba2.JPG",
   "376263b7-2a07-4292-932e-5176a59a1580.JPG",
   "390e45ee-dbc2-40fb-818d-9442416af798.JPG",
   "3abe48a7-def7-4131-a7da-7daffa592846.jpg",
@@ -213,29 +187,26 @@ const mediaImages = [
   "f08e1656-b110-4ff9-a0e5-137b6f61e1a2.JPG",
   "f106a5e8-bdbf-4423-ab9d-04ee42a2950f.JPG",
   "f12ccaa9-fda4-48fa-a503-56872034a63b.JPG",
-  "f13fadc2-e0f0-4023-bb4f-b4e0eb7e49ff.JPG",
-  "f297d649-cb74-42c9-b726-73fdc6cb0520.JPG",
-  "f398eec9-c11d-4610-baaa-7ee6900d93be.JPG",
-  "f4afa269-7d59-4fbe-b8a9-1431d5be67a9.JPG",
-  "fed832df-890a-4f41-b732-dc5fa0910e3b.JPG",
-  "ffa1fd34-90e8-4eb4-bf28-4911182b09ad.JPG",
-];
-
-const mediaVideos = [
-  "4719a6af-a21c-46e2-b849-df517a82bd24.MP4",
-  "59c69ffd-80d2-4a08-8cbb-f9a664f53d95.MP4",
-  "83ac5fbf-8be8-4b90-963b-b82e078f996c.MP4",
-  "IMG_2249.MOV",
-  "IMG_2252.MOV",
-  "IMG_5570.MOV",
-  "ebd8ddfe-5352-4c6b-874f-1484d8818191.mov",
-];
+  ... ── */
 
 /* ── Media grid renderer ── */
-function renderMediaGrid() {
+async function renderMediaGrid() {
   const grid = document.getElementById('mediaGrid');
   if (!grid || grid.dataset.rendered) return;
   grid.dataset.rendered = '1';
+
+  // Load manifest — generated at deploy time from public/gallery/ directory
+  try {
+    const res = await fetch('public/gallery/manifest.json');
+    if (!res.ok) throw new Error('manifest not found');
+    const manifest = await res.json();
+    mediaImages = manifest.images || [];
+    mediaVideos = manifest.videos || [];
+  } catch (e) {
+    console.warn('[gallery] Could not load manifest:', e.message);
+    grid.innerHTML = '<div style="text-align:center;padding:4rem;opacity:0.6;">⚠️ gallery unavailable</div>';
+    return;
+  }
 
   let _activeTileVideo = null;
 

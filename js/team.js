@@ -1,27 +1,7 @@
 /* ─── team.js ─── load & render cinematic team showcase ─── */
+/* Shared utilities (parseFrontmatter, esc) are defined in app.js. */
 
 const PASTEL_COLORS = ['#fde8d8','#fdf0c0','#d8f0e8','#d8e8fd','#fde8f0','#f0d8fd'];
-
-function parseTeamMd(raw) {
-  const lines = raw.trim().split('\n');
-  const meta = {};
-  let i = 0;
-  if (lines[0].trim() === '---') i++;
-  while (i < lines.length && lines[i].trim() !== '---') {
-    const colonIdx = lines[i].indexOf(':');
-    if (colonIdx !== -1) {
-      const key = lines[i].slice(0, colonIdx).trim();
-      const val = lines[i].slice(colonIdx + 1).trim();
-      meta[key] = val;
-    }
-    i++;
-  }
-  i++;
-  const body = lines.slice(i).join('\n').trim();
-  return { meta, body };
-}
-
-function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function imageExists(meta) {
   return meta.image && meta.image.trim().length > 0;
@@ -43,16 +23,14 @@ function cinemaAvatarHtml(meta, idx, hasImage) {
 
 function coreAvatarHtml(meta, idx, hasImage) {
   const color = PASTEL_COLORS[idx % PASTEL_COLORS.length];
-  const noFallbackNames = ['Pia Rattan', 'Ishaan Sen Dave', 'Rutupurna Debalina Naik'];
   if (hasImage) {
     return `<div class="core-avatar" style="--ph-color:${color};">
       <img class="core-avatar-img" src="${esc(meta.image)}" alt="${esc(meta.name)}" loading="lazy" onerror="this.remove();this.parentNode.querySelector('.core-avatar-fallback').style.display=''">
       <span class="core-avatar-fallback" style="display:none">🐾</span>
     </div>`;
   }
-  const fallback = noFallbackNames.includes(meta.name) ? '' : '🐾';
   return `<div class="core-avatar" style="--ph-color:${color};">
-    <span class="core-avatar-fallback">${fallback}</span>
+    <span class="core-avatar-fallback">🐾</span>
   </div>`;
 }
 
@@ -442,7 +420,7 @@ async function loadTeam() {
         section.members.map(async f => {
           const res = await fetch('public/team/leadership/content/' + f + bust);
           if (!res.ok) throw new Error(res.status);
-          return parseTeamMd(await res.text());
+          return parseFrontmatter(await res.text());
         })
       );
       leaderSections.push({
@@ -458,7 +436,7 @@ async function loadTeam() {
       coreManifest.members.map(async (f, index) => {
         const res = await fetch('public/team/core/content/' + f + bust);
         if (!res.ok) throw new Error(res.status);
-        return { index, member: parseTeamMd(await res.text()) };
+        return { index, member: parseFrontmatter(await res.text()) };
       })
     );
     const coreMembers = coreResults
