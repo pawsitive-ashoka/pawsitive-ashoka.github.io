@@ -35,18 +35,6 @@ jobs:
         timeout-minutes: 4
         continue-on-error: true
 
-      # ── Generate runtime config ────────────────────────────────────────
-      # Writes admin/config.js and js/site-config.js — never committed.
-      # Also stamps a build timestamp in admin/index.html for cache-busting.
-      - name: Generate runtime config
-        env:
-          SUPABASE_URL:              ${{ vars.SUPABASE_URL }}
-          SUPABASE_ANON_KEY:         ${{ secrets.SUPABASE_ANON_KEY }}
-          CLOUDINARY_CLOUD_NAME:     ${{ vars.CLOUDINARY_CLOUD_NAME }}
-          CLOUDINARY_API_KEY:        ${{ vars.CLOUDINARY_API_KEY }}
-          CLOUDINARY_UPLOAD_PRESET:  ${{ vars.CLOUDINARY_UPLOAD_PRESET }}
-        run: node .github/scripts/generate-config.js
-
       # ── Deploy to GitHub Pages ─────────────────────────────────────────
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4

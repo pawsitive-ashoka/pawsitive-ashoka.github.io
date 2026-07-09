@@ -1,7 +1,0 @@
-{
-  "_note": "Edit this file and push to add or remove CMS access. Email addresses must match the Google account used to sign in. No Supabase CLI or dashboard changes needed — the Edge Function reads this file directly at startup.",
-  "emails": [
-    "pawsitive@ashoka.edu.in",
-    "nitin.s_ug2025@ashoka.edu.in"
-  ]
-}
