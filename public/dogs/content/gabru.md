@@ -2,7 +2,7 @@
 name: Gabru
 nameEmoji: 💪
 emoji: 🐕
-breed: 📍 Next to Roti Boti · ♂ · 2 months · Brown
+breed: 📍 Next to Roti Boti · ♂ · 5 months · Brown
 born: 2026
 image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/gabru.jpg
 tags: 🌱 tiny pup, 💪 runt with attitude, 🔧 personality in development

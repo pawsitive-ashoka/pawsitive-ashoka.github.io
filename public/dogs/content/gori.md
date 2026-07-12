@@ -2,7 +2,7 @@
 name: Gori
 nameEmoji: 🌱
 emoji: 🐕
-breed: 📍 Opposite Gate 2 · ♀ · 2 months · Black
+breed: 📍 Opposite Gate 2 · ♀ · 5 months · Black
 born: 2026
 image: https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/dogs/images/gori.jpg
 tags: 🌱 tiny pup, 🐾 runt of the litter, 🔧 personality in development
