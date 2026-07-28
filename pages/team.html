@@ -2,24 +2,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    .team-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .team-tab {
-      flex: 1 1 auto;
-      margin: 0.5rem;
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
     .team-photo-wrap img {
       max-width: 100%;
       height: auto;
-    }
-    .team-desc-block {
-      padding: 1rem;
-      font-size: 1rem;
     }
   </style>
 </head>
@@ -31,8 +16,8 @@
 
 <div class="team-photo-wrap">
   <div class="team-photo-box">
-    <img class="team-hero-img" src="https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/team/team.jpeg" onerror="_cldImgError(this)" alt="The Pawsitive family (2024–25)" />
-    <div class="team-photo-caption">🐾 the pawsitive family (2025–26)</div>
+    <img class="team-hero-img" src="https://res.cloudinary.com/duij1lw6u/image/upload/f_auto,q_auto/public/team/team.jpeg" onerror="_cldImgError(this)" alt="The Pawsitive family" />
+    <div class="team-photo-caption">🐾 the pawsitive family</div>
   </div>
 </div>
 
@@ -44,38 +29,54 @@
   </div>
 </div>
 
-<!-- ===== TAB BAR ===== -->
-<div class="team-tabs-wrap">
-  <div class="team-tabs">
-    <button class="team-tab active" data-tab="leadership"
-      onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
-      🌟 Leadership
-    </button>
-    <button class="team-tab" data-tab="core"
-      onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
-      ✨ Core Team
-    </button>
-    <button class="team-tab" data-tab="members"
-      onclick="(t=>{document.querySelectorAll('#page-team .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
-      🐾 Members
-    </button>
+<!-- ===== TEAM LAYOUT ===== -->
+<div class="team-layout">
+
+  <div class="team-main">
+    <div class="team-year-header">
+      <h2 class="team-year-title" id="team-year-title">loading...</h2>
+    </div>
+
+    <!-- Unified tab bar -->
+    <div class="team-tabs-wrap" id="team-tabs">
+      <div class="team-tabs">
+        <button class="team-tab active" data-tab="leadership"
+          onclick="(t=>{document.querySelectorAll('#team-content .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
+          🌟 Heads
+        </button>
+        <button class="team-tab" data-tab="core"
+          onclick="(t=>{document.querySelectorAll('#team-content .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
+          ✨ Core Team
+        </button>
+        <button class="team-tab" data-tab="members"
+          onclick="(t=>{document.querySelectorAll('#team-content .team-section').forEach(s=>s.style.display=s.dataset.section===t.dataset.tab?'':'none');t.closest('.team-tabs').querySelectorAll('.team-tab').forEach(b=>b.classList.toggle('active',b===t))})(this)">
+          🐾 Members
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab content — shared for all years -->
+    <div id="team-content">
+      <div class="team-section cinema-stage" data-section="leadership" id="team-leadership">
+        <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading...</div>
+      </div>
+      <div class="team-section cinema-stage" data-section="core" id="team-core" style="display:none;">
+        <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading...</div>
+      </div>
+      <div class="team-section cinema-stage" data-section="members" id="team-members" style="display:none;">
+        <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading...</div>
+      </div>
+    </div>
   </div>
+
+  <aside class="team-sidebar" id="team-sidebar">
+    <h3 class="team-sidebar-title">🕐 past teams</h3>
+    <div class="team-sidebar-chips" id="team-sidebar-chips"></div>
+  </aside>
+
 </div>
 
-<!-- ===== TEAM SECTIONS (populated by js/team.js) ===== -->
-<div class="team-section cinema-stage" data-section="leadership" id="team-leadership">
-  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading leadership...</div>
-</div>
-
-<div class="team-section cinema-stage" data-section="core" id="team-core" style="display:none;">
-  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading core team...</div>
-</div>
-
-<div class="team-section cinema-stage" data-section="members" id="team-members" style="display:none;">
-  <div style="text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);">loading members...</div>
-</div>
-
-<!-- ===== POPUP MODAL (populated by js/team.js) ===== -->
+<!-- ===== POPUP MODAL ===== -->
 <div class="team-popup-overlay" id="team-popup-overlay">
   <div class="team-popup-frame">
     <button class="team-popup-nav team-popup-nav-prev" aria-label="Previous">&#8249;</button>

@@ -1,0 +1,114 @@
+{
+  "departments": [
+    {
+      "name": "Presidents",
+      "icon": "🏛️",
+      "members": [
+        {
+          "name": "Saanvi Goyal",
+          "email": "saanvi.goyal_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/saanvi-goyal.jpg"
+        },
+        {
+          "name": "Ojal Rao",
+          "email": "ojal.rao_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/ojal-rao.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Secretaries",
+      "icon": "📋",
+      "members": [
+        {
+          "name": "Mehati Punnamaraju",
+          "email": "mehati.punnamaraju_ug2024@ashoka.edu.in",
+          "image": "public/team/2026-27/images/mehati-punnamaraju.jpg"
+        },
+        {
+          "name": "Vignesh Ganesh",
+          "email": "vignesh.ganesh_ug2024@ashoka.edu.in",
+          "image": "public/team/2026-27/images/vignesh-ganesh.jpg"
+        }
+      ]
+    },
+    {
+      "name": "On-Ground",
+      "icon": "🐾",
+      "members": [
+        {
+          "name": "Durga Vasumati",
+          "role": "HoD",
+          "email": "durga.vasumati_ug2024@ashoka.edu.in",
+          "image": "public/team/2026-27/images/durga-vasumati.jpg"
+        },
+        {
+          "name": "Kaynaat Groover",
+          "role": "HoD",
+          "email": "kaynaat.groover_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/kaynaat-grover.jpg"
+        },
+        {
+          "name": "Aranya Bhagat",
+          "role": "Deputy HoD",
+          "email": "aranya.bhagat_ug2024@ashoka.edu.in",
+          "image": "public/team/2026-27/images/aranya-bhagat.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Finance",
+      "icon": "💰",
+      "members": [
+        {
+          "name": "Shaurya Taneja",
+          "role": "HoD",
+          "email": "shaurya.taneja_ug2024@ashoka.edu.in",
+          "image": "public/team/2026-27/images/shaurya-taneja.jpg"
+        },
+        {
+          "name": "Vidhaan Taneja",
+          "role": "HoD",
+          "email": "vidhaan.taneja_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/vidhaan-taneja.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Social Media",
+      "icon": "📱",
+      "members": [
+        {
+          "name": "Ira Malik",
+          "role": "HoD",
+          "email": "ira.malik_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/ira-malik.jpg"
+        },
+        {
+          "name": "Sara Bhargava",
+          "role": "HoD",
+          "email": "sara.bhargava_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/sara-bhargava.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "icon": "🎉",
+      "members": [
+        {
+          "name": "Anika Masaldan",
+          "role": "HoD",
+          "email": "anika.masaldan_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/anika-masaldan.jpg"
+        },
+        {
+          "name": "Darshana Baishya",
+          "role": "HoD",
+          "email": "darshana.baishya_ug2025@ashoka.edu.in",
+          "image": "public/team/2026-27/images/darshana-baishya.jpg"
+        }
+      ]
+    }
+  ]
+}

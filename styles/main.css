@@ -465,12 +465,11 @@ nav::after {
 @media(max-width:768px){.members-list{columns:2 160px;}.dept-heads-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:480px){.members-list{columns:1;}}
 
-.team-hero-img{max-width:90%;width:100%;height:auto;max-height:50vh;display:block;margin:0 auto;border-radius:8px;object-fit:contain;}
-.team-photo-caption{padding:0.7rem 1.5rem;font-family:'Caveat',cursive;font-size:1.05rem;color:var(--ink-soft);text-align:center;border-top:none;}
-/* keep old class mapped for any legacy uses */
-.team-photo-wrap{max-width:900px;margin:2rem auto;padding:0 2rem;}
-.team-photo-box{background:var(--card);border:2.5px solid var(--border);border-radius:20px;box-shadow:6px 6px 0 var(--sketch);overflow:hidden;padding:1rem;}
-.team-desc-block{max-width:720px;margin:2rem auto;padding:0 2rem;}
+.team-hero-img{max-width:90%;width:100%;height:auto;max-height:40vh;display:block;margin:0 auto;border-radius:8px;object-fit:contain;}
+.team-photo-caption{padding:0.4rem 1.5rem;font-family:'Caveat',cursive;font-size:1rem;color:var(--ink-soft);text-align:center;border-top:none;}
+.team-photo-wrap{max-width:900px;margin:1rem auto;padding:0 2rem;}
+.team-photo-box{background:var(--card);border:2.5px solid var(--border);border-radius:20px;box-shadow:6px 6px 0 var(--sketch);overflow:hidden;padding:0.7rem;}
+.team-desc-block{max-width:720px;margin:1rem auto;padding:0 2rem;}
 .team-grid-section{max-width:1000px;margin:0 auto;padding:2rem 2rem 4rem;}
 .team-grid-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;text-align:center;margin-bottom:2rem;transform:rotate(-0.5deg);}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1.2rem;}
@@ -530,6 +529,7 @@ nav::after {
 .core-avatar-fallback{font-size:1.6rem;line-height:1;z-index:0;}
 [data-theme="dark"] .core-avatar{background:var(--bg2) !important;}
 .core-name{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;color:var(--ink);text-align:center;line-height:1.15;}
+.core-batch{font-size:0.72rem;color:var(--accent);text-align:center;line-height:1.2;margin-top:-0.1rem;font-weight:600;}
 .core-spirit-dog{font-size:0.72rem;color:var(--ink-soft);text-align:center;font-style:italic;line-height:1.2;margin-top:-0.1rem;}
 .core-grid-item--has-popup{cursor:pointer;}
 .core-grid-item--has-popup:hover{border-color:var(--accent);}
@@ -605,6 +605,37 @@ nav::after {
   .core-avatar{width:44px;height:44px;}
   .core-name{font-size:0.88rem;}
   .member-pill{font-size:0.95rem;padding:0.3rem 0.8rem;}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEAM ARCHIVE — Two-column layout + Year chips + Dept card wall
+   ═══════════════════════════════════════════════════════════════ */
+
+.team-layout{display:flex;gap:1.5rem;max-width:1100px;margin:0 auto;padding:0 1.5rem 2rem;align-items:flex-start;}
+.team-main{flex:1;min-width:0;}
+.team-sidebar{width:150px;flex-shrink:0;position:sticky;top:100px;}
+.team-sidebar-title{font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;color:var(--ink-soft);margin-bottom:0.6rem;text-align:center;}
+.team-sidebar-chips{display:flex;flex-direction:column;gap:0.4rem;}
+.year-chip{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;padding:0.35rem 0.8rem;border-radius:12px;border:2px solid var(--border);background:var(--bg2);color:var(--ink-soft);cursor:pointer;transition:all 0.18s;box-shadow:2px 2px 0 var(--sketch);text-align:center;}
+.year-chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px);}
+.year-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:2px 2px 0 rgba(45,32,19,0.18);}
+.year-chip--current{background:var(--card);border-style:dashed;color:var(--ink-soft);}
+.year-chip--current:hover{background:var(--accent);color:#fff;border-color:var(--accent);border-style:solid;}
+
+/* Year header */
+.team-year-header{margin-bottom:0.4rem;}
+.team-year-title{font-family:'Caveat',cursive;font-size:1.8rem;font-weight:700;color:var(--ink);transform:rotate(-0.5deg);}
+.team-empty{text-align:center;padding:2rem;font-family:'Caveat',cursive;color:var(--ink-soft);font-size:1.1rem;}
+
+/* ── Team layout responsive ── */
+@media(max-width:860px){
+  .team-layout{flex-direction:column;gap:1rem;}
+  .team-sidebar{width:100%;position:static;}
+  .team-sidebar-chips{flex-direction:row;flex-wrap:wrap;justify-content:center;}
+  .year-chip{padding:0.3rem 0.7rem;font-size:0.9rem;}
+}
+@media(max-width:600px){
+  .team-year-title{font-size:1.5rem;}
 }
 
 /* GALLERY */
