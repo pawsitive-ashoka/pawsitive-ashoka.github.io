@@ -1,38 +1,6 @@
 {
   "departments": [
     {
-      "name": "Presidents",
-      "icon": "🏛️",
-      "members": [
-        {
-          "name": "Saanvi Goyal",
-          "email": "saanvi.goyal_ug2025@ashoka.edu.in",
-          "image": "public/team/2026-27/images/saanvi-goyal.jpg"
-        },
-        {
-          "name": "Ojal Rao",
-          "email": "ojal.rao_ug2025@ashoka.edu.in",
-          "image": "public/team/2026-27/images/ojal-rao.jpg"
-        }
-      ]
-    },
-    {
-      "name": "Secretaries",
-      "icon": "📋",
-      "members": [
-        {
-          "name": "Mehati Punnamaraju",
-          "email": "mehati.punnamaraju_ug2024@ashoka.edu.in",
-          "image": "public/team/2026-27/images/mehati-punnamaraju.jpg"
-        },
-        {
-          "name": "Vignesh Ganesh",
-          "email": "vignesh.ganesh_ug2024@ashoka.edu.in",
-          "image": "public/team/2026-27/images/vignesh-ganesh.jpg"
-        }
-      ]
-    },
-    {
       "name": "On-Ground",
       "icon": "🐾",
       "members": [

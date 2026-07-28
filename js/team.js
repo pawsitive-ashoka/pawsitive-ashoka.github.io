@@ -305,7 +305,7 @@ function renderSidebarChips(yearsData, container) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   LOAD CURRENT YEAR (2026-27 format: flat departments manifest)
+   LOAD CURRENT YEAR — tries content-file format, falls back to flat manifest
    ═══════════════════════════════════════════════════════════════ */
 
 async function loadCurrentYear(yearId) {
@@ -320,43 +320,88 @@ async function loadCurrentYear(yearId) {
   const bust = isDev ? `?v=${Date.now()}` : '';
 
   try {
-    const manifest = await fetch(`public/team/${yearId}/manifest.json${bust}`).then(r => r.json());
+    /* ── Leadership: try content files first, fall back to flat manifest ── */
+    let loadedLeadership = false;
+    try {
+      const leaderManifest = await fetch(`public/team/${yearId}/leadership/manifest.json${bust}`).then(r => { if (!r.ok) throw 0; return r.json(); });
+      const leaderSections = [];
+      for (const section of leaderManifest.sections) {
+        const results = await Promise.allSettled(
+          section.members.map(async f => {
+            const res = await fetch(`public/team/${yearId}/leadership/content/${f}${bust}`);
+            if (!res.ok) throw new Error(res.status);
+            return parseFrontmatter(await res.text());
+          })
+        );
+        leaderSections.push({
+          label: section.label,
+          members: results.filter(r => r.status === 'fulfilled').map(r => r.value)
+        });
+      }
+      renderLeadershipCinema(leaderSections, leadershipEl);
+      loadedLeadership = true;
+    } catch (_) { /* no leadership content folder — fall back */ }
 
-    const leadershipDepts = manifest.departments.filter(d => LEADERSHIP_DEPTS.includes(d.name));
-    const coreDepts = manifest.departments.filter(d => !LEADERSHIP_DEPTS.includes(d.name));
-
-    /* Transform leadership depts → cinema carousel sections format */
-    const leaderSections = leadershipDepts.map(dept => ({
-      label: dept.name.toLowerCase(),
-      members: dept.members.map(m => ({
-        meta: {
-          name: m.name,
-          role: dept.name === 'Presidents' ? 'President' : 'Secretary',
-          image: m.image || '',
-          batch: m.email || '',
-          spirit_dog: ''
-        },
-        body: ''
-      }))
-    }));
-    renderLeadershipCinema(leaderSections, leadershipEl);
-
-    /* Transform core depts → flat core grid format */
-    const coreMembers = [];
-    coreDepts.forEach(dept => {
-      dept.members.forEach(m => {
-        coreMembers.push({
+    if (!loadedLeadership) {
+      const manifest = await fetch(`public/team/${yearId}/manifest.json${bust}`).then(r => r.json());
+      const leadershipDepts = manifest.departments.filter(d => LEADERSHIP_DEPTS.includes(d.name));
+      const leaderSections = leadershipDepts.map(dept => ({
+        label: dept.name.toLowerCase(),
+        members: dept.members.map(m => ({
           meta: {
             name: m.name,
+            role: dept.name === 'Presidents' ? 'President' : 'Secretary',
             image: m.image || '',
-            batch: dept.name,
+            batch: m.email || '',
             spirit_dog: ''
           },
-          body: m.role || ''
+          body: ''
+        }))
+      }));
+      renderLeadershipCinema(leaderSections, leadershipEl);
+    }
+
+    /* ── Core: try content files first, fall back to flat manifest ── */
+    let loadedCore = false;
+    try {
+      const coreManifest = await fetch(`public/team/${yearId}/core/manifest.json${bust}`).then(r => { if (!r.ok) throw 0; return r.json(); });
+      const coreResults = await Promise.allSettled(
+        coreManifest.members.map(async (f, index) => {
+          const res = await fetch(`public/team/${yearId}/core/content/${f}${bust}`);
+          if (!res.ok) throw new Error(res.status);
+          return { index, member: parseFrontmatter(await res.text()) };
+        })
+      );
+      const coreMembers = coreResults
+        .filter(r => r.status === 'fulfilled').map(r => r.value)
+        .sort((a, b) => {
+          const ap = hasCorePopupData(a.member) ? 1 : 0, bp = hasCorePopupData(b.member) ? 1 : 0;
+          return ap !== bp ? bp - ap : a.index - b.index;
+        })
+        .map(e => e.member);
+      renderCoreGrid(coreMembers, coreEl);
+      loadedCore = true;
+    } catch (_) { /* no core content folder — fall back */ }
+
+    if (!loadedCore) {
+      const manifest = await fetch(`public/team/${yearId}/manifest.json${bust}`).then(r => r.json());
+      const coreDepts = manifest.departments.filter(d => !LEADERSHIP_DEPTS.includes(d.name));
+      const coreMembers = [];
+      coreDepts.forEach(dept => {
+        dept.members.forEach(m => {
+          coreMembers.push({
+            meta: {
+              name: m.name,
+              image: m.image || '',
+              batch: dept.name,
+              spirit_dog: ''
+            },
+            body: m.role || ''
+          });
         });
       });
-    });
-    renderCoreGrid(coreMembers, coreEl);
+      renderCoreGrid(coreMembers, coreEl);
+    }
 
     renderMembersWall([], membersEl);
 

@@ -1,0 +1,26 @@
+{
+  "sections": [
+    {
+      "label": "presidents & secretaries",
+      "members": [
+        "saanvi-goyal.md",
+        "ojal-rao.md",
+        "mehati-punnamaraju.md",
+        "vignesh-ganesh.md"
+      ]
+    },
+    {
+      "label": "department heads",
+      "members": [
+        "durga-vasumati.md",
+        "kaynaat-grover.md",
+        "shaurya-taneja.md",
+        "vidhaan-taneja.md",
+        "ira-malik.md",
+        "sara-bhargava.md",
+        "anika-masaldan.md",
+        "darshana-baishya.md"
+      ]
+    }
+  ]
+}
