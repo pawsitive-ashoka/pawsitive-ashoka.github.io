@@ -62,46 +62,62 @@ function rebuildMemorial() {
   console.log(`  memorial: ${sorted.length} entries`);
 }
 
-// ── Core Team ────────────────────────────────────────────────────────────────
-function rebuildCore() {
-  const dir   = 'public/team/core/content';
-  const files = mdFiles(dir);
-  const sorted = files
-    .map(f => {
-      const meta = parseFrontmatter(fs.readFileSync(path.join(dir, f), 'utf8'));
-      return { f, order: parseInt(meta.order || '999', 10) };
-    })
-    .sort((a, b) => a.order - b.order);
+// ── Team (year-based) ────────────────────────────────────────────────────────
+function rebuildTeamYear(yearDir) {
+  const leadershipDir = path.join(yearDir, 'leadership', 'content');
+  const coreDir       = path.join(yearDir, 'core', 'content');
 
-  write('public/team/core/manifest.json', { members: sorted.map(m => m.f) });
-  console.log(`  core team: ${sorted.length} entries`);
+  // Rebuild leadership manifest if content dir exists
+  if (fs.existsSync(leadershipDir)) {
+    const files    = mdFiles(leadershipDir);
+    const SECTIONS = ['presidents & secretaries', 'department heads'];
+    const buckets  = Object.fromEntries(SECTIONS.map(s => [s, []]));
+
+    files.forEach(f => {
+      const meta    = parseFrontmatter(fs.readFileSync(path.join(leadershipDir, f), 'utf8'));
+      const section = (meta.section || '').toLowerCase().trim();
+      const order   = parseInt(meta.order || '999', 10);
+      const bucket  = buckets[section] ?? buckets['department heads'];
+      bucket.push({ f, order });
+    });
+
+    const sections = SECTIONS
+      .map(label => ({
+        label,
+        members: buckets[label].sort((a, b) => a.order - b.order).map(m => m.f)
+      }))
+      .filter(s => s.members.length > 0);
+
+    write(path.join(yearDir, 'leadership', 'manifest.json'), { sections });
+    console.log(`  leadership: ${sections.flatMap(s => s.members).length} entries`);
+  }
+
+  // Rebuild core manifest if content dir exists
+  if (fs.existsSync(coreDir)) {
+    const files = mdFiles(coreDir);
+    const sorted = files
+      .map(f => {
+        const meta = parseFrontmatter(fs.readFileSync(path.join(coreDir, f), 'utf8'));
+        return { f, order: parseInt(meta.order || '999', 10) };
+      })
+      .sort((a, b) => a.order - b.order);
+
+    write(path.join(yearDir, 'core', 'manifest.json'), { members: sorted.map(m => m.f) });
+    console.log(`  core team: ${sorted.length} entries`);
+  }
 }
 
-// ── Leadership ───────────────────────────────────────────────────────────────
-function rebuildLeadership() {
-  const dir      = 'public/team/leadership/content';
-  const files    = mdFiles(dir);
-  const SECTIONS = ['presidents & secretaries', 'department heads'];
-  const buckets  = Object.fromEntries(SECTIONS.map(s => [s, []]));
+function rebuildTeam() {
+  const teamDir = 'public/team';
+  const years = fs.readdirSync(teamDir)
+    .filter(f => /^\d{4}-\d{2}$/.test(f) && fs.statSync(path.join(teamDir, f)).isDirectory());
 
-  files.forEach(f => {
-    const meta    = parseFrontmatter(fs.readFileSync(path.join(dir, f), 'utf8'));
-    const section = (meta.section || '').toLowerCase().trim();
-    const order   = parseInt(meta.order || '999', 10);
-    // Fall back to 'department heads' if section is unrecognised
-    const bucket  = buckets[section] ?? buckets['department heads'];
-    bucket.push({ f, order });
+  years.sort().reverse(); // newest first
+  years.forEach(y => {
+    const yearDir = path.join(teamDir, y);
+    console.log(`  year ${y}:`);
+    rebuildTeamYear(yearDir);
   });
-
-  const sections = SECTIONS
-    .map(label => ({
-      label,
-      members: buckets[label].sort((a, b) => a.order - b.order).map(m => m.f)
-    }))
-    .filter(s => s.members.length > 0);
-
-  write('public/team/leadership/manifest.json', { sections });
-  console.log(`  leadership: ${sections.flatMap(s => s.members).length} entries`);
 }
 
 // ── Gallery ──────────────────────────────────────────────────────────────────
@@ -120,7 +136,6 @@ function rebuildGallery() {
 console.log('Rebuilding manifests…');
 rebuildDogs();
 rebuildMemorial();
-rebuildCore();
-rebuildLeadership();
+rebuildTeam();
 rebuildGallery();
 console.log('Done.');
